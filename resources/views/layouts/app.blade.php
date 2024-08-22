@@ -55,6 +55,8 @@
         </main>
     </div>
 
+    <x-wui-dialog />
+
     @livewire('notifications')
 
     @filamentScripts

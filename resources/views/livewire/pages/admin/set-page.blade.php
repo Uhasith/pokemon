@@ -35,6 +35,13 @@ new class extends Component {
         return $rules;
     }
 
+    public function messages(){
+        return [
+            'file.required' => 'Please select a file.',
+            'file.mimes' => 'The file must be a file of type: xlsx, csv.',
+        ];
+    }
+
     public function updatedFile()
     {
         if ($this->file) {
@@ -95,11 +102,18 @@ new class extends Component {
             </div>
         </div>
         <div>
-            <x-wui-modal-card title="Import Sets" name="setModal" wire:model.live="setModalState" width="5xl" align="center">
+            <x-wui-modal-card title="Import Sets" name="setModal" wire:model.live="setModalState" width="5xl"
+                align="center">
                 <form wire:submit="submit" class="px-6">
                     <div class="space-y-6 mb-8">
                         <x-file-pond wire:model="file"
                             accept="text/csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+
+                        @error('file')
+                            <div class="w-full text-sm text-red-600 flex justify-center items-center mt-1">
+                                <span>{{ $message }}</span>
+                            </div>
+                        @enderror
 
                         @if ($this->file && count($this->excelColumns) > 0)
                             <div class="grid grid-cols-2 gap-4">
@@ -123,7 +137,7 @@ new class extends Component {
                     </div>
 
                     {{-- @if ($this->file && count($this->excelColumns) > 0) --}}
-                        <x-wui-button class="w-full my-2" type="submit" spinner="submit" primary label="Import" />
+                    <x-wui-button class="w-full my-2" type="submit" spinner="submit" primary label="Import" />
                     {{-- @endif --}}
                 </form>
             </x-wui-modal-card>
