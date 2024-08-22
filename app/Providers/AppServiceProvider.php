@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Services\Notifications\NotificationService;
+use Filament\Notifications\Livewire\DatabaseNotifications;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -11,7 +13,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        DatabaseNotifications::trigger('filament.notifications.database-notifications-trigger');
+        DatabaseNotifications::pollingInterval('30s');
+
+        $this->app->singleton(NotificationService::class, function ($app) {
+            return new NotificationService;
+        });
     }
 
     /**
