@@ -30,7 +30,7 @@ final class SetTable extends PowerGridComponent
 
         return [
             Responsive::make(),
-            Header::make()->showSearchInput(),
+            Header::make()->showToggleColumns()->showSearchInput(),
             Footer::make()
                 ->showPerPage()
                 ->showRecordCount(),
