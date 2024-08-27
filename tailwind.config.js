@@ -36,7 +36,10 @@ export default {
             colors: {
                 "pg-primary": colors.blue,
                 "blackish": "#212121",
-                "yellowish": "#FFC107"
+                "yellowish": "#FFC107",
+                "grayish": "#27292B",
+                "evengray": "#383A3C",
+                "oddgray": "#484B4D"
             },
             maxWidth: {
                 '7xl': '1440px',
