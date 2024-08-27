@@ -24,18 +24,28 @@ export default {
         "./app/Filament/**/*.php",
         "./resources/views/filament/**/*.blade.php",
         "./vendor/filament/**/*.blade.php",
+        "./node_modules/flowbite/**/*.js"
     ],
 
     theme: {
         extend: {
             fontFamily: {
                 sans: ["Figtree", ...defaultTheme.fontFamily.sans],
+                manrope: ["Manrope", ...defaultTheme.fontFamily.sans],
             },
             colors: {
                 "pg-primary": colors.blue,
+                "blackish": "#212121",
+                "yellowish": "#FFC107"
             },
+            maxWidth: {
+                '7xl': '1440px',
+              }
         },
     },
 
-    plugins: [forms],
+    plugins: [
+        forms,
+        require('flowbite/plugin')
+    ],
 };
