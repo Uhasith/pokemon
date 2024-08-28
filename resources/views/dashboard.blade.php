@@ -4,6 +4,7 @@
             <h3>All Categories > Pokemon Cards > Ancient Booster Energy Capsule</h3>
         </div>
 
+        {{-- Second Section --}}
         <div class="flex gap-12">
             {{-- left Image section --}}
             <div class="w-1/3">
@@ -48,16 +49,16 @@
                     <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
                         <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-styled-tab" data-tabs-toggle="#default-styled-tab-content" data-tabs-active-classes="text-yellowish hover:text-yellowish dark:text-purple-500 dark:hover:text-purple-500 border-yellowish dark:border-yellowish" data-tabs-inactive-classes="dark:border-transparent text-gray-500 hover:text-gray-600 dark:text-gray-400 border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300" role="tablist">
                             <li class="me-2" role="presentation">
-                                <button class="inline-block p-4 border-b-2 rounded-t-lg" id="prices-styled-tab" data-tabs-target="#styled-prices" type="button" role="tab" aria-controls="prices" aria-selected="false">Prices</button>
+                                <button class="inline-block p-4 border-b rounded-t-lg" id="prices-styled-tab" data-tabs-target="#styled-prices" type="button" role="tab" aria-controls="prices" aria-selected="false">Prices</button>
                             </li>
                             <li class="me-2" role="presentation">
-                                <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="market-styled-tab" data-tabs-target="#styled-market" type="button" role="tab" aria-controls="market" aria-selected="false">Market</button>
+                                <button class="inline-block p-4 border-b rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="market-styled-tab" data-tabs-target="#styled-market" type="button" role="tab" aria-controls="market" aria-selected="false">Market</button>
                             </li>
                             <li class="me-2" role="presentation">
-                                <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="auctions-styled-tab" data-tabs-target="#styled-auctions" type="button" role="tab" aria-controls="auctions" aria-selected="false">Auctions</button>
+                                <button class="inline-block p-4 border-b rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="auctions-styled-tab" data-tabs-target="#styled-auctions" type="button" role="tab" aria-controls="auctions" aria-selected="false">Auctions</button>
                             </li>
                             <li role="presentation">
-                                <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="details-styled-tab" data-tabs-target="#styled-details" type="button" role="tab" aria-controls="details" aria-selected="false">Details</button>
+                                <button class="inline-block p-4 border-b rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="details-styled-tab" data-tabs-target="#styled-details" type="button" role="tab" aria-controls="details" aria-selected="false">Details</button>
                             </li>
                         </ul>
                     </div>
@@ -166,28 +167,25 @@
                 </div>
 
                 <div class="py-5">
-                    <h2 class="font-manrope font-bold text-white text-xl">Market Price History</h2>
+                    <h2 class="font-manrope font-bold text-white text-xl mb-5">Market Price History</h2>
 
                     <div>
-                        <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
-                            <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-styled-tab" data-tabs-toggle="#default-styled-tab-content" data-tabs-active-classes="bg-yellowish py-1 px-2 rounded-lg text-white hover:text-purple-600 dark:text-purple-500 dark:hover:text-purple-500 border-purple-600 dark:border-purple-500" data-tabs-inactive-classes="dark:border-transparent text-gray-500 hover:text-gray-600 dark:text-gray-400 border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300" role="tablist">
-                                <li class="me-2" role="presentation">
-                                    <button class="inline-block p-4 border-b-2 rounded-t-lg" id="profile-styled-tab" data-tabs-target="#styled-profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
+                        <div class="border-b border-gray-200 dark:border-gray-700">
+                            <ul class="flex flex-wrap -mb-px text-sm font-medium text-center bg-evengray rounded-t-xl" id="default-styled-tab" data-tabs-toggle="#default-styled-tab-content" data-tabs-active-classes="tabactive bg-yellowish rounded-b-lg text-black" data-tabs-inactive-classes="text-gray-500 hover:text-black hover:bg-yellowish hover:rounded-lg" role="tablist">
+                                <li class="bg-grayish p-3 rounded-t-xl" role="presentation">
+                                    <button class="inline-block p-4 rounded-t-lg" id="profile-styled-tab" data-tabs-target="#styled-profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Price Changes - $</button>
                                 </li>
-                                <li class="me-2" role="presentation">
-                                    <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="dashboard-styled-tab" data-tabs-target="#styled-dashboard" type="button" role="tab" aria-controls="dashboard" aria-selected="false">Dashboard</button>
+                                <li class="bg-evengray p-3 rounded-t-xl" role="presentation">
+                                    <button class="inline-block p-4 rounded-t-lg" id="dashboard-styled-tab" data-tabs-target="#styled-dashboard" type="button" role="tab" aria-controls="dashboard" aria-selected="false">Number of Sales - Bar chart</button>
                                 </li>
-                                <li class="me-2" role="presentation">
-                                    <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="settings-styled-tab" data-tabs-target="#styled-settings" type="button" role="tab" aria-controls="settings" aria-selected="false">Settings</button>
-                                </li>
-                                <li role="presentation">
-                                    <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="contacts-styled-tab" data-tabs-target="#styled-contacts" type="button" role="tab" aria-controls="contacts" aria-selected="false">Contacts</button>
+                                <li class="bg-evengray p-3 rounded-t-xl" role="presentation">
+                                    <button class="inline-block p-4 rounded-t-lg" id="settings-styled-tab" data-tabs-target="#styled-settings" type="button" role="tab" aria-controls="settings" aria-selected="false">Population</button>
                                 </li>
                             </ul>
                         </div>
                         <div id="default-styled-tab-content">
-                            <div class="hidden p-4 rounded-lg bg-grayish" id="styled-profile" role="tabpanel" aria-labelledby="profile-tab">
-                                <div id="chart-container" style="width: 100%; height: 400px; margin: auto;">
+                            <div class="hidden p-4 rounded-b-xl bg-grayish" id="styled-profile" role="tabpanel" aria-labelledby="profile-tab">
+                                <div id="chart-container" style="width: 90%; height: 300px; margin: auto;">
                                     <canvas id="myChart"></canvas>
                                 </div>
                             </div>
@@ -197,13 +195,63 @@
                             <div class="hidden p-4 rounded-lg bg-gray-50" id="styled-settings" role="tabpanel" aria-labelledby="settings-tab">
                                 <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Settings tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
                             </div>
-                            <div class="hidden p-4 rounded-lg bg-gray-50" id="styled-contacts" role="tabpanel" aria-labelledby="contacts-tab">
-                                <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Contacts tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
-                            </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="py-5">
+                    <h2 class="font-manrope font-bold text-white text-xl mb-5">Current Price Points</h2>
+
+                    <div class="w-2/5">
+                        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                            <table class="w-full text-sm text-left rtl:text-right text-gray-500 !rounded-xl">
+                                <thead class="text-xs text-white bg-evengray rounded-xl">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 text-yellowish font-manrope font-semibold text-base normal-case">
+                                            Price Point
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-yellowish font-manrope font-semibold text-base text-end normal-case">
+                                            Foil
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="rounded-xl">
+                                    <tr class="odd:bg-oddgray text-white even:bg-evengray">
+                                        <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">
+                                            Market Price
+                                        </th>
+                                        <td class="px-6 py-4  text-end">
+                                            $0.18
+                                        </td>
+                                    </tr>
+                                    <tr class="odd:bg-oddgray text-white even:bg-evengray">
+                                        <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">
+                                            Buylist Market Price
+                                        </th>
+                                        <td class="px-6 py-4  text-end">
+                                            -
+                                        </td>
+                                    </tr>
+                                    <tr class="odd:bg-oddgray text-white even:bg-evengray">
+                                        <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">
+                                            Listed Median Price
+                                        </th>
+                                        <td class="px-6 py-4  text-end">
+                                            $0.24
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
             </div>
+        </div>
+
+        {{-- Third Section --}}
+        <div class="w-full !bg-blackish h-10">
+
         </div>
     </div>
 </x-app-layout>
