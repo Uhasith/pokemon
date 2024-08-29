@@ -38,8 +38,10 @@ export default {
                 "blackish": "#212121",
                 "yellowish": "#FFC107",
                 "grayish": "#27292B",
-                "evengray": "#383A3C",
-                "oddgray": "#484B4D"
+                "evengray": "#2D2D2D",
+                "oddgray": "#282828",
+                "darkblackbg": "#1C1C1C",
+                "addbg": "#212121"
             },
             maxWidth: {
                 '7xl': '1440px',

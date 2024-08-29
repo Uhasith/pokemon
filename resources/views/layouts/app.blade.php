@@ -107,7 +107,7 @@
 </head>
 
 <body class="font-sans antialiased" x-data>
-    <div class="min-h-screen bg-blackish dark:bg-gray-900">
+    <div class="min-h-screen">
         <livewire:layout.navigation />
 
         <!-- Page Heading -->
