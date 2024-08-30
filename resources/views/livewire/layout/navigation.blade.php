@@ -16,7 +16,7 @@ new class extends Component
     }
 }; ?>
 
-<nav x-data="{ open: false }" class="bg-blackish dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+<nav x-data="{ open: false }" class="bg-blackish border-b border-[#27292B]">
     <!-- Primary Navigation Menu -->
     <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -163,22 +163,26 @@ new class extends Component
                     <form class="max-w-md mx-auto">
                         <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                         <div class="relative">
-                            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                                </svg>
-                            </div>
-                            <input type="search" id="default-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Mockups, Logos..." required />
-                            <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+                            <input type="search" id="default-search" class="block w-full p-4 m-2 text-sm text-gray-900 rounded-lg bg-[#333333] dark:text-white" placeholder="Find a card..." required />
+                            <button type="submit" class="text-white absolute end-2.5 bottom-2.5 font-medium rounded-lg text-sm p-2">
+                                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><g opacity="0.4"><path d="M16.041 16.0417L20.166 20.1667" stroke="white" stroke-width="1.375" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.332 10.0834C18.332 5.52702 14.6384 1.83337 10.082 1.83337C5.52568 1.83337 1.83203 5.52702 1.83203 10.0834C1.83203 14.6397 5.52568 18.3334 10.082 18.3334C14.6384 18.3334 18.332 14.6397 18.332 10.0834Z" stroke="white" stroke-width="1.375" stroke-linejoin="round"/></g></svg>
+                            </button>
                         </div>
                     </form>
                 </div>
             </div>
 
             <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
-                
-                <x-dropdown align="right" width="48">
+            <div class="hidden sm:flex sm:items-center">
+                <div class="grid grid-cols-2 gap-3 my-3 w-full">
+                    <button class="w-full bg-yellowish rounded-lg text-center flex gap-3 items-center justify-center marker p-2 text-base">
+                        <span>Log In</span>
+                    </button>
+                    <button class="w-full border border-yellowish text-yellowish rounded-lg text-center flex gap-3 items-center justify-center p-2 text-base">
+                        <span>Sign Up</span>
+                    </button>
+                </div>
+                {{-- <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-white dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
                             <div x-data="{{ json_encode(['name' => auth()->user()->name]) }}" x-text="name" x-on:profile-updated.window="name = $event.detail.name"></div>
@@ -203,7 +207,7 @@ new class extends Component
                             </x-dropdown-link>
                         </button>
                     </x-slot>
-                </x-dropdown>
+                </x-dropdown> --}}
             </div>
 
             <!-- Hamburger -->
