@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Tables;
 
-use App\Models\Set;
+use App\Models\Card;
 use Illuminate\View\View;
 use Illuminate\Support\Carbon;
 use WireUi\Traits\WireUiActions;
@@ -13,13 +13,13 @@ use PowerComponents\LivewirePowerGrid\Footer;
 use PowerComponents\LivewirePowerGrid\Header;
 use PowerComponents\LivewirePowerGrid\PowerGrid;
 use PowerComponents\LivewirePowerGrid\Exportable;
+use PowerComponents\LivewirePowerGrid\Responsive;
 use PowerComponents\LivewirePowerGrid\Facades\Filter;
 use PowerComponents\LivewirePowerGrid\PowerGridFields;
 use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 use PowerComponents\LivewirePowerGrid\PowerGridComponent;
-use PowerComponents\LivewirePowerGrid\Responsive;
 
-final class SetTable extends PowerGridComponent
+final class CardTable extends PowerGridComponent
 {
     use WireUiActions;
     use WithExport;
@@ -41,7 +41,7 @@ final class SetTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        return Set::query();
+        return Card::query();
     }
 
     public function relationSearch(): array
@@ -53,15 +53,12 @@ final class SetTable extends PowerGridComponent
     {
         return PowerGrid::fields()
             ->add('id')
+            ->add('card_id')
             ->add('set_id')
-            ->add('set_name')
-            ->add('psa_set_name')
-            ->add('year')
-            ->add('pop_url')
-            ->add('release_date')
-            ->add('set_image')
-            ->add('language')
-            ->add('is_promo')
+            ->add('name')
+            ->add('psa_name')
+            ->add('card_number')
+            ->add('variant')
             ->add('created_at');
     }
 
@@ -69,23 +66,19 @@ final class SetTable extends PowerGridComponent
     {
         return [
             Column::make('Id', 'id'),
-            Column::make('Set Name', 'set_name')->sortable()->searchable()->fixedOnResponsive(),
-            Column::make('PSA Set Name', 'psa_set_name')->sortable()->searchable(),
+            Column::make('Card Name', 'name')->sortable()->searchable()->fixedOnResponsive(),
+            Column::make('PSA Name', 'psa_name')->sortable()->searchable(),
+            Column::make('Card Id', 'card_id')->sortable()->searchable(),
             Column::make('Set Id', 'set_id')->sortable()->searchable(),
-            Column::make('Year', 'year')->sortable()->searchable()->fixedOnResponsive(),
-            Column::make('Pop Url', 'pop_url'),
-            Column::make('Release Date', 'release_date')->sortable()->searchable(),
-            Column::make('Set Image', 'set_image'),
-            Column::make('Language', 'language')->sortable()->searchable()->fixedOnResponsive(),
-            Column::make('Is Promo', 'is_promo'),
+            Column::make('Card Number', 'card_number')->sortable()->searchable()->fixedOnResponsive(),
+            Column::make('Variant', 'variant'),
             // Column::action('Action')
         ];
     }
 
     public function filters(): array
     {
-        return [
-        ];
+        return [];
     }
     public function edit($rowId): void
     {
@@ -108,7 +101,7 @@ final class SetTable extends PowerGridComponent
 
     public function deleteProduct($id)
     {
-        $product = Set::find($id);
+        $product = Card::find($id);
         $product->orders()->detach();
         $product->delete();
     }

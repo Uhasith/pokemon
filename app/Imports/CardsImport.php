@@ -3,7 +3,7 @@
 namespace App\Imports;
 
 use Carbon\Carbon;
-use App\Models\Set;
+use App\Models\Card;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Events\AfterImport;
@@ -14,7 +14,7 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 
-class SetsImport implements ShouldQueue, ToModel, WithBatchInserts, WithChunkReading, WithEvents, WithHeadingRow
+class CardsImport implements ShouldQueue, ToModel, WithBatchInserts, WithChunkReading, WithEvents, WithHeadingRow
 {
     protected $columnMappings;
 
@@ -38,10 +38,7 @@ class SetsImport implements ShouldQueue, ToModel, WithBatchInserts, WithChunkRea
 
                 if ($value !== null) {
                     try {
-                        if ($dbColumn === 'year') {
-                            // If the year is provided as a full date (like '2002-02-02'), extract the year
-                            $value = Carbon::parse($value)->year;
-                        } elseif (in_array($dbColumn, ['last_pop_updated', 'release_date'])) {
+                        if (in_array($dbColumn, ['last_scraped']) && !empty($value)) {
                             // Format the date to a standardized format (e.g., Y-m-d)
                             $value = Carbon::parse($value)->format('Y-m-d');
                         }
@@ -56,11 +53,11 @@ class SetsImport implements ShouldQueue, ToModel, WithBatchInserts, WithChunkRea
             }
         }
 
-        $set_id = $excelMapping['set_id'] ?? null;
+        $card_id = $excelMapping['card_id'] ?? null;
 
-        if ($set_id === null) {
+        if ($card_id === null) {
             // Log an error and skip processing this row
-            Log::error('Set Id is missing for a row, skipping the row.', ['row' => $row]);
+            Log::error('Card Id is missing for a row, skipping the row.', ['row' => $row]);
             return null; // Skip this row
         }
 
@@ -69,18 +66,16 @@ class SetsImport implements ShouldQueue, ToModel, WithBatchInserts, WithChunkRea
             return $value !== null && $value !== '';
         });
 
-
         // Attempt to find the set by Set Id or any alternative identifiers
-        $set = Set::where('set_id', $set_id)->first();
+        $set = Card::where('card_id', $card_id)->first();
 
         if ($set) {
             // Update the existing set
             $set->update($filteredExcelMapping);
         } else {
             // Create a new set if no conflicts
-            Set::create($filteredExcelMapping);
+            Card::create($filteredExcelMapping);
         }
-
 
         return null; // Return null because database insertion is handled manually
     }

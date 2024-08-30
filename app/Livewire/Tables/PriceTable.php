@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Tables;
 
-use App\Models\Set;
+use App\Models\Price;
 use Illuminate\View\View;
 use Illuminate\Support\Carbon;
 use WireUi\Traits\WireUiActions;
@@ -13,13 +13,13 @@ use PowerComponents\LivewirePowerGrid\Footer;
 use PowerComponents\LivewirePowerGrid\Header;
 use PowerComponents\LivewirePowerGrid\PowerGrid;
 use PowerComponents\LivewirePowerGrid\Exportable;
+use PowerComponents\LivewirePowerGrid\Responsive;
 use PowerComponents\LivewirePowerGrid\Facades\Filter;
 use PowerComponents\LivewirePowerGrid\PowerGridFields;
 use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 use PowerComponents\LivewirePowerGrid\PowerGridComponent;
-use PowerComponents\LivewirePowerGrid\Responsive;
 
-final class SetTable extends PowerGridComponent
+final class PriceTable extends PowerGridComponent
 {
     use WireUiActions;
     use WithExport;
@@ -41,7 +41,7 @@ final class SetTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        return Set::query();
+        return Price::query();
     }
 
     public function relationSearch(): array
@@ -53,15 +53,16 @@ final class SetTable extends PowerGridComponent
     {
         return PowerGrid::fields()
             ->add('id')
-            ->add('set_id')
-            ->add('set_name')
-            ->add('psa_set_name')
-            ->add('year')
-            ->add('pop_url')
-            ->add('release_date')
-            ->add('set_image')
-            ->add('language')
-            ->add('is_promo')
+            ->add('card_id')
+            ->add('price_id')
+            ->add('value')
+            ->add('sale_date')
+            ->add('grade')
+            ->add('lot_id')
+            ->add('auction_house')
+            ->add('seller')
+            ->add('cert_number')
+            ->add('sale_type')
             ->add('created_at');
     }
 
@@ -69,23 +70,23 @@ final class SetTable extends PowerGridComponent
     {
         return [
             Column::make('Id', 'id'),
-            Column::make('Set Name', 'set_name')->sortable()->searchable()->fixedOnResponsive(),
-            Column::make('PSA Set Name', 'psa_set_name')->sortable()->searchable(),
-            Column::make('Set Id', 'set_id')->sortable()->searchable(),
-            Column::make('Year', 'year')->sortable()->searchable()->fixedOnResponsive(),
-            Column::make('Pop Url', 'pop_url'),
-            Column::make('Release Date', 'release_date')->sortable()->searchable(),
-            Column::make('Set Image', 'set_image'),
-            Column::make('Language', 'language')->sortable()->searchable()->fixedOnResponsive(),
-            Column::make('Is Promo', 'is_promo'),
+            Column::make('Price Id', 'price_id')->sortable()->searchable(),
+            Column::make('Card Id', 'card_id')->sortable()->searchable(),
+            Column::make('Value', 'value')->sortable()->searchable()->fixedOnResponsive(),
+            Column::make('Sale Date', 'sale_date')->sortable()->searchable(),
+            Column::make('Grade', 'grade')->sortable()->searchable()->fixedOnResponsive(),
+            Column::make('Lot Id', 'lot_id')->sortable()->searchable()->fixedOnResponsive(),
+            Column::make('Auction House', 'auction_house')->sortable()->searchable()->fixedOnResponsive(),
+            Column::make('Seller', 'seller')->sortable()->searchable()->fixedOnResponsive(),
+            Column::make('Cert Number', 'cert_number')->sortable()->searchable(),
+            Column::make('Sale Type', 'sale_type')->sortable()->searchable()->fixedOnResponsive(),
             // Column::action('Action')
         ];
     }
 
     public function filters(): array
     {
-        return [
-        ];
+        return [];
     }
     public function edit($rowId): void
     {
@@ -108,7 +109,7 @@ final class SetTable extends PowerGridComponent
 
     public function deleteProduct($id)
     {
-        $product = Set::find($id);
+        $product = Price::find($id);
         $product->orders()->detach();
         $product->delete();
     }
