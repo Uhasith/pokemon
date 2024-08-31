@@ -6,16 +6,14 @@ use App\Services\Notifications\NotificationService;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\HeadingRowImport;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Imports\SetsImport;
+use App\Imports\CardsImport;
 use Livewire\Attributes\Layout;
 
-new 
-#[Layout('layouts.admin')]
-class extends Component {
+new #[Layout('layouts.admin')] class extends Component {
     use WithFileUploads;
 
     public $file;
-    public $setModalState;
+    public $cardModalState;
 
     public $excelColumns = [];
 
@@ -26,7 +24,7 @@ class extends Component {
     public function mount()
     {
         // Get columns for the 'products' table
-        $this->dbColumns = config('pokemon.setTableColumns');
+        $this->dbColumns = config('pokemon.cardTableColumns');
     }
 
     public function rules()
@@ -38,7 +36,8 @@ class extends Component {
         return $rules;
     }
 
-    public function messages(){
+    public function messages()
+    {
         return [
             'file.required' => 'Please select a file.',
             'file.mimes' => 'The file must be a file of type: xlsx, csv.',
@@ -75,37 +74,39 @@ class extends Component {
         $this->validate();
 
         try {
-            // Check if 'set_id' column is present
-            if (!isset($this->columnMappings['set_id']) || empty($this->columnMappings['set_id'])) {
-                app(NotificationService::class)->sendExeptionNotification("The 'Set Id' column is required.");
+            // Check if 'card_id' column is present
+            if (!isset($this->columnMappings['card_id']) || empty($this->columnMappings['card_id']) || !isset($this->columnMappings['set_id']) || empty($this->columnMappings['set_id'])) {
+                app(NotificationService::class)->sendExeptionNotification("The 'Card Id' and 'Set Id' column is required.");
                 return;
             }
 
-            Excel::import(new SetsImport($this->columnMappings), $this->file);
-            app(NotificationService::class)->sendSuccessNotification('Importing Sets process start in the background. Please wait...');
+            Log::info('Importing cards...');
 
-            $this->redirectRoute('set-page');
+            Excel::import(new CardsImport($this->columnMappings), $this->file);
+            app(NotificationService::class)->sendSuccessNotification('Importing Cards process start in the background. Please wait...');
+
+            $this->redirectRoute('card-page');
         } catch (\Throwable $e) {
             Log::error("Failed to import products: {$e->getMessage()}");
             app(NotificationService::class)->sendExeptionNotification();
-            $this->redirectRoute('set-page');
+            $this->redirectRoute('card-page');
         }
     }
 }; ?>
 
 <div class="py-4">
     <div class="max-w-7xl mx-auto flex gap-4 justify-end sm:px-6 lg:px-8 mb-2">
-        <x-wui-mini-button info icon="document-arrow-down" x-on:click="$openModal('setModal')"
-            x-tooltip.placement.bottom.raw="Import Products" />
+        <x-wui-mini-button info icon="document-arrow-down" x-on:click="$openModal('cardModal')"
+            x-tooltip.placement.bottom.raw="Import Crads" />
     </div>
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg min-h-[70vh]">
             <div class="p-6 text-gray-900 dark:text-gray-100">
-                <livewire:tables.set-table />
+                <livewire:tables.card-table />
             </div>
         </div>
         <div>
-            <x-wui-modal-card title="Import Sets" name="setModal" wire:model.live="setModalState" width="5xl"
+            <x-wui-modal-card title="Import Cards" name="cardModal" wire:model.live="cardModalState" width="5xl"
                 align="center">
                 <form wire:submit="submit" class="px-6">
                     <div class="space-y-6 mb-8">

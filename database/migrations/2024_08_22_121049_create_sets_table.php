@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('sets', function (Blueprint $table) {
             $table->id();
-            $table->string('set_id')->unique()->index();
+            $table->uuid('set_id')->unique()->index(); 
             $table->string('set_name')->nullable();
             $table->string('psa_set_name')->nullable();
             $table->year('year')->nullable();

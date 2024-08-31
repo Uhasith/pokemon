@@ -21,6 +21,8 @@ Route::middleware([
 
     // Full Page Components Routes
     Volt::route('/set-page', 'pages.admin.set-page')->lazy()->name('set-page');
+    Volt::route('/card-page', 'pages.admin.card-page')->lazy()->name('card-page');
+    Volt::route('/price-page', 'pages.admin.price-page')->lazy()->name('price-page');
 
 });
 
