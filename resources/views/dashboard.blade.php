@@ -1,5 +1,6 @@
 <x-app-layout>
     <div class="w-full bg-darkblackbg">
+        {{-- Single Product Details Section --}}
         <div class="max-w-[1440px] bg-darkbg mx-auto relative flex flex-col">
             <div class="my-12">
                 <h3 class="flex gap-3 items-center font-manrope">
@@ -15,8 +16,7 @@
                 </h3>
             </div>
 
-            {{-- Second Section --}}
-            <div class="flex gap-12">
+            <div class="flex gap-4">
                 {{-- left Image section --}}
                 <div class="w-4/12">
                     <div class="flex w-full">
@@ -58,7 +58,7 @@
                 </div>
 
                 {{-- right content section --}}
-                <div class="w-6/12 px-3">
+                <div class="w-6/12 px-3 ml-5">
                     <div>
                         <h1 class="font-manrope text-4xl font-bold text-white">Pikachu - SV05: Temporal Forces (TEF)</h1>
                     </div>
@@ -72,26 +72,26 @@
                     </div>
 
                     <div>
-                        <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
-                            <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-styled-tab" data-tabs-toggle="#default-styled-tab-content" data-tabs-active-classes="text-yellowish hover:text-yellowish dark:text-purple-500 dark:hover:text-purple-500 border-yellowish dark:border-yellowish" data-tabs-inactive-classes="dark:border-transparent text-gray-500 hover:text-gray-600 dark:text-gray-400 border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300" role="tablist">
+                        <div class="mb-4 border-b border-evengray">
+                            <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-styled-tab" data-tabs-toggle="#default-styled-tab-content" data-tabs-active-classes="text-yellowish hover:text-yellowish dark:text-purple-500 dark:hover:text-purple-500 border-yellowish dark:border-yellowish" data-tabs-inactive-classes="text-white hover:text-yellowish dark:text-gray-400 border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300" role="tablist">
                                 <li class="me-2" role="presentation">
                                     <button class="inline-block p-4 border-b rounded-t-lg" id="prices-styled-tab" data-tabs-target="#styled-prices" type="button" role="tab" aria-controls="prices" aria-selected="false">Prices</button>
                                 </li>
                                 <li class="me-2" role="presentation">
-                                    <button class="inline-block p-4 border-b rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="market-styled-tab" data-tabs-target="#styled-market" type="button" role="tab" aria-controls="market" aria-selected="false">Market</button>
+                                    <button class="inline-block p-4 border-b border-evengray rounded-t-lg hover:text-yellowish hover:border-yellowish" id="market-styled-tab" data-tabs-target="#styled-market" type="button" role="tab" aria-controls="market" aria-selected="false">Market</button>
                                 </li>
                                 <li class="me-2" role="presentation">
-                                    <button class="inline-block p-4 border-b rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="auctions-styled-tab" data-tabs-target="#styled-auctions" type="button" role="tab" aria-controls="auctions" aria-selected="false">Auctions</button>
+                                    <button class="inline-block p-4 border-b border-evengray rounded-t-lg hover:text-yellowish hover:border-yellowish" id="auctions-styled-tab" data-tabs-target="#styled-auctions" type="button" role="tab" aria-controls="auctions" aria-selected="false">Auctions</button>
                                 </li>
                                 <li role="presentation">
-                                    <button class="inline-block p-4 border-b rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="details-styled-tab" data-tabs-target="#styled-details" type="button" role="tab" aria-controls="details" aria-selected="false">Details</button>
+                                    <button class="inline-block p-4 border-b border-evengray rounded-t-lg hover:text-yellowish hover:border-yellowish" id="details-styled-tab" data-tabs-target="#styled-details" type="button" role="tab" aria-controls="details" aria-selected="false">Details</button>
                                 </li>
                             </ul>
                         </div>
                         <div id="default-styled-tab-content">
-                            <div class="hidden p-4 rounded-lg bg-grayish" id="styled-prices" role="tabpanel" aria-labelledby="profile-tab">
-                                <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                                    <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+                            <div class="hidden" id="styled-prices" role="tabpanel" aria-labelledby="profile-tab">
+                                <div class="relative overflow-x-auto sm:rounded-lg">
+                                    {{-- <table class="w-full text-sm text-left rtl:text-right text-gray-500">
                                         <thead class="text-xs text-white uppercase bg-evengray">
                                             <tr>
                                                 <th scope="col" class="px-6 py-3">
@@ -177,7 +177,142 @@
                                             </tr>
 
                                         </tbody>
-                                    </table>
+                                    </table> --}}
+
+                                    <div class="w-full flex gap-5 my-3">
+                                        <div class="w-10/12 bg-[#27292B] rounded-xl p-4 overflow-x-auto">
+                                            <div class="flex justify-start w-full mb-3">
+                                                <h2 class="font-manrope font-bold text-base text-white">PSA Population price</h2>
+                                            </div>
+                                            <div class="grid grid-cols-10 gap-4 w-full">
+                                                <div class="w-full flex flex-col gap-2 justify-center">
+                                                    <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">PSA10</h4>
+                                                    <h4 class="font-manrope font-semibold text-sm text-white">$67</h4>
+                                                </div>
+                                                <div class="w-full flex flex-col gap-2 justify-center">
+                                                    <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">PSA9</h4>
+                                                    <h4 class="font-manrope font-semibold text-sm text-white">$453</h4>
+                                                </div>
+                                                <div class="w-full flex flex-col gap-2 justify-center">
+                                                    <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">PSA8</h4>
+                                                    <h4 class="font-manrope font-semibold text-sm text-white">$364</h4>
+                                                </div>
+                                                <div class="w-full flex flex-col gap-2 justify-center">
+                                                    <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">PSA7</h4>
+                                                    <h4 class="font-manrope font-semibold text-sm text-white">$230</h4>
+                                                </div>
+                                                <div class="w-full flex flex-col gap-2 justify-center">
+                                                    <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">PSA6</h4>
+                                                    <h4 class="font-manrope font-semibold text-sm text-white">$203</h4>
+                                                </div>
+                                                <div class="w-full flex flex-col gap-2 justify-center">
+                                                    <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">PSA5</h4>
+                                                    <h4 class="font-manrope font-semibold text-sm text-white">$154</h4>
+                                                </div>
+                                                <div class="w-full flex flex-col gap-2 justify-center">
+                                                    <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">PSA4</h4>
+                                                    <h4 class="font-manrope font-semibold text-sm text-white">$59</h4>
+                                                </div>
+                                                <div class="w-full flex flex-col gap-2 justify-center">
+                                                    <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">PSA3</h4>
+                                                    <h4 class="font-manrope font-semibold text-sm text-white">$37</h4>
+                                                </div>
+                                                <div class="w-full flex flex-col gap-2 justify-center">
+                                                    <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">PSA2</h4>
+                                                    <h4 class="font-manrope font-semibold text-sm text-white">$10</h4>
+                                                </div>
+                                                <div class="w-full flex flex-col gap-2 justify-center">
+                                                    <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">PSA1</h4>
+                                                    <h4 class="font-manrope font-semibold text-sm text-white">$17</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="w-2/12 bg-[#27292B] rounded-xl p-4">
+                                            <div class="flex justify-center w-full mb-3 flex-col gap-1 items-center">
+                                                <h2 class="font-manrope font-bold text-base text-white">Fair Price</h2>
+                                                <h2 class="font-manrope font-bold text-lg text-yellowish">$1494.24</h2>
+                                                <h2 class="font-manrope font-bold text-sm text-[#BEBFBF]">3D Volume</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="w-full flex gap-5 my-5">
+                                        <div class="w-10/12 bg-[#27292B] rounded-xl p-4 overflow-x-auto flex flex-col justify-between">
+                                            <div class="flex justify-start w-full mb-3">
+                                                <h2 class="font-manrope font-bold text-base text-white">PSA Population price</h2>
+                                            </div>
+                                            <div class="flex gap-4 w-full">
+                                                <div class="w-full flex flex-col gap-2 justify-center">
+                                                    <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">PSA total population</h4>
+                                                    <h4 class="font-manrope font-semibold text-sm text-white">1860</h4>
+                                                </div>
+                                                <div class="w-full flex flex-col gap-2 justify-center">
+                                                    <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">PSA 10 chance</h4>
+                                                    <h4 class="font-manrope font-semibold text-sm text-white">14.13%</h4>
+                                                </div>
+                                                <div class="w-full flex flex-col gap-2 justify-center">
+                                                    <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">PSA 9/10 Ratio</h4>
+                                                    <h4 class="font-manrope font-semibold text-sm text-white">5.99:1</h4>
+                                                </div>
+                                                <div class="w-full flex flex-col gap-2 justify-center">
+                                                    <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">PSA Grade Difficulty</h4>
+                                                    <h4 class="font-manrope font-semibold text-sm text-white">Very Hard</h4>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="grid grid-cols-10 gap-4 w-full">
+                                                <div class="w-full flex flex-col gap-2 justify-center">
+                                                    <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">PSA10</h4>
+                                                    <h4 class="font-manrope font-semibold text-sm text-white">$67</h4>
+                                                </div>
+                                                <div class="w-full flex flex-col gap-2 justify-center">
+                                                    <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">PSA9</h4>
+                                                    <h4 class="font-manrope font-semibold text-sm text-white">$453</h4>
+                                                </div>
+                                                <div class="w-full flex flex-col gap-2 justify-center">
+                                                    <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">PSA8</h4>
+                                                    <h4 class="font-manrope font-semibold text-sm text-white">$364</h4>
+                                                </div>
+                                                <div class="w-full flex flex-col gap-2 justify-center">
+                                                    <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">PSA7</h4>
+                                                    <h4 class="font-manrope font-semibold text-sm text-white">$230</h4>
+                                                </div>
+                                                <div class="w-full flex flex-col gap-2 justify-center">
+                                                    <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">PSA6</h4>
+                                                    <h4 class="font-manrope font-semibold text-sm text-white">$203</h4>
+                                                </div>
+                                                <div class="w-full flex flex-col gap-2 justify-center">
+                                                    <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">PSA5</h4>
+                                                    <h4 class="font-manrope font-semibold text-sm text-white">$154</h4>
+                                                </div>
+                                                <div class="w-full flex flex-col gap-2 justify-center">
+                                                    <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">PSA4</h4>
+                                                    <h4 class="font-manrope font-semibold text-sm text-white">$59</h4>
+                                                </div>
+                                                <div class="w-full flex flex-col gap-2 justify-center">
+                                                    <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">PSA3</h4>
+                                                    <h4 class="font-manrope font-semibold text-sm text-white">$37</h4>
+                                                </div>
+                                                <div class="w-full flex flex-col gap-2 justify-center">
+                                                    <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">PSA2</h4>
+                                                    <h4 class="font-manrope font-semibold text-sm text-white">$10</h4>
+                                                </div>
+                                                <div class="w-full flex flex-col gap-2 justify-center">
+                                                    <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">PSA1</h4>
+                                                    <h4 class="font-manrope font-semibold text-sm text-white">$17</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="w-2/12 bg-[#27292B] rounded-xl p-4">
+                                            <div class="flex justify-center w-full mb-3 flex-col gap-1 items-center">
+                                                <h2 class="font-manrope font-bold text-base text-white">PSA Market Cap</h2>
+                                                <h2 class="font-manrope font-bold text-sm text-[#BEBFBF]">Market Cap Rating</h2>
+                                                <h2 class="font-manrope font-bold text-lg text-yellowish">#193/29344</h2>
+                                                <h2 class="font-manrope font-bold text-sm text-[#BEBFBF] mt-2">Total PSA Market Cap</h2>
+                                                <h2 class="font-manrope font-bold text-lg text-yellowish">$1,244.014</h2>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="hidden p-4 rounded-lg bg-grayish dark:bg-gray-800" id="styled-market" role="tabpanel" aria-labelledby="market-tab">
@@ -274,7 +409,7 @@
                     </div>
                 </div>
 
-                <div class="w-2/12 h-fit">
+                <div class="w-/12 h-fit ml-2">
                     <div class="w-full h-[100vh] rounded-3xl bg-addbg p-8 flex items-center justify-center">
                         <h1 class="text-white">addvertisements</h1>
                     </div>
@@ -282,6 +417,7 @@
             </div>
         </div>
 
+        {{-- Second Section --}}
         <div class="w-full bg-blackish py-12">
             <div class="max-w-[1440px] bg-blackish flex relative mx-auto flex-row gap-12 items-center justify-center">
                 <div class="w-10/12">
@@ -547,6 +683,7 @@
             </div>
         </div>
 
+        {{-- Third Section --}}
         <div class="w-full bg-darkblackbg py-12">
             <div class="max-w-[1440px] bg-darkblackbg flex relative mx-auto flex-row gap-12 items-center justify-center">
                 <div class="w-10/12">
@@ -669,6 +806,7 @@
             </div>
         </div>
 
+        {{-- Fourth Section --}}
         <div class="w-full bg-blackish py-12">
             <div class="max-w-[1440px] bg-blackish flex relative mx-auto flex-row gap-12 items-center justify-center">
                 <div class="w-10/12">
@@ -792,6 +930,7 @@
             </div>
         </div>
 
+        {{-- Fifth Section --}}
         <div class="w-full bg-darkblackbg py-12">
             <div class="max-w-[1440px] bg-darkblackbg flex relative mx-auto flex-row gap-12 items-center justify-center">
                 <div class="w-10/12">
