@@ -1,6 +1,7 @@
 <?php
 
 use Livewire\Volt\Volt;
+use App\Livewire\ShopPage;
 use Illuminate\Support\Facades\Route;
 
 require __DIR__ . '/auth.php';
@@ -26,4 +27,6 @@ Route::middleware([
 
 });
 
+
+Route::get('/shop', ShopPage::class);
 
