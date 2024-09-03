@@ -3,7 +3,7 @@
 namespace App\Imports;
 
 use Carbon\Carbon;
-use App\Models\Price;
+use App\Models\Population;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Events\AfterImport;
@@ -14,7 +14,7 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 
-class PricesImport implements ShouldQueue, ToModel, WithBatchInserts, WithChunkReading, WithEvents, WithHeadingRow
+class PopulationsImport implements ShouldQueue, ToModel, WithBatchInserts, WithChunkReading, WithEvents, WithHeadingRow
 {
     protected $columnMappings;
 
@@ -38,7 +38,7 @@ class PricesImport implements ShouldQueue, ToModel, WithBatchInserts, WithChunkR
 
                 if ($value !== null) {
                     try {
-                        if (in_array($dbColumn, ['sale_date']) && !empty($value)) {
+                        if (in_array($dbColumn, ['date_checked']) && !empty($value)) {
                             // Format the date to a standardized format (e.g., Y-m-d)
                             $value = Carbon::parse($value)->format('Y-m-d');
                         }
@@ -53,12 +53,12 @@ class PricesImport implements ShouldQueue, ToModel, WithBatchInserts, WithChunkR
             }
         }
 
-        $price_id = $excelMapping['price_id'] ?? null;
         $card_id = $excelMapping['card_id'] ?? null;
+        $population_id = $excelMapping['population_id'] ?? null;
 
-        if ($price_id === null || $card_id === null) {
+        if ($card_id === null || $population_id === null) {
             // Log an error and skip processing this row
-            Log::error('Price Id or Card Id is missing for a row, skipping the row.', ['row' => $row]);
+            Log::error('Card Id or Population Id is missing for a row, skipping the row.', ['row' => $row]);
             return null; // Skip this row
         }
 
@@ -68,14 +68,14 @@ class PricesImport implements ShouldQueue, ToModel, WithBatchInserts, WithChunkR
         });
 
         // Attempt to find the set by Set Id or any alternative identifiers
-        $set = Price::where('price_id', $price_id)->where('card_id', $card_id)->first();
+        $set = Population::where('population_id', $population_id)->where('card_id', $card_id)->first();
 
         if ($set) {
             // Update the existing set
             $set->update($filteredExcelMapping);
         } else {
             // Create a new set if no conflicts
-            Price::create($filteredExcelMapping);
+            Population::create($filteredExcelMapping);
         }
 
         return null; // Return null because database insertion is handled manually

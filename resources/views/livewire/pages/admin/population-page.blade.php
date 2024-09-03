@@ -6,14 +6,15 @@ use App\Services\Notifications\NotificationService;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\HeadingRowImport;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Imports\CardsImport;
+use App\Imports\PopulationsImport;
 use Livewire\Attributes\Layout;
 
 new #[Layout('layouts.admin')] class extends Component {
     use WithFileUploads;
 
     public $file;
-    public $cardModalState;
+
+    public $populationModalState;
 
     public $excelColumns = [];
 
@@ -82,22 +83,22 @@ new #[Layout('layouts.admin')] class extends Component {
 
             Log::info('Importing cards...');
 
-            Excel::import(new CardsImport($this->columnMappings), $this->file);
+            Excel::import(new PopulationsImport($this->columnMappings), $this->file);
             app(NotificationService::class)->sendSuccessNotification('Importing Cards process start in the background. Please wait...');
 
-            $this->redirectRoute('card-page');
+            $this->redirectRoute('population-page');
         } catch (\Throwable $e) {
             Log::error("Failed to import products: {$e->getMessage()}");
             app(NotificationService::class)->sendExeptionNotification();
-            $this->redirectRoute('card-page');
+            $this->redirectRoute('population-page');
         }
     }
 }; ?>
 
 <div class="py-4">
     <div class="max-w-7xl mx-auto flex gap-4 justify-end sm:px-6 lg:px-8 mb-2">
-        <x-wui-mini-button info icon="document-arrow-down" x-on:click="$openModal('cardModal')"
-            x-tooltip.placement.bottom.raw="Import Crads" />
+        <x-wui-mini-button info icon="document-arrow-down" x-on:click="$openModal('populationModal')"
+            x-tooltip.placement.bottom.raw="Import Populations" />
     </div>
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg min-h-[70vh]">
@@ -106,7 +107,7 @@ new #[Layout('layouts.admin')] class extends Component {
             </div>
         </div>
         <div>
-            <x-wui-modal-card title="Import Cards" name="cardModal" wire:model.live="cardModalState" width="5xl"
+            <x-wui-modal-card title="Import Populations" name="populationModal" wire:model.live="populationModalState" width="5xl"
                 align="center">
                 <form wire:submit="submit" class="px-6">
                     <div class="space-y-6 mb-8">
@@ -146,3 +147,4 @@ new #[Layout('layouts.admin')] class extends Component {
         </div>
     </div>
 </div>
+
