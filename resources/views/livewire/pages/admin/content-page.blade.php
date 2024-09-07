@@ -6,7 +6,7 @@ use App\Services\Notifications\NotificationService;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\HeadingRowImport;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Imports\PopulationsImport;
+use App\Imports\ContentImport;
 use Livewire\Attributes\Layout;
 
 new #[Layout('layouts.admin')] class extends Component {
@@ -14,7 +14,7 @@ new #[Layout('layouts.admin')] class extends Component {
 
     public $file;
 
-    public $populationModalState;
+    public $contentModalState;
 
     public $excelColumns = [];
 
@@ -25,7 +25,7 @@ new #[Layout('layouts.admin')] class extends Component {
     public function mount()
     {
         // Get columns for the 'products' table
-        $this->dbColumns = config('pokemon.populationTableColumns');
+        $this->dbColumns = config('pokemon.contentTableColumns');
     }
 
     public function rules()
@@ -75,39 +75,39 @@ new #[Layout('layouts.admin')] class extends Component {
         $this->validate();
 
         try {
-            // Check if 'card_id' column is present
-            if (!isset($this->columnMappings['card_id']) || empty($this->columnMappings['card_id']) || !isset($this->columnMappings['set_id']) || empty($this->columnMappings['set_id'])) {
-                app(NotificationService::class)->sendExeptionNotification("The 'Card Id' and 'Set Id' column is required.");
+            // Check if 'content_id' column is present
+            if (!isset($this->columnMappings['content_id']) || empty($this->columnMappings['content_id'])) {
+                app(NotificationService::class)->sendExeptionNotification("The 'Content ID' column is required.");
                 return;
             }
 
             Log::info('Importing cards...');
 
-            Excel::import(new PopulationsImport($this->columnMappings), $this->file);
+            Excel::import(new ContentImport($this->columnMappings), $this->file);
             app(NotificationService::class)->sendSuccessNotification('Importing Cards process start in the background. Please wait...');
 
-            $this->redirectRoute('population-page');
+            $this->redirectRoute('content-page');
         } catch (\Throwable $e) {
             Log::error("Failed to import products: {$e->getMessage()}");
             app(NotificationService::class)->sendExeptionNotification();
-            $this->redirectRoute('population-page');
+            $this->redirectRoute('content-page');
         }
     }
 }; ?>
 
 <div class="py-4">
     <div class="max-w-7xl mx-auto flex gap-4 justify-end sm:px-6 lg:px-8 mb-2">
-        <x-wui-mini-button info icon="document-arrow-down" x-on:click="$openModal('populationModal')"
-            x-tooltip.placement.bottom.raw="Import Populations" />
+        <x-wui-mini-button info icon="document-arrow-down" x-on:click="$openModal('contentModal')"
+            x-tooltip.placement.bottom.raw="Import Contents" />
     </div>
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg min-h-[70vh]">
             <div class="p-6 text-gray-900 dark:text-gray-100">
-               <livewire:tables.population-table/>
+           <livewire:tables.content-table/>
             </div>
         </div>
         <div>
-            <x-wui-modal-card title="Import Populations" name="populationModal" wire:model.live="populationModalState" width="5xl"
+            <x-wui-modal-card title="Import Contents" name="contentModal" wire:model.live="contentModalState" width="5xl"
                 align="center">
                 <form wire:submit="submit" class="px-6">
                     <div class="space-y-6 mb-8">

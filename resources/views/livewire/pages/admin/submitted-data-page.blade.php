@@ -6,7 +6,7 @@ use App\Services\Notifications\NotificationService;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\HeadingRowImport;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Imports\PopulationsImport;
+use App\Imports\SubmittedDataImport;
 use Livewire\Attributes\Layout;
 
 new #[Layout('layouts.admin')] class extends Component {
@@ -14,7 +14,7 @@ new #[Layout('layouts.admin')] class extends Component {
 
     public $file;
 
-    public $populationModalState;
+    public $submittedDataModalState;
 
     public $excelColumns = [];
 
@@ -25,7 +25,7 @@ new #[Layout('layouts.admin')] class extends Component {
     public function mount()
     {
         // Get columns for the 'products' table
-        $this->dbColumns = config('pokemon.populationTableColumns');
+        $this->dbColumns = config('pokemon.submittedDataTableColumns');
     }
 
     public function rules()
@@ -49,6 +49,7 @@ new #[Layout('layouts.admin')] class extends Component {
     {
         if ($this->file) {
             $headers = (new HeadingRowImport())->toArray($this->file)[0][0];
+            Log::info((new HeadingRowImport())->toArray($this->file));
             // Map the headers to the desired format
             foreach ($headers as $key => $header) {
                 $this->excelColumns[] = [
@@ -75,15 +76,15 @@ new #[Layout('layouts.admin')] class extends Component {
         $this->validate();
 
         try {
-            // Check if 'card_id' column is present
-            if (!isset($this->columnMappings['card_id']) || empty($this->columnMappings['card_id']) || !isset($this->columnMappings['set_id']) || empty($this->columnMappings['set_id'])) {
-                app(NotificationService::class)->sendExeptionNotification("The 'Card Id' and 'Set Id' column is required.");
+            // Check if 'submitted_data_id' column is present
+            if (!isset($this->columnMappings['submitted_data_id']) || empty($this->columnMappings['submitted_data_id'])) {
+                app(NotificationService::class)->sendExeptionNotification("The 'Submitted Data ID' column is required.");
                 return;
             }
 
             Log::info('Importing cards...');
 
-            Excel::import(new PopulationsImport($this->columnMappings), $this->file);
+            Excel::import(new SubmittedDataImport($this->columnMappings), $this->file);
             app(NotificationService::class)->sendSuccessNotification('Importing Cards process start in the background. Please wait...');
 
             $this->redirectRoute('population-page');
@@ -97,17 +98,17 @@ new #[Layout('layouts.admin')] class extends Component {
 
 <div class="py-4">
     <div class="max-w-7xl mx-auto flex gap-4 justify-end sm:px-6 lg:px-8 mb-2">
-        <x-wui-mini-button info icon="document-arrow-down" x-on:click="$openModal('populationModal')"
+        <x-wui-mini-button info icon="document-arrow-down" x-on:click="$openModal('submittedDataModal')"
             x-tooltip.placement.bottom.raw="Import Populations" />
     </div>
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg min-h-[70vh]">
             <div class="p-6 text-gray-900 dark:text-gray-100">
-               <livewire:tables.population-table/>
+            <livewire:tables.submitted-data-table/>
             </div>
         </div>
         <div>
-            <x-wui-modal-card title="Import Populations" name="populationModal" wire:model.live="populationModalState" width="5xl"
+            <x-wui-modal-card title="Import Populations" name="submittedDataModal" wire:model.live="submittedDataModalState" width="5xl"
                 align="center">
                 <form wire:submit="submit" class="px-6">
                     <div class="space-y-6 mb-8">

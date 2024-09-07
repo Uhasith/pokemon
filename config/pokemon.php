@@ -131,4 +131,106 @@ return [
             'value' => 'sale_type',
         ],
     ],
+    'populationTableColumns' => [
+        [
+            'name' => 'Population Id (UUID)',
+            'value' => 'population_id',
+        ],
+        [
+            'name' => 'Card Id (UUID)',
+            'value' => 'card_id',
+        ],
+        [
+            'name' => 'Pop 1 (Integer)',
+            'value' => 'pop1',
+        ],
+        [
+            'name' => 'Pop 2 (Integer)',
+            'value' => 'pop2',
+        ],
+        [
+            'name' => 'Pop 3 (Integer)',
+            'value' => 'pop3',
+        ],
+        [
+            'name' => 'Pop 4 (Integer)',
+            'value' => 'pop4',
+        ],
+        [
+            'name' => 'Pop 5 (Integer)',
+            'value' => 'pop5',
+        ],
+        [
+            'name' => 'Pop 6 (Integer)',
+            'value' => 'pop6',
+        ],
+        [
+            'name' => 'Pop 7 (Integer)',
+            'value' => 'pop7',
+        ],
+        [
+            'name' => 'Pop 8 (Integer)',
+            'value' => 'pop8',
+        ],
+        [
+            'name' => 'Pop 9 (Integer)',
+            'value' => 'pop9',
+        ],
+        [
+            'name' => 'Pop 10 (Integer)',
+            'value' => 'pop10',
+        ],
+        [
+            'name' => 'Date Checked (Date)',
+            'value' => 'date_checked',
+        ],
+    ],
+    'submittedDataTableColumns' => [
+        [
+            'name' => 'Submitted Data Id (UUID)',
+            'value' => 'submitted_data_id',
+        ],
+        [
+            'name' => 'URL (Text)',
+            'value' => 'url',
+        ],
+        [
+            'name' => 'Reason (Text)',
+            'value' => 'reason',
+        ],
+        [
+            'name' => 'Action (String)',
+            'value' => 'action',
+        ],
+    ],
+    'contentTableColumns' => [
+        [
+            'name' => 'Content Id (UUID)',
+            'value' => 'content_id',
+        ],
+        [
+            'name' => 'Title (String)',
+            'value' => 'title',
+        ],
+        [
+            'name' => 'Content Body (Text)',
+            'value' => 'content_body',
+        ],
+        [
+            'name' => 'Date Created (Date)',
+            'value' => 'date_created',
+        ],
+        [
+            'name' => 'Is Live (Boolean)',
+            'value' => 'is_live',
+        ],
+        [
+            'name' => 'Image URL (String)',
+            'value' => 'image_url',
+        ],
+        [
+            'name' => 'Content Group (String)',
+            'value' => 'content_group',
+        ],
+    ],
 ];
