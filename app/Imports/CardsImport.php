@@ -54,10 +54,11 @@ class CardsImport implements ShouldQueue, ToModel, WithBatchInserts, WithChunkRe
         }
 
         $card_id = $excelMapping['card_id'] ?? null;
+        $set_id = $excelMapping['set_id'] ?? null;
 
-        if ($card_id === null) {
+        if ($card_id === null || $set_id === null) {
             // Log an error and skip processing this row
-            Log::error('Card Id is missing for a row, skipping the row.', ['row' => $row]);
+            Log::error('Card Id or Set Id is missing for a row, skipping the row.', ['row' => $row]);
             return null; // Skip this row
         }
 
@@ -67,7 +68,7 @@ class CardsImport implements ShouldQueue, ToModel, WithBatchInserts, WithChunkRe
         });
 
         // Attempt to find the set by Set Id or any alternative identifiers
-        $set = Card::where('card_id', $card_id)->first();
+        $set = Card::where('card_id', $card_id)->where('set_id', $set_id)->first();
 
         if ($set) {
             // Update the existing set

@@ -139,9 +139,7 @@ class extends Component {
                         @endif
                     </div>
 
-                    {{-- @if ($this->file && count($this->excelColumns) > 0) --}}
                     <x-wui-button class="w-full my-2" type="submit" spinner="submit" primary label="Import" />
-                    {{-- @endif --}}
                 </form>
             </x-wui-modal-card>
         </div>

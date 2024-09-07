@@ -42,6 +42,15 @@ new class extends Component
                     <x-nav-link :href="route('price-page')" :active="request()->routeIs('price-page')" wire:navigate>
                         {{ __('Prices') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('population-page')" :active="request()->routeIs('population-page')" wire:navigate>
+                        {{ __('Population') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('submitted-data-page')" :active="request()->routeIs('submitted-data-page')" wire:navigate>
+                        {{ __('Submitted Data') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('content-page')" :active="request()->routeIs('content-page')" wire:navigate>
+                        {{ __('Content') }}
+                    </x-nav-link>
                 </div>
             </div>
 

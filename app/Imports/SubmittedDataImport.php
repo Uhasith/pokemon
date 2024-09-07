@@ -3,7 +3,7 @@
 namespace App\Imports;
 
 use Carbon\Carbon;
-use App\Models\Price;
+use App\Models\SubmittedData;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Events\AfterImport;
@@ -14,7 +14,7 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 
-class PricesImport implements ShouldQueue, ToModel, WithBatchInserts, WithChunkReading, WithEvents, WithHeadingRow
+class SubmittedDataImport implements ShouldQueue, ToModel, WithBatchInserts, WithChunkReading, WithEvents, WithHeadingRow
 {
     protected $columnMappings;
 
@@ -36,29 +36,15 @@ class PricesImport implements ShouldQueue, ToModel, WithBatchInserts, WithChunkR
             if ($dbColumn !== 'id') {
                 $value = $row[$excelColumnIndex] ?? null;
 
-                if ($value !== null) {
-                    try {
-                        if (in_array($dbColumn, ['sale_date']) && !empty($value)) {
-                            // Format the date to a standardized format (e.g., Y-m-d)
-                            $value = Carbon::parse($value)->format('Y-m-d');
-                        }
-                    } catch (\Exception $e) {
-                        // Log the exception for debugging purposes
-                        Log::error("Failed to parse date for $dbColumn with value: $value", ['exception' => $e]);
-                        $value = null; // Set value to null if parsing fails
-                    }
-                }
-
                 $excelMapping[$dbColumn] = $value;
             }
         }
 
-        $price_id = $excelMapping['price_id'] ?? null;
-        $card_id = $excelMapping['card_id'] ?? null;
+        $submitted_data_id = $excelMapping['submitted_data_id'] ?? null;
 
-        if ($price_id === null || $card_id === null) {
+        if ($submitted_data_id === null) {
             // Log an error and skip processing this row
-            Log::error('Price Id or Card Id is missing for a row, skipping the row.', ['row' => $row]);
+            Log::error('Submitted Data Id is missing for a row, skipping the row.', ['row' => $row]);
             return null; // Skip this row
         }
 
@@ -67,15 +53,15 @@ class PricesImport implements ShouldQueue, ToModel, WithBatchInserts, WithChunkR
             return $value !== null && $value !== '';
         });
 
-        // Attempt to find the set by Set Id or any alternative identifiers
-        $set = Price::where('price_id', $price_id)->where('card_id', $card_id)->first();
+        // Attempt to find the submittedData by submittedData Id or any alternative identifiers
+        $submittedData = SubmittedData::where('submitted_data_id', $submitted_data_id)->first();
 
-        if ($set) {
+        if ($submittedData) {
             // Update the existing set
-            $set->update($filteredExcelMapping);
+            $submittedData->update($filteredExcelMapping);
         } else {
             // Create a new set if no conflicts
-            Price::create($filteredExcelMapping);
+            SubmittedData::create($filteredExcelMapping);
         }
 
         return null; // Return null because database insertion is handled manually
