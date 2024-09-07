@@ -41,7 +41,9 @@ export default {
                 "evengray": "#2D2D2D",
                 "oddgray": "#282828",
                 "darkblackbg": "#1C1C1C",
-                "addbg": "#212121"
+                "addbg": "#212121",
+                "redprice": "#F4454F",
+                "greenprice": "#17D28B"
             },
             maxWidth: {
                 '7xl': '1440px',

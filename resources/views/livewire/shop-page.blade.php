@@ -142,9 +142,9 @@
                     </div>
                 </div>
 
-                <div class="grid gap-8 grid-cols-5 my-5">
+                {{-- This is Grid View --}}
+                {{-- <div class="grid gap-8 grid-cols-5 my-5">
 
-                    {{-- items 01 --}}
                     <div class="w-full">
                         <div class="flex w-full">
                             <div class="p-4 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
@@ -163,7 +163,6 @@
                         </div>
                     </div>
 
-                    {{-- items 02 --}}
                     <div class="w-full">
                         <div class="flex w-full">
                             <div class="p-4 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
@@ -182,7 +181,6 @@
                         </div>
                     </div>
 
-                    {{-- items 03 --}}
                     <div class="w-full">
                         <div class="flex w-full">
                             <div class="p-4 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
@@ -201,7 +199,6 @@
                         </div>
                     </div>
 
-                    {{-- items 04 --}}
                     <div class="w-full">
                         <div class="flex w-full">
                             <div class="p-4 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
@@ -220,7 +217,6 @@
                         </div>
                     </div>
 
-                    {{-- items 05 --}}
                     <div class="w-full">
                         <div class="flex w-full">
                             <div class="p-4 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
@@ -239,7 +235,6 @@
                         </div>
                     </div>
 
-                    {{-- items 06 --}}
                     <div class="w-full">
                         <div class="flex w-full">
                             <div class="p-4 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
@@ -258,7 +253,6 @@
                         </div>
                     </div>
 
-                    {{-- items 07 --}}
                     <div class="w-full">
                         <div class="flex w-full">
                             <div class="p-4 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
@@ -277,7 +271,6 @@
                         </div>
                     </div>
 
-                    {{-- items 08 --}}
                     <div class="w-full">
                         <div class="flex w-full">
                             <div class="p-4 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
@@ -296,7 +289,6 @@
                         </div>
                     </div>
 
-                    {{-- items 09 --}}
                     <div class="w-full">
                         <div class="flex w-full">
                             <div class="p-4 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
@@ -315,7 +307,6 @@
                         </div>
                     </div>
 
-                    {{-- items 10 --}}
                     <div class="w-full">
                         <div class="flex w-full">
                             <div class="p-4 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
@@ -334,7 +325,6 @@
                         </div>
                     </div>
 
-                    {{-- items 11 --}}
                     <div class="w-full">
                         <div class="flex w-full">
                             <div class="p-4 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
@@ -353,7 +343,6 @@
                         </div>
                     </div>
 
-                    {{-- items 12 --}}
                     <div class="w-full">
                         <div class="flex w-full">
                             <div class="p-4 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
@@ -372,7 +361,6 @@
                         </div>
                     </div>
 
-                    {{-- items 13 --}}
                     <div class="w-full">
                         <div class="flex w-full">
                             <div class="p-4 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
@@ -391,7 +379,6 @@
                         </div>
                     </div>
 
-                    {{-- items 14 --}}
                     <div class="w-full">
                         <div class="flex w-full">
                             <div class="p-4 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
@@ -410,7 +397,6 @@
                         </div>
                     </div>
 
-                    {{-- items 15 --}}
                     <div class="w-full">
                         <div class="flex w-full">
                             <div class="p-4 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
@@ -429,7 +415,6 @@
                         </div>
                     </div>
 
-                    {{-- items 16 --}}
                     <div class="w-full">
                         <div class="flex w-full">
                             <div class="p-4 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
@@ -448,7 +433,6 @@
                         </div>
                     </div>
 
-                    {{-- items 17 --}}
                     <div class="w-full">
                         <div class="flex w-full">
                             <div class="p-4 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
@@ -467,7 +451,6 @@
                         </div>
                     </div>
 
-                    {{-- items 18 --}}
                     <div class="w-full">
                         <div class="flex w-full">
                             <div class="p-4 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
@@ -486,7 +469,6 @@
                         </div>
                     </div>
 
-                    {{-- items 19 --}}
                     <div class="w-full">
                         <div class="flex w-full">
                             <div class="p-4 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
@@ -505,7 +487,6 @@
                         </div>
                     </div>
 
-                    {{-- items 20 --}}
                     <div class="w-full">
                         <div class="flex w-full">
                             <div class="p-4 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
@@ -524,6 +505,220 @@
                         </div>
                     </div>
 
+                </div> --}}
+
+                {{-- This is List view --}}
+                <div class="my-5 relative overflow-x-auto">
+                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                        <table class="w-full text-left rtl:text-right">
+                            <thead class="text-sm font-manrope font-semibold text-yellowish bg-blackish normal-case">
+                                <tr>
+                                    <th scope="col" class="p-4">
+
+                                    </th>
+                                    <th scope="col" class="p-3">
+                                        #
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        <div class="flex items-center">
+                                            Name
+                                            <a href="#">
+                                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M13.5 11C13.5 11 10.1858 14.75 8.99996 14.75C7.81413 14.75 4.5 11 4.5 11" stroke="#FFC107" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                    <path d="M13.5 6.99997C13.5 6.99997 10.1858 3.25001 8.99996 3.25C7.81413 3.24999 4.5 7 4.5 7" stroke="#FFC107" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        <div class="flex items-center">
+                                            Price
+                                            <a href="#">
+                                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M13.5 11C13.5 11 10.1858 14.75 8.99996 14.75C7.81413 14.75 4.5 11 4.5 11" stroke="#FFC107" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                    <path d="M13.5 6.99997C13.5 6.99997 10.1858 3.25001 8.99996 3.25C7.81413 3.24999 4.5 7 4.5 7" stroke="#FFC107" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        <div class="flex items-center">
+                                            7d
+                                            <a href="#">
+                                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M13.5 11C13.5 11 10.1858 14.75 8.99996 14.75C7.81413 14.75 4.5 11 4.5 11" stroke="#FFC107" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                    <path d="M13.5 6.99997C13.5 6.99997 10.1858 3.25001 8.99996 3.25C7.81413 3.24999 4.5 7 4.5 7" stroke="#FFC107" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        <div class="flex items-center">
+                                            30d
+                                            <a href="#">
+                                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M13.5 11C13.5 11 10.1858 14.75 8.99996 14.75C7.81413 14.75 4.5 11 4.5 11" stroke="#FFC107" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                    <path d="M13.5 6.99997C13.5 6.99997 10.1858 3.25001 8.99996 3.25C7.81413 3.24999 4.5 7 4.5 7" stroke="#FFC107" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        <div class="flex items-center">
+                                            1y
+                                            <a href="#">
+                                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M13.5 11C13.5 11 10.1858 14.75 8.99996 14.75C7.81413 14.75 4.5 11 4.5 11" stroke="#FFC107" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                    <path d="M13.5 6.99997C13.5 6.99997 10.1858 3.25001 8.99996 3.25C7.81413 3.24999 4.5 7 4.5 7" stroke="#FFC107" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Market cap
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Volume
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Population number
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-sm font-manrope font-bold">
+                                <tr class="odd:bg-oddgray even:bg-evengray">
+                                    <td class="w-4 p-4">
+                                        <div class="flex items-center">
+                                            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.9987 7.33337V14.6667M14.6654 11L7.33203 11" stroke="white" stroke-opacity="0.5" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.28906 11.0001C2.28906 6.89493 2.28906 4.84236 3.56437 3.56705C4.83967 2.29175 6.89225 2.29175 10.9974 2.29175C15.1025 2.29175 17.1551 2.29175 18.4304 3.56705C19.7057 4.84236 19.7057 6.89493 19.7057 11.0001C19.7057 15.1052 19.7057 17.1578 18.4304 18.4331C17.1551 19.7084 15.1025 19.7084 10.9974 19.7084C6.89225 19.7084 4.83967 19.7084 3.56437 18.4331C2.28906 17.1578 2.28906 15.1052 2.28906 11.0001Z" stroke="white" stroke-opacity="0.5" stroke-width="1.4"/></svg>
+                                        </div>
+                                    </td>
+                                    <td class="p-3 text-white">
+                                        1
+                                    </td>
+                                    <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">
+                                        <div class="flex items-center gap-3 hyphens-auto">
+                                            <img src="{{ asset('assets/card-images/Flareon.png') }}" class="w-14 md:w-8" alt="">
+                                            Iron Valiant - 080/162 - SV05: <br>Temporal Forces (TEF)
+                                        </div>
+                                    </th>
+                                    <td class="px-6 py-4 text-white">
+                                        $36.00
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex gap-1 items-center text-redprice">
+                                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13.943 6.14615C14.2764 6.39178 14.3477 6.86128 14.1021 7.19479C13.9113 7.45385 13.7205 7.7001 13.5531 7.9146C13.2189 8.3427 12.759 8.91615 12.2592 9.4917C11.7627 10.0636 11.2121 10.6548 10.6982 11.1089C10.4421 11.3352 10.1773 11.5433 9.91915 11.699C9.68163 11.8421 9.35523 12 8.99815 12C8.64108 12 8.3146 11.8421 8.07708 11.699C7.81893 11.5433 7.55425 11.3352 7.29813 11.1089C6.78416 10.6548 6.23363 10.0636 5.7371 9.4917C5.23734 8.91615 4.77735 8.3427 4.44321 7.9146C4.27583 7.7001 4.08499 7.45385 3.8942 7.1948C3.64857 6.86128 3.71981 6.39178 4.05333 6.14615C4.1874 6.0474 4.34344 5.99987 4.49809 6H8.99815H13.4982C13.6528 5.99987 13.8089 6.0474 13.943 6.14615Z" fill="#F4454F"/></svg>
+                                            0.45
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex gap-1 items-center text-redprice">
+                                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13.943 6.14615C14.2764 6.39178 14.3477 6.86128 14.1021 7.19479C13.9113 7.45385 13.7205 7.7001 13.5531 7.9146C13.2189 8.3427 12.759 8.91615 12.2592 9.4917C11.7627 10.0636 11.2121 10.6548 10.6982 11.1089C10.4421 11.3352 10.1773 11.5433 9.91915 11.699C9.68163 11.8421 9.35523 12 8.99815 12C8.64108 12 8.3146 11.8421 8.07708 11.699C7.81893 11.5433 7.55425 11.3352 7.29813 11.1089C6.78416 10.6548 6.23363 10.0636 5.7371 9.4917C5.23734 8.91615 4.77735 8.3427 4.44321 7.9146C4.27583 7.7001 4.08499 7.45385 3.8942 7.1948C3.64857 6.86128 3.71981 6.39178 4.05333 6.14615C4.1874 6.0474 4.34344 5.99987 4.49809 6H8.99815H13.4982C13.6528 5.99987 13.8089 6.0474 13.943 6.14615Z" fill="#F4454F"/></svg>
+                                            1.93
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex gap-1 items-center text-redprice">
+                                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13.943 6.14615C14.2764 6.39178 14.3477 6.86128 14.1021 7.19479C13.9113 7.45385 13.7205 7.7001 13.5531 7.9146C13.2189 8.3427 12.759 8.91615 12.2592 9.4917C11.7627 10.0636 11.2121 10.6548 10.6982 11.1089C10.4421 11.3352 10.1773 11.5433 9.91915 11.699C9.68163 11.8421 9.35523 12 8.99815 12C8.64108 12 8.3146 11.8421 8.07708 11.699C7.81893 11.5433 7.55425 11.3352 7.29813 11.1089C6.78416 10.6548 6.23363 10.0636 5.7371 9.4917C5.23734 8.91615 4.77735 8.3427 4.44321 7.9146C4.27583 7.7001 4.08499 7.45385 3.8942 7.1948C3.64857 6.86128 3.71981 6.39178 4.05333 6.14615C4.1874 6.0474 4.34344 5.99987 4.49809 6H8.99815H13.4982C13.6528 5.99987 13.8089 6.0474 13.943 6.14615Z" fill="#F4454F"/></svg>
+                                            0.20
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-white">
+                                        $1,568
+                                    </td>
+                                    <td class="px-6 py-4 text-white">
+                                        $18,568
+                                    </td>
+                                    <td class="px-6 py-4 text-white">
+                                        20
+                                    </td>
+                                </tr>
+                                <tr class="odd:bg-oddgray even:bg-evengray">
+                                    <td class="w-4 p-4">
+                                        <div class="flex items-center">
+                                            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.9987 7.33337V14.6667M14.6654 11L7.33203 11" stroke="white" stroke-opacity="0.5" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.28906 11.0001C2.28906 6.89493 2.28906 4.84236 3.56437 3.56705C4.83967 2.29175 6.89225 2.29175 10.9974 2.29175C15.1025 2.29175 17.1551 2.29175 18.4304 3.56705C19.7057 4.84236 19.7057 6.89493 19.7057 11.0001C19.7057 15.1052 19.7057 17.1578 18.4304 18.4331C17.1551 19.7084 15.1025 19.7084 10.9974 19.7084C6.89225 19.7084 4.83967 19.7084 3.56437 18.4331C2.28906 17.1578 2.28906 15.1052 2.28906 11.0001Z" stroke="white" stroke-opacity="0.5" stroke-width="1.4"/></svg>
+                                        </div>
+                                    </td>
+                                    <td class="p-3 text-white">
+                                        2
+                                    </td>
+                                    <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">
+                                        <div class="flex items-center gap-3 hyphens-auto">
+                                            <img src="{{ asset('assets/card-images/pikachu50.png') }}" class="w-14 md:w-8" alt="">
+                                            Iron Thorns - SV05: Temporal <br> Forces (TEF)
+                                        </div>
+                                    </th>
+                                    <td class="px-6 py-4 text-white">
+                                        $40.00
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex gap-1 items-center text-greenprice">
+                                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13.943 11.8538C14.2764 11.6082 14.3477 11.1387 14.1021 10.8051C13.9113 10.5461 13.7205 10.2998 13.5531 10.0853C13.2189 9.65724 12.759 9.08379 12.2592 8.50824C11.7627 7.93636 11.2121 7.34514 10.6982 6.89101C10.4421 6.66474 10.1773 6.45661 9.91915 6.30099C9.68163 6.15781 9.35523 5.99994 8.99815 5.99994C8.64108 5.99994 8.3146 6.15781 8.07708 6.30099C7.81893 6.45661 7.55425 6.66474 7.29813 6.89101C6.78416 7.34514 6.23363 7.93636 5.7371 8.50824C5.23734 9.08379 4.77735 9.65724 4.44321 10.0853C4.27583 10.2998 4.08499 10.5461 3.8942 10.8051C3.64857 11.1387 3.71981 11.6082 4.05333 11.8538C4.1874 11.9525 4.34344 12.0001 4.49809 11.9999H8.99815H13.4982C13.6528 12.0001 13.8089 11.9525 13.943 11.8538Z" fill="#17D28B"/></svg>
+                                            0.45
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex gap-1 items-center text-greenprice">
+                                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13.943 11.8538C14.2764 11.6082 14.3477 11.1387 14.1021 10.8051C13.9113 10.5461 13.7205 10.2998 13.5531 10.0853C13.2189 9.65724 12.759 9.08379 12.2592 8.50824C11.7627 7.93636 11.2121 7.34514 10.6982 6.89101C10.4421 6.66474 10.1773 6.45661 9.91915 6.30099C9.68163 6.15781 9.35523 5.99994 8.99815 5.99994C8.64108 5.99994 8.3146 6.15781 8.07708 6.30099C7.81893 6.45661 7.55425 6.66474 7.29813 6.89101C6.78416 7.34514 6.23363 7.93636 5.7371 8.50824C5.23734 9.08379 4.77735 9.65724 4.44321 10.0853C4.27583 10.2998 4.08499 10.5461 3.8942 10.8051C3.64857 11.1387 3.71981 11.6082 4.05333 11.8538C4.1874 11.9525 4.34344 12.0001 4.49809 11.9999H8.99815H13.4982C13.6528 12.0001 13.8089 11.9525 13.943 11.8538Z" fill="#17D28B"/></svg>
+                                            1.93
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex gap-1 items-center text-greenprice">
+                                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13.943 11.8538C14.2764 11.6082 14.3477 11.1387 14.1021 10.8051C13.9113 10.5461 13.7205 10.2998 13.5531 10.0853C13.2189 9.65724 12.759 9.08379 12.2592 8.50824C11.7627 7.93636 11.2121 7.34514 10.6982 6.89101C10.4421 6.66474 10.1773 6.45661 9.91915 6.30099C9.68163 6.15781 9.35523 5.99994 8.99815 5.99994C8.64108 5.99994 8.3146 6.15781 8.07708 6.30099C7.81893 6.45661 7.55425 6.66474 7.29813 6.89101C6.78416 7.34514 6.23363 7.93636 5.7371 8.50824C5.23734 9.08379 4.77735 9.65724 4.44321 10.0853C4.27583 10.2998 4.08499 10.5461 3.8942 10.8051C3.64857 11.1387 3.71981 11.6082 4.05333 11.8538C4.1874 11.9525 4.34344 12.0001 4.49809 11.9999H8.99815H13.4982C13.6528 12.0001 13.8089 11.9525 13.943 11.8538Z" fill="#17D28B"/></svg>
+                                            0.20
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-white">
+                                        $1,568
+                                    </td>
+                                    <td class="px-6 py-4 text-white">
+                                        $18,568
+                                    </td>
+                                    <td class="px-6 py-4 text-white">
+                                        20
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="w-full flex justify-center items-center my-8">
+                        <nav aria-label="Page navigation example">
+                            <ul class="flex items-center -space-x-px h-10 text-base">
+                            <li>
+                                <a href="#" class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-white">
+                                <span class="sr-only">Previous</span>
+                                <svg class="w-3 h-3 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+                                </svg>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500">1</a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500">2</a>
+                            </li>
+                            <li>
+                                <a href="#" aria-current="page" class="z-10 flex items-center justify-center px-4 h-10 leading-tight text-black rounded-lg bg-yellowish">3</a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500">4</a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500">5</a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500">
+                                <span class="sr-only">Next</span>
+                                <svg class="w-3 h-3 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                                </svg>
+                                </a>
+                            </li>
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
             </div>
         </div>
