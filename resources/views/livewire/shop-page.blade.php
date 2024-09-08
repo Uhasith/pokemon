@@ -1,25 +1,25 @@
 <div class="bg-darkblackbg w-full relative">
     {{-- First hero Section --}}
     <div class="w-full h-56 bg-blend-darken bg-no-repeat bg-center bg-cover relative flex justify-center items-center" style="background-image: url('{{ asset('assets/card-images/hero-background.png') }}');">
-        <h2 class="text-center font-manrope font-bold text-5xl text-white z-10">1999 Base set cards</h2>
+        <h2 class="text-center font-manrope font-bold text-3xl lg:text-4xl xl:text-5xl text-white z-10 md:pl-24">1999 Base set cards</h2>
         <div class="h-full w-full absolute top-0 right-0 bg-[#000000CC]"></div>
     </div>
 
     {{-- Second Main Section --}}
     <div class="w-full bg-darkblackbg min-h-screen">
-        <div class="max-w-[1440px] relative flex gap-12 mx-auto p-5">
-            <div class="w-1/5">
-                <div class="bg-addbg rounded-xl flex flex-col gap-3 justify-center items-center px-5 py-8 w-full -mt-40">
+        <div class="max-w-[1440px] relative flex flex-col md:flex-row gap-8 xl:gap-12 mx-auto p-5">
+            <div class="w-full md:w-3/12 xl:w-1/5">
+                <div class="bg-addbg rounded-xl flex flex-col gap-3 justify-center md:items-center px-5 py-8 w-full -mt-20 md:-mt-40">
                     <div class="flex justify-center">
-                        <img class="w-36" src="{{ asset('assets/card-images/pikachuself.png') }}" alt="">
+                        <img class="w-28 lg:w-32 xl:w-36" src="{{ asset('assets/card-images/pikachuself.png') }}" alt="">
                     </div>
                     <div>
-                        <h3 class="font-manrope font-bold text-yellowish text-2xl">Pikachu (232/091)</h3>
-                        <h4 class="font-manrope font-semibold text-white text-lg">Temporal Forces (TEF)</h4>
+                        <h3 class="font-manrope font-bold text-yellowish text-2xl md:text-lg xl:text-2xl">Pikachu (232/091)</h3>
+                        <h4 class="font-manrope font-semibold text-white text-base xl:text-lg">Temporal Forces (TEF)</h4>
                         <h5 class="font-manrope font-medium text-gray-600 text-sm">Series</h5>
-                        <h5 class="font-manrope font-medium text-white text-base">Scarlet & Voilet</h5>
+                        <h5 class="font-manrope font-medium text-white text-sm xl:text-base">Scarlet & Voilet</h5>
                         <h5 class="font-manrope font-medium text-gray-600 text-sm">Date</h5>
-                        <h5 class="font-manrope font-medium text-white text-base">29th Aug, 2024</h5>
+                        <h5 class="font-manrope font-medium text-white text-sm xl:text-base">29th Aug, 2024</h5>
                     </div>
                 </div>
                 <div class="bg-addbg rounded-xl flex flex-col gap-3 justify-start items-start px-8 py-8 w-full mt-3">
@@ -76,12 +76,12 @@
                     </div>
                 </div>
             </div>
-            <div class="w-4/5">
+            <div class="w-full md:w-9/12 xl:w-4/5">
                 <div class="flex items-center justify-end gap-4">
                     <div class="flex items-center gap-3">
                         <h2 class="font-manrope font-semibold text-sm text-white">Filter Cards: </h2>
-                        <div class="flex items-center">
-                            <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="text-yellowish w-full bg-[#383A3C] font-medium rounded-md text-base px-4 py-2.5 text-center flex items-center justify-between" type="button">
+                        <div class="flex items-center w-full">
+                            <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="text-yellowish w-full bg-[#383A3C] font-medium rounded-md text-sm xl:text-base px-4 py-2.5 text-center flex items-center justify-between" type="button">
                                 Show All
                                 <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/></svg>
                             </button>
@@ -107,8 +107,8 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <h2 class="font-manrope font-semibold text-sm text-white">Last Sale Grade: </h2>
-                        <div class="flex items-center">
-                            <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="text-yellowish w-full bg-[#383A3C] font-medium rounded-md text-base px-4 py-2.5 text-center flex items-center justify-between" type="button">
+                        <div class="flex items-center w-full">
+                            <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="text-yellowish w-full bg-[#383A3C] font-medium rounded-md text-sm xl:text-base px-4 py-2.5 text-center flex items-center justify-between" type="button">
                                 10
                                 <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/></svg>
                             </button>
@@ -143,7 +143,7 @@
                 </div>
 
                 {{-- This is Grid View --}}
-                {{-- <div class="grid gap-8 grid-cols-5 my-5">
+                {{-- <div class="grid gap-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 my-5">
 
                     <div class="w-full">
                         <div class="flex w-full">
@@ -156,10 +156,10 @@
                                 </div>
                             </div>
                         </div>
-                        <h2 class="font-manrope font-bold text-base text-white mt-2">Iron Thorns - SV05: Temporal Forces (TEF)</h2>
+                        <h2 class="font-manrope font-bold text-sm xl:text-base text-white mt-2">Iron Thorns - SV05: Temporal Forces (TEF)</h2>
                         <div class="flex justify-between items-center mt-2">
-                            <p class="font-manrope text-yellowish text-base font-semibold">Price :</p>
-                            <p class="font-manrope text-white text-base font-bold">$36.00</p>
+                            <p class="font-manrope text-yellowish text-sm xl:text-base font-semibold">Price :</p>
+                            <p class="font-manrope text-white text-sm xl:text-base font-bold">$36.00</p>
                         </div>
                     </div>
 
@@ -174,10 +174,10 @@
                                 </div>
                             </div>
                         </div>
-                        <h2 class="font-manrope font-bold text-base text-white mt-2">Flutter Mane - SV05: Temporal Forces (TEF)</h2>
+                        <h2 class="font-manrope font-bold text-sm xl:text-base text-white mt-2">Flutter Mane - SV05: Temporal Forces (TEF)</h2>
                         <div class="flex justify-between items-center mt-2">
-                            <p class="font-manrope text-yellowish text-base font-semibold">Price :</p>
-                            <p class="font-manrope text-white text-base font-bold">$40.00</p>
+                            <p class="font-manrope text-yellowish text-sm xl:text-base font-semibold">Price :</p>
+                            <p class="font-manrope text-white text-sm xl:text-base font-bold">$40.00</p>
                         </div>
                     </div>
 
@@ -192,10 +192,10 @@
                                 </div>
                             </div>
                         </div>
-                        <h2 class="font-manrope font-bold text-base text-white mt-2">Munkidori - SV06: Twilight Masquerade (TWM)</h2>
+                        <h2 class="font-manrope font-bold text-sm xl:text-base text-white mt-2">Munkidori - SV06: Twilight Masquerade (TWM)</h2>
                         <div class="flex justify-between items-center mt-2">
-                            <p class="font-manrope text-yellowish text-base font-semibold">Price :</p>
-                            <p class="font-manrope text-white text-base font-bold">$26.00</p>
+                            <p class="font-manrope text-yellowish text-sm xl:text-base font-semibold">Price :</p>
+                            <p class="font-manrope text-white text-sm xl:text-base font-bold">$26.00</p>
                         </div>
                     </div>
 
@@ -210,10 +210,10 @@
                                 </div>
                             </div>
                         </div>
-                        <h2 class="font-manrope font-bold text-base text-white mt-2">Iron Valiant - 080/162 - SV05: Temporal Forces (TEF)</h2>
+                        <h2 class="font-manrope font-bold text-sm xl:text-base text-white mt-2">Iron Valiant - 080/162 - SV05: Temporal Forces (TEF)</h2>
                         <div class="flex justify-between items-center mt-2">
-                            <p class="font-manrope text-yellowish text-base font-semibold">Price :</p>
-                            <p class="font-manrope text-white text-base font-bold">$80.00</p>
+                            <p class="font-manrope text-yellowish text-sm xl:text-base font-semibold">Price :</p>
+                            <p class="font-manrope text-white text-sm xl:text-base font-bold">$80.00</p>
                         </div>
                     </div>
 
@@ -228,10 +228,10 @@
                                 </div>
                             </div>
                         </div>
-                        <h2 class="font-manrope font-bold text-base text-white mt-2">Pikachu - SV05: Temporal Forces (TEF)</h2>
+                        <h2 class="font-manrope font-bold text-sm xl:text-base text-white mt-2">Pikachu - SV05: Temporal Forces (TEF)</h2>
                         <div class="flex justify-between items-center mt-2">
-                            <p class="font-manrope text-yellowish text-base font-semibold">Price :</p>
-                            <p class="font-manrope text-white text-base font-bold">$30.00</p>
+                            <p class="font-manrope text-yellowish text-sm xl:text-base font-semibold">Price :</p>
+                            <p class="font-manrope text-white text-sm xl:text-base font-bold">$30.00</p>
                         </div>
                     </div>
 
@@ -246,10 +246,10 @@
                                 </div>
                             </div>
                         </div>
-                        <h2 class="font-manrope font-bold text-base text-white mt-2">Iron Thorns - SV05: Temporal Forces (TEF)</h2>
+                        <h2 class="font-manrope font-bold text-sm xl:text-base text-white mt-2">Iron Thorns - SV05: Temporal Forces (TEF)</h2>
                         <div class="flex justify-between items-center mt-2">
-                            <p class="font-manrope text-yellowish text-base font-semibold">Price :</p>
-                            <p class="font-manrope text-white text-base font-bold">$36.00</p>
+                            <p class="font-manrope text-yellowish text-sm xl:text-base font-semibold">Price :</p>
+                            <p class="font-manrope text-white text-sm xl:text-base font-bold">$36.00</p>
                         </div>
                     </div>
 
@@ -264,10 +264,10 @@
                                 </div>
                             </div>
                         </div>
-                        <h2 class="font-manrope font-bold text-base text-white mt-2">Flutter Mane - SV05: Temporal Forces (TEF)</h2>
+                        <h2 class="font-manrope font-bold text-sm xl:text-base text-white mt-2">Flutter Mane - SV05: Temporal Forces (TEF)</h2>
                         <div class="flex justify-between items-center mt-2">
-                            <p class="font-manrope text-yellowish text-base font-semibold">Price :</p>
-                            <p class="font-manrope text-white text-base font-bold">$40.00</p>
+                            <p class="font-manrope text-yellowish text-sm xl:text-base font-semibold">Price :</p>
+                            <p class="font-manrope text-white text-sm xl:text-base font-bold">$40.00</p>
                         </div>
                     </div>
 
@@ -282,10 +282,10 @@
                                 </div>
                             </div>
                         </div>
-                        <h2 class="font-manrope font-bold text-base text-white mt-2">Munkidori - SV06: Twilight Masquerade (TWM)</h2>
+                        <h2 class="font-manrope font-bold text-sm xl:text-base text-white mt-2">Munkidori - SV06: Twilight Masquerade (TWM)</h2>
                         <div class="flex justify-between items-center mt-2">
-                            <p class="font-manrope text-yellowish text-base font-semibold">Price :</p>
-                            <p class="font-manrope text-white text-base font-bold">$26.00</p>
+                            <p class="font-manrope text-yellowish text-sm xl:text-base font-semibold">Price :</p>
+                            <p class="font-manrope text-white text-sm xl:text-base font-bold">$26.00</p>
                         </div>
                     </div>
 
@@ -300,10 +300,10 @@
                                 </div>
                             </div>
                         </div>
-                        <h2 class="font-manrope font-bold text-base text-white mt-2">Iron Valiant - 080/162 - SV05: Temporal Forces (TEF)</h2>
+                        <h2 class="font-manrope font-bold text-sm xl:text-base text-white mt-2">Iron Valiant - 080/162 - SV05: Temporal Forces (TEF)</h2>
                         <div class="flex justify-between items-center mt-2">
-                            <p class="font-manrope text-yellowish text-base font-semibold">Price :</p>
-                            <p class="font-manrope text-white text-base font-bold">$80.00</p>
+                            <p class="font-manrope text-yellowish text-sm xl:text-base font-semibold">Price :</p>
+                            <p class="font-manrope text-white text-sm xl:text-base font-bold">$80.00</p>
                         </div>
                     </div>
 
@@ -318,10 +318,10 @@
                                 </div>
                             </div>
                         </div>
-                        <h2 class="font-manrope font-bold text-base text-white mt-2">Pikachu - SV05: Temporal Forces (TEF)</h2>
+                        <h2 class="font-manrope font-bold text-sm xl:text-base text-white mt-2">Pikachu - SV05: Temporal Forces (TEF)</h2>
                         <div class="flex justify-between items-center mt-2">
-                            <p class="font-manrope text-yellowish text-base font-semibold">Price :</p>
-                            <p class="font-manrope text-white text-base font-bold">$30.00</p>
+                            <p class="font-manrope text-yellowish text-sm xl:text-base font-semibold">Price :</p>
+                            <p class="font-manrope text-white text-sm xl:text-base font-bold">$30.00</p>
                         </div>
                     </div>
 
@@ -336,10 +336,10 @@
                                 </div>
                             </div>
                         </div>
-                        <h2 class="font-manrope font-bold text-base text-white mt-2">Iron Thorns - SV05: Temporal Forces (TEF)</h2>
+                        <h2 class="font-manrope font-bold text-sm xl:text-base text-white mt-2">Iron Thorns - SV05: Temporal Forces (TEF)</h2>
                         <div class="flex justify-between items-center mt-2">
-                            <p class="font-manrope text-yellowish text-base font-semibold">Price :</p>
-                            <p class="font-manrope text-white text-base font-bold">$36.00</p>
+                            <p class="font-manrope text-yellowish text-sm xl:text-base font-semibold">Price :</p>
+                            <p class="font-manrope text-white text-sm xl:text-base font-bold">$36.00</p>
                         </div>
                     </div>
 
@@ -354,10 +354,10 @@
                                 </div>
                             </div>
                         </div>
-                        <h2 class="font-manrope font-bold text-base text-white mt-2">Flutter Mane - SV05: Temporal Forces (TEF)</h2>
+                        <h2 class="font-manrope font-bold text-sm xl:text-base text-white mt-2">Flutter Mane - SV05: Temporal Forces (TEF)</h2>
                         <div class="flex justify-between items-center mt-2">
-                            <p class="font-manrope text-yellowish text-base font-semibold">Price :</p>
-                            <p class="font-manrope text-white text-base font-bold">$40.00</p>
+                            <p class="font-manrope text-yellowish text-sm xl:text-base font-semibold">Price :</p>
+                            <p class="font-manrope text-white text-sm xl:text-base font-bold">$40.00</p>
                         </div>
                     </div>
 
@@ -372,10 +372,10 @@
                                 </div>
                             </div>
                         </div>
-                        <h2 class="font-manrope font-bold text-base text-white mt-2">Munkidori - SV06: Twilight Masquerade (TWM)</h2>
+                        <h2 class="font-manrope font-bold text-sm xl:text-base text-white mt-2">Munkidori - SV06: Twilight Masquerade (TWM)</h2>
                         <div class="flex justify-between items-center mt-2">
-                            <p class="font-manrope text-yellowish text-base font-semibold">Price :</p>
-                            <p class="font-manrope text-white text-base font-bold">$26.00</p>
+                            <p class="font-manrope text-yellowish text-sm xl:text-base font-semibold">Price :</p>
+                            <p class="font-manrope text-white text-sm xl:text-base font-bold">$26.00</p>
                         </div>
                     </div>
 
@@ -390,10 +390,10 @@
                                 </div>
                             </div>
                         </div>
-                        <h2 class="font-manrope font-bold text-base text-white mt-2">Iron Valiant - 080/162 - SV05: Temporal Forces (TEF)</h2>
+                        <h2 class="font-manrope font-bold text-sm xl:text-base text-white mt-2">Iron Valiant - 080/162 - SV05: Temporal Forces (TEF)</h2>
                         <div class="flex justify-between items-center mt-2">
-                            <p class="font-manrope text-yellowish text-base font-semibold">Price :</p>
-                            <p class="font-manrope text-white text-base font-bold">$80.00</p>
+                            <p class="font-manrope text-yellowish text-sm xl:text-base font-semibold">Price :</p>
+                            <p class="font-manrope text-white text-sm xl:text-base font-bold">$80.00</p>
                         </div>
                     </div>
 
@@ -408,10 +408,10 @@
                                 </div>
                             </div>
                         </div>
-                        <h2 class="font-manrope font-bold text-base text-white mt-2">Pikachu - SV05: Temporal Forces (TEF)</h2>
+                        <h2 class="font-manrope font-bold text-sm xl:text-base text-white mt-2">Pikachu - SV05: Temporal Forces (TEF)</h2>
                         <div class="flex justify-between items-center mt-2">
-                            <p class="font-manrope text-yellowish text-base font-semibold">Price :</p>
-                            <p class="font-manrope text-white text-base font-bold">$30.00</p>
+                            <p class="font-manrope text-yellowish text-sm xl:text-base font-semibold">Price :</p>
+                            <p class="font-manrope text-white text-sm xl:text-base font-bold">$30.00</p>
                         </div>
                     </div>
 
@@ -426,10 +426,10 @@
                                 </div>
                             </div>
                         </div>
-                        <h2 class="font-manrope font-bold text-base text-white mt-2">Iron Thorns - SV05: Temporal Forces (TEF)</h2>
+                        <h2 class="font-manrope font-bold text-sm xl:text-base text-white mt-2">Iron Thorns - SV05: Temporal Forces (TEF)</h2>
                         <div class="flex justify-between items-center mt-2">
-                            <p class="font-manrope text-yellowish text-base font-semibold">Price :</p>
-                            <p class="font-manrope text-white text-base font-bold">$36.00</p>
+                            <p class="font-manrope text-yellowish text-sm xl:text-base font-semibold">Price :</p>
+                            <p class="font-manrope text-white text-sm xl:text-base font-bold">$36.00</p>
                         </div>
                     </div>
 
@@ -444,10 +444,10 @@
                                 </div>
                             </div>
                         </div>
-                        <h2 class="font-manrope font-bold text-base text-white mt-2">Flutter Mane - SV05: Temporal Forces (TEF)</h2>
+                        <h2 class="font-manrope font-bold text-sm xl:text-base text-white mt-2">Flutter Mane - SV05: Temporal Forces (TEF)</h2>
                         <div class="flex justify-between items-center mt-2">
-                            <p class="font-manrope text-yellowish text-base font-semibold">Price :</p>
-                            <p class="font-manrope text-white text-base font-bold">$40.00</p>
+                            <p class="font-manrope text-yellowish text-sm xl:text-base font-semibold">Price :</p>
+                            <p class="font-manrope text-white text-sm xl:text-base font-bold">$40.00</p>
                         </div>
                     </div>
 
@@ -462,10 +462,10 @@
                                 </div>
                             </div>
                         </div>
-                        <h2 class="font-manrope font-bold text-base text-white mt-2">Munkidori - SV06: Twilight Masquerade (TWM)</h2>
+                        <h2 class="font-manrope font-bold text-sm xl:text-base text-white mt-2">Munkidori - SV06: Twilight Masquerade (TWM)</h2>
                         <div class="flex justify-between items-center mt-2">
-                            <p class="font-manrope text-yellowish text-base font-semibold">Price :</p>
-                            <p class="font-manrope text-white text-base font-bold">$26.00</p>
+                            <p class="font-manrope text-yellowish text-sm xl:text-base font-semibold">Price :</p>
+                            <p class="font-manrope text-white text-sm xl:text-base font-bold">$26.00</p>
                         </div>
                     </div>
 
@@ -480,10 +480,10 @@
                                 </div>
                             </div>
                         </div>
-                        <h2 class="font-manrope font-bold text-base text-white mt-2">Iron Valiant - 080/162 - SV05: Temporal Forces (TEF)</h2>
+                        <h2 class="font-manrope font-bold text-sm xl:text-base text-white mt-2">Iron Valiant - 080/162 - SV05: Temporal Forces (TEF)</h2>
                         <div class="flex justify-between items-center mt-2">
-                            <p class="font-manrope text-yellowish text-base font-semibold">Price :</p>
-                            <p class="font-manrope text-white text-base font-bold">$80.00</p>
+                            <p class="font-manrope text-yellowish text-sm xl:text-base font-semibold">Price :</p>
+                            <p class="font-manrope text-white text-sm xl:text-base font-bold">$80.00</p>
                         </div>
                     </div>
 
@@ -498,10 +498,10 @@
                                 </div>
                             </div>
                         </div>
-                        <h2 class="font-manrope font-bold text-base text-white mt-2">Pikachu - SV05: Temporal Forces (TEF)</h2>
+                        <h2 class="font-manrope font-bold text-sm xl:text-base text-white mt-2">Pikachu - SV05: Temporal Forces (TEF)</h2>
                         <div class="flex justify-between items-center mt-2">
-                            <p class="font-manrope text-yellowish text-base font-semibold">Price :</p>
-                            <p class="font-manrope text-white text-base font-bold">$30.00</p>
+                            <p class="font-manrope text-yellowish text-sm xl:text-base font-semibold">Price :</p>
+                            <p class="font-manrope text-white text-sm xl:text-base font-bold">$30.00</p>
                         </div>
                     </div>
 
