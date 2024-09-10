@@ -43,8 +43,8 @@
                         borderColor: 'rgba(255, 165, 0, 1)', // Line color (orange)
                         borderWidth: 2,
                         tension: 0.3, // Smoothness of the line
-                        pointBackgroundColor: 'rgba(255, 165, 0, 1)', // Point color
-                        pointBorderColor: 'rgba(255, 165, 0, 1)',
+                        pointBackgroundColor: 'transparent', // Point color
+                        pointBorderColor: 'transparent',
                     }]
                 },
                 options: {
