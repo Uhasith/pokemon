@@ -251,11 +251,11 @@
                                                         <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">PSA total population</h4>
                                                         <h4 class="font-manrope font-semibold text-sm text-white">1860</h4>
                                                     </div>
-                                                    <div class="w-1/4 flex flex-col gap-2 justify-between">
+                                                    <div class="w-1/5 flex flex-col gap-2 justify-between">
                                                         <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">PSA 10 chance</h4>
                                                         <h4 class="font-manrope font-semibold text-sm text-greenprice">14.13%</h4>
                                                     </div>
-                                                    <div class="w-1/4 flex flex-col gap-2 justify-between">
+                                                    <div class="w-1/5 flex flex-col gap-2 justify-between">
                                                         <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">PSA 9/10 Ratio</h4>
                                                         <h4 class="font-manrope font-semibold text-sm text-greenprice">5.99:1</h4>
                                                     </div>
@@ -352,6 +352,57 @@
                             </div>
                             <div id="default-styled-tab-content">
                                 <div class="hidden p-4 rounded-b-xl bg-grayish" id="styled-profile" role="tabpanel" aria-labelledby="profile-tab">
+                                    <div class="flex justify-between items-center mb-5">
+                                        <div class="flex rounded-lg bg-evengray p-1 w-auto gap-3">
+                                            <div>
+                                                <div class="p-2 rounded bg-yellowish hover:bg-yellowish group cursor-pointer">
+                                                    <p class="font-manrope font-bold text-sm text-center group-hover:text-black">6M</p>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="p-2 rounded hover:bg-yellowish group cursor-pointer">
+                                                    <p class="font-manrope font-bold text-sm text-center text-white group-hover:text-black">1Y</p>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="p-2 rounded hover:bg-yellowish group cursor-pointer">
+                                                    <p class="font-manrope font-bold text-sm text-center text-white group-hover:text-black">5Y</p>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="p-2 rounded hover:bg-yellowish group cursor-pointer">
+                                                    <p class="font-manrope font-bold text-sm text-center text-white group-hover:text-black">All</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+
+                                            <button id="dropdownSelectGrades" data-dropdown-toggle="dropdown" class="text-white bg-evengray font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center" type="button">
+                                                Select Grades
+                                                <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/></svg>
+                                            </button>
+
+                                            <!-- Dropdown menu -->
+                                            <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownSelectGrades">
+                                                <li>
+                                                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">PSA 1</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">PSA 2</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">PSA 3</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">PSA 4</a>
+                                                </li>
+                                                </ul>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
                                     <div id="chart-container" style="width: 90%; height: 300px; margin: auto;">
                                         <canvas id="myChart"></canvas>
                                     </div>
