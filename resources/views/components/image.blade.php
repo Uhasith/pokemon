@@ -1,4 +1,4 @@
-<div x-data="imageLoader('{{ $attributes['src'] }}')">
+<div x-data="imageLoader('{{ $attributes['src'] }}', '{{ $attributes['class'] ?? '' }}')">
     <!-- Skeleton Placeholder -->
     <div x-show="isLoading" class="flex items-center justify-center bg-gray-300 rounded dark:bg-gray-700 animate-pulse"
         style="width: {{ $attributes['skeltonWidth'] ?? 100 }}px; height: {{ $attributes['skeltonHeight'] ?? 100 }}px;">
@@ -10,15 +10,19 @@
     </div>
 
     <!-- Image -->
-    <img :src="imageSrc" @load="isLoading = false" :class="isLoading ? 'hidden' : 'block w-full h-auto'"
-        :alt="!isLoading ? $attributes['alt'] : ''">
+    <img :src="imageSrc" @load="isLoading = false"
+        :class="isLoading ? 'hidden' : 'block w-full h-auto ' + extraClass" :alt="!isLoading ? $attributes['alt'] : ''">
 </div>
 
 <script>
-    function imageLoader(src) {
+    function imageLoader(src, extraClass) {
         return {
             isLoading: true,
-            imageSrc: src
+            imageSrc: src,
+            extraClass: extraClass,
+            init() {
+                this.imageSrc = src;
+            }
         }
     }
 </script>
