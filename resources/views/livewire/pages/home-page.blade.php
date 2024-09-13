@@ -242,7 +242,12 @@ new class extends Component {
                                 <div class="w-full" wire:key="card-{{ $card->id }}">
                                     <div class="flex w-full">
                                         <div class="p-4 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
-                                            <img src="{{ asset('assets/card-images/pikachu60.png') }}" alt="">
+                                            @if ($card->image_url)
+                                                <img src="{{ $card->image_url }}" alt="card">
+                                            @else
+                                                <img src="{{ asset('assets/card-images/pikachu60.png') }}"
+                                                    alt="card">
+                                            @endif
                                         </div>
                                         <div class="relative">
                                             <div
