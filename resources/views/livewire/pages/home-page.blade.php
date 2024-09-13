@@ -28,7 +28,7 @@ new class extends Component {
         </div>
 
         {{-- Second Main Section --}}
-        <div class="w-full bg-darkblackbg min-h-screen" x-data="{ type: 'grid' }">
+        <div id="section2" class="w-full bg-darkblackbg min-h-screen" x-data="{ type: 'grid' }">
             <div class="max-w-[1440px] relative flex flex-col md:flex-row gap-8 xl:gap-12 mx-auto p-5">
                 <div class="w-full md:w-3/12 xl:w-1/5">
                     <div
@@ -484,7 +484,7 @@ new class extends Component {
                         </div>
                     </div>
 
-                    {{ $cards->links(data: ['scrollTo' => false]) }}
+                    {{ $cards->links(data: ['scrollTo' => '#section2']) }}
                 </div>
             </div>
         </div>
