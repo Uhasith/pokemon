@@ -241,9 +241,10 @@ new class extends Component {
                             @foreach ($cards as $card)
                                 <div class="w-full" wire:key="card-{{ $card->id }}">
                                     <div class="flex w-full">
-                                        <div class="p-4 rounded-2xl bg-[#2C2C2C] bg-blend-screen relative">
+                                        <div
+                                            class="p-4 rounded-2xl bg-[#2C2C2C] bg-blend-screen relative cursor-pointer">
                                             @if ($card->image_url)
-                                                <x-image :src="$card->image_url" alt="card image" skeltonWidth="160"
+                                                <x-image :src="$card->image_url" :alt="$card->name" skeltonWidth="160"
                                                     skeltonHeight="220" />
                                             @else
                                                 <div class="flex items-center justify-center bg-gray-300 rounded dark:bg-gray-700 animate-pulse"
