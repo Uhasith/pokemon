@@ -76,8 +76,8 @@ new #[Layout('layouts.admin')] class extends Component {
 
         try {
             // Check if 'card_id' column is present
-            if (!isset($this->columnMappings['card_id']) || empty($this->columnMappings['card_id']) || !isset($this->columnMappings['set_id']) || empty($this->columnMappings['set_id'])) {
-                app(NotificationService::class)->sendExeptionNotification("The 'Card Id' and 'Set Id' column is required.");
+            if (!isset($this->columnMappings['card_id']) || empty($this->columnMappings['card_id']) || !isset($this->columnMappings['population_id']) || empty($this->columnMappings['population_id'])) {
+                app(NotificationService::class)->sendExeptionNotification("The 'Card Id' and 'Population Id' column is required.");
                 return;
             }
 
