@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 Volt::route('/home', 'pages.home-page')->lazy()->name('home');
+Volt::route('/card/details', 'pages.card-details-page')->lazy()->name('card-details');
 
 Route::middleware([
     'auth',

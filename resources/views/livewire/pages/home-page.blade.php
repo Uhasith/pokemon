@@ -7,8 +7,6 @@ use App\Models\Card;
 new class extends Component {
     use WithPagination;
 
-    public $viewType = 'grid';
-
     public function with(): array
     {
         return [
@@ -244,8 +242,10 @@ new class extends Component {
                                         <div
                                             class="p-4 rounded-2xl bg-[#2C2C2C] bg-blend-screen relative cursor-pointer">
                                             @if ($card->image_url)
-                                                <x-image :src="$card->image_url" :alt="$card->name" skeltonWidth="160"
-                                                    skeltonHeight="220" />
+                                                <a href="{{ route('card-details', ['card_id' => $card->card_id]) }}">
+                                                    <x-image :src="$card->image_url" :alt="$card->name" skeltonWidth="160"
+                                                        skeltonHeight="220" />
+                                                </a>
                                             @else
                                                 <div class="flex items-center justify-center bg-gray-300 rounded dark:bg-gray-700 animate-pulse"
                                                     style="width: 160px; height: 220px;">
