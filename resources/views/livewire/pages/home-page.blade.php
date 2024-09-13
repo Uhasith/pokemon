@@ -241,12 +241,12 @@ new class extends Component {
                             @foreach ($cards as $card)
                                 <div class="w-full" wire:key="card-{{ $card->id }}">
                                     <div class="flex w-full">
-                                        <div class="p-4 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
+                                        <div class="p-4 rounded-2xl bg-[#2C2C2C] bg-blend-screen relative">
                                             @if ($card->image_url)
-                                                <img src="{{ $card->image_url }}" alt="card">
+                                                <x-image :src="$card->image_url" alt="card image" skeltonWidth="160"
+                                                    skeltonHeight="220" />
                                             @else
-                                                <img src="{{ asset('assets/card-images/pikachu60.png') }}"
-                                                    alt="card">
+                                                <x-image :src="asset('assets/card-images/pikachu60.png')" skeltonWidth="160" skeltonHeight="220" />
                                             @endif
                                         </div>
                                         <div class="relative">
