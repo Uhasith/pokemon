@@ -2,17 +2,17 @@
 
 namespace App\Imports;
 
-use Carbon\Carbon;
 use App\Models\Set;
+use Carbon\Carbon;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Events\AfterImport;
-use Maatwebsite\Excel\Concerns\WithEvents;
-use Maatwebsite\Excel\Events\ImportFailed;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
+use Maatwebsite\Excel\Concerns\WithEvents;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Events\AfterImport;
+use Maatwebsite\Excel\Events\ImportFailed;
 
 class SetsImport implements ShouldQueue, ToModel, WithBatchInserts, WithChunkReading, WithEvents, WithHeadingRow
 {
@@ -61,6 +61,7 @@ class SetsImport implements ShouldQueue, ToModel, WithBatchInserts, WithChunkRea
         if ($set_id === null) {
             // Log an error and skip processing this row
             Log::error('Set Id is missing for a row, skipping the row.', ['row' => $row]);
+
             return null; // Skip this row
         }
 
@@ -68,7 +69,6 @@ class SetsImport implements ShouldQueue, ToModel, WithBatchInserts, WithChunkRea
         $filteredExcelMapping = array_filter($excelMapping, function ($value) {
             return $value !== null && $value !== '';
         });
-
 
         // Attempt to find the set by Set Id or any alternative identifiers
         $set = Set::where('set_id', $set_id)->first();
@@ -81,7 +81,6 @@ class SetsImport implements ShouldQueue, ToModel, WithBatchInserts, WithChunkRea
             Set::create($filteredExcelMapping);
         }
 
-
         return null; // Return null because database insertion is handled manually
     }
 
@@ -90,7 +89,7 @@ class SetsImport implements ShouldQueue, ToModel, WithBatchInserts, WithChunkRea
         return [
             ImportFailed::class => function (ImportFailed $event) {
                 $exceptionMessage = $event->getException()->getMessage();
-                Log::error('Failed to import row: ' . $exceptionMessage);
+                Log::error('Failed to import row: '.$exceptionMessage);
             },
         ];
     }

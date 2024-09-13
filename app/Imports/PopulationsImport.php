@@ -2,17 +2,17 @@
 
 namespace App\Imports;
 
-use Carbon\Carbon;
 use App\Models\Population;
+use Carbon\Carbon;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Events\AfterImport;
-use Maatwebsite\Excel\Concerns\WithEvents;
-use Maatwebsite\Excel\Events\ImportFailed;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
+use Maatwebsite\Excel\Concerns\WithEvents;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Events\AfterImport;
+use Maatwebsite\Excel\Events\ImportFailed;
 
 class PopulationsImport implements ShouldQueue, ToModel, WithBatchInserts, WithChunkReading, WithEvents, WithHeadingRow
 {
@@ -38,7 +38,7 @@ class PopulationsImport implements ShouldQueue, ToModel, WithBatchInserts, WithC
 
                 if ($value !== null) {
                     try {
-                        if (in_array($dbColumn, ['date_checked']) && !empty($value)) {
+                        if (in_array($dbColumn, ['date_checked']) && ! empty($value)) {
                             // Format the date to a standardized format (e.g., Y-m-d)
                             $value = Carbon::parse($value)->format('Y-m-d');
                         }
@@ -59,6 +59,7 @@ class PopulationsImport implements ShouldQueue, ToModel, WithBatchInserts, WithC
         if ($card_id === null || $population_id === null) {
             // Log an error and skip processing this row
             Log::error('Card Id or Population Id is missing for a row, skipping the row.', ['row' => $row]);
+
             return null; // Skip this row
         }
 
@@ -86,7 +87,7 @@ class PopulationsImport implements ShouldQueue, ToModel, WithBatchInserts, WithC
         return [
             ImportFailed::class => function (ImportFailed $event) {
                 $exceptionMessage = $event->getException()->getMessage();
-                Log::error('Failed to import row: ' . $exceptionMessage);
+                Log::error('Failed to import row: '.$exceptionMessage);
             },
         ];
     }

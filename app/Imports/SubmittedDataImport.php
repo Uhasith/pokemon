@@ -2,17 +2,16 @@
 
 namespace App\Imports;
 
-use Carbon\Carbon;
 use App\Models\SubmittedData;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Events\AfterImport;
-use Maatwebsite\Excel\Concerns\WithEvents;
-use Maatwebsite\Excel\Events\ImportFailed;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
+use Maatwebsite\Excel\Concerns\WithEvents;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Events\AfterImport;
+use Maatwebsite\Excel\Events\ImportFailed;
 
 class SubmittedDataImport implements ShouldQueue, ToModel, WithBatchInserts, WithChunkReading, WithEvents, WithHeadingRow
 {
@@ -45,6 +44,7 @@ class SubmittedDataImport implements ShouldQueue, ToModel, WithBatchInserts, Wit
         if ($submitted_data_id === null) {
             // Log an error and skip processing this row
             Log::error('Submitted Data Id is missing for a row, skipping the row.', ['row' => $row]);
+
             return null; // Skip this row
         }
 
@@ -72,7 +72,7 @@ class SubmittedDataImport implements ShouldQueue, ToModel, WithBatchInserts, Wit
         return [
             ImportFailed::class => function (ImportFailed $event) {
                 $exceptionMessage = $event->getException()->getMessage();
-                Log::error('Failed to import row: ' . $exceptionMessage);
+                Log::error('Failed to import row: '.$exceptionMessage);
             },
         ];
     }

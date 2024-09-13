@@ -1,20 +1,25 @@
 <?php
 
-use Livewire\Volt\Volt;
 use App\Livewire\ShopPage;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Livewire\Volt\Volt;
 
-require __DIR__ . '/auth.php';
-
-Route::view('/', 'welcome');
-
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+require __DIR__.'/auth.php';
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
+
+Route::get('/', function () {
+    // if (Auth::check()) {
+    //     return redirect()->route('dashboard');
+    // }
+
+    return redirect()->route('home');
+});
+
+Volt::route('/home', 'pages.home-page')->lazy()->name('home');
 
 Route::middleware([
     'auth',
@@ -30,6 +35,4 @@ Route::middleware([
 
 });
 
-
 Route::get('/shop', ShopPage::class);
-

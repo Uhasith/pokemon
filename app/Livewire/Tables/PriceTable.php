@@ -3,21 +3,18 @@
 namespace App\Livewire\Tables;
 
 use App\Models\Price;
-use Illuminate\View\View;
-use Illuminate\Support\Carbon;
-use WireUi\Traits\WireUiActions;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\View\View;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
 use PowerComponents\LivewirePowerGrid\Footer;
 use PowerComponents\LivewirePowerGrid\Header;
 use PowerComponents\LivewirePowerGrid\PowerGrid;
-use PowerComponents\LivewirePowerGrid\Exportable;
-use PowerComponents\LivewirePowerGrid\Responsive;
-use PowerComponents\LivewirePowerGrid\Facades\Filter;
-use PowerComponents\LivewirePowerGrid\PowerGridFields;
-use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 use PowerComponents\LivewirePowerGrid\PowerGridComponent;
+use PowerComponents\LivewirePowerGrid\PowerGridFields;
+use PowerComponents\LivewirePowerGrid\Responsive;
+use PowerComponents\LivewirePowerGrid\Traits\WithExport;
+use WireUi\Traits\WireUiActions;
 
 final class PriceTable extends PowerGridComponent
 {
@@ -88,6 +85,7 @@ final class PriceTable extends PowerGridComponent
     {
         return [];
     }
+
     public function edit($rowId): void
     {
         $this->dispatch('open-product-modal', params: ['id' => $rowId, 'modalId' => 'product-create-modal']);
@@ -102,7 +100,7 @@ final class PriceTable extends PowerGridComponent
             'accept' => [
                 'label' => 'Yes, delete it',
                 'method' => 'deleteProduct',
-                'params' => '' . $rowId . '',
+                'params' => ''.$rowId.'',
             ],
         ]);
     }
