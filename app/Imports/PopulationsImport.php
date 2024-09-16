@@ -3,7 +3,6 @@
 namespace App\Imports;
 
 use App\Models\PokeCardPopulation;
-use App\Models\Population;
 use Carbon\Carbon;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Log;

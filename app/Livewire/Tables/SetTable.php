@@ -3,7 +3,6 @@
 namespace App\Livewire\Tables;
 
 use App\Models\PokeSet;
-use App\Models\Set;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\View\View;
 use PowerComponents\LivewirePowerGrid\Button;

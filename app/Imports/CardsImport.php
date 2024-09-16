@@ -87,7 +87,7 @@ class CardsImport implements ShouldQueue, ToModel, WithBatchInserts, WithChunkRe
         return [
             ImportFailed::class => function (ImportFailed $event) {
                 $exceptionMessage = $event->getException()->getMessage();
-                Log::error('Failed to import row: ' . $exceptionMessage);
+                Log::error('Failed to import row: '.$exceptionMessage);
             },
         ];
     }

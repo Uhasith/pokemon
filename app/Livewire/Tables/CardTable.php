@@ -92,7 +92,7 @@ final class CardTable extends PowerGridComponent
             'accept' => [
                 'label' => 'Yes, delete it',
                 'method' => 'deleteProduct',
-                'params' => '' . $rowId . '',
+                'params' => ''.$rowId.'',
             ],
         ]);
     }

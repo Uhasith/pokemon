@@ -3,53 +3,107 @@
 use Livewire\Volt\Component;
 use Livewire\Attributes\Url;
 use App\Models\PokeCard;
-use App\Models\CardTcgp;
+use App\Models\PokeAllCard;
 use Illuminate\Support\Facades\Log;
 
 new class extends Component {
     #[Url]
     public $card_id;
     public $card;
-    public $cardTcgp;
-    public $cardPrices = [];
+    public $relatedAllCard;
+    public $cardPricesTieseries = [];
     public $population;
     public $totalPopulation;
     public $populations = [];
     public $prices = [];
+    public $imageUrl;
 
-    public function mount()
+    public function booted()
     {
-        $this->card = Card::where('card_id', $this->card_id)
-            ->with('card_tcgp', 'populations', 'card_prices')
+        // Load the card with necessary relationships and sort populations by date_checked
+        $this->card = PokeCard::where('card_id', $this->card_id)
+            ->with([
+                'tcg',
+                'populations' => function ($query) {
+                    $query->orderBy('date_checked', 'desc')->limit(1);
+                },
+                'card_prices',
+                'price_timeseries',
+            ])
             ->first();
-        $this->cardTcgp = $this->card->card_tcgp;
-        $this->cardPrices = $this->card->card_prices->toArray();
-        $this->population = $this->card->populations->sortByDesc('date_checked')->first();
 
-        // Initialize prices array with default values as '-'
-        $this->prices = [
-            'PSA10' => '-',
-            'PSA9' => '-',
-            'PSA8' => '-',
-            'PSA7' => '-',
-            'PSA6' => '-',
-            'PSA5' => '-',
-            'PSA4' => '-',
-            'PSA3' => '-',
-            'PSA2' => '-',
-            'PSA1' => '-',
-        ];
+        $this->relatedAllCard = PokeAllCard::where('tcg_id', $this->card->tcg->tcg_id)->first();
 
-        // Loop through the cardPrices array to populate the prices array based on psa_grade
-        foreach ($this->cardPrices as $price) {
+        if ($this->relatedAllCard) {
+            $this->imageUrl = $this->relatedAllCard->images['large'];
+        }
+
+        // Initialize the timeseries data and population from the related data
+        $this->cardPricesTieseries = $this->card->price_timeseries->toArray();
+        $this->population = $this->card->populations->first();
+
+        // Initialize prices array with default values of '-'
+        $this->prices = array_map(fn() => '-', array_flip(['PSA10', 'PSA9', 'PSA8', 'PSA7', 'PSA6', 'PSA5', 'PSA4', 'PSA3', 'PSA2', 'PSA1']));
+
+        // Populate prices with the latest fair prices
+        $this->populatePrices();
+
+        // Populate populations from the fetched population data
+        $this->populations = $this->getPopulationData();
+
+        // Calculate the total population
+        $this->totalPopulation = array_sum($this->populations);
+    }
+
+    /**
+     * Populate the prices array by fetching the latest fair prices from the timeseries data
+     */
+    private function populatePrices()
+    {
+        foreach ($this->cardPricesTieseries as $price) {
             $psaGrade = 'PSA' . $price['psa_grade'];
+
             if (isset($this->prices[$psaGrade])) {
-                // Round the price to an integer (removing decimals) and append a '$' sign
-                $this->prices[$psaGrade] = '$ ' . round($price['fair_price']);
+                $latestFairPrice = $this->getLatestFairPrice($price['timeseries_data'] ?? []);
+
+                if (!is_null($latestFairPrice)) {
+                    $this->prices[$psaGrade] = '$ ' . round($latestFairPrice);
+                }
+            }
+        }
+    }
+
+    /**
+     * Get the latest fair price from the timeseries data
+     *
+     * @param array $timeseriesData
+     * @return float|null
+     */
+    private function getLatestFairPrice(array $timeseriesData)
+    {
+        $latestDate = null;
+        $latestFairPrice = null;
+
+        foreach ($timeseriesData as $timeSeriesPrice) {
+            $currentDate = new DateTime($timeSeriesPrice['date']);
+
+            if (is_null($latestDate) || $currentDate > $latestDate) {
+                $latestDate = $currentDate;
+                $latestFairPrice = $timeSeriesPrice['fair_price'];
             }
         }
 
-        $this->populations = [
+        return $latestFairPrice;
+    }
+
+    /**
+     * Extract population data for different PSA grades
+     *
+     * @return array
+     */
+    private function getPopulationData()
+    {
+        return [
             'PSA10' => $this->population->pop10,
             'PSA9' => $this->population->pop9,
             'PSA8' => $this->population->pop8,
@@ -61,17 +115,11 @@ new class extends Component {
             'PSA2' => $this->population->pop2,
             'PSA1' => $this->population->pop1,
         ];
-
-        $this->totalPopulation = array_sum($this->populations);
     }
 }; ?>
 
 <div>
     <div class="w-full bg-darkblackbg" x-init="initFlowbite();">
-        {{-- @php
-            print_r(json_decode($this->cardTcgp->card_market, true));
-        @endphp --}}
-        {{-- Single Product Details Section --}}
         <div class="max-w-[1440px] 2xl:max-w-[1500px] bg-darkbg mx-auto relative flex flex-col lg:px-8 xl:px-0">
             <div class="my-12 px-8 lg:px-0">
                 <h3 class="flex gap-3 items-center font-manrope">
@@ -107,7 +155,18 @@ new class extends Component {
                     <div class="flex w-full">
                         {{-- <div class="p-8 rounded-2xl bg-[radial-gradient(81.7%_81.7%_at_10.35%_28.75%,_#7E6A7E_8.33%,_#D5D5D5_37.5%,_#75888A_63.45%,_#896753_100%)] bg-[conic-gradient(from_219.88deg_at_88.77%_56.84%,_#000000_0deg,_#FFFFFF_30deg,_#000000_95.62deg,_#FFFFFF_168.75deg,_#000000_228.75deg,_#FFFFFF_285deg,_#000000_360deg)] bg-blend-screen bg-[conic-gradient(from_219.95deg_at_88.81%_56.89%,_#000000_0deg,_rgba(255,_255,_255,_0.72)_16.88deg,_#000000_88.12deg,_rgba(255,_255,_255,_0.72)_151.87deg,_#000000_225deg,_rgba(255,_255,_255,_0.72)_288.75deg,_#000000_360deg)]"> --}}
                         <div class="p-5 md:p-8 rounded-2xl bg-[#414343] bg-blend-screen">
-                            <img src="{{ asset('assets/card-images/pikachu50.png') }}" alt="">
+                            @if ($imageUrl)
+                                <x-image :src="$imageUrl" :alt="$card->name" skeltonWidth="280" skeltonHeight="390" />
+                            @else
+                                <div class="flex items-center justify-center bg-gray-300 rounded dark:bg-gray-700 animate-pulse"
+                                    style="width: 280px; height: 390px;">
+                                    <svg class="w-10 h-10 text-gray-200 dark:text-gray-600" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                                        <path
+                                            d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z" />
+                                    </svg>
+                                </div>
+                            @endif
                         </div>
                         <div class="relative">
                             <div
@@ -394,7 +453,10 @@ new class extends Component {
                                     </div>
 
                                     @php
-                                        $percentage = ($populations['PSA10'] / $totalPopulation) * 100;
+                                        // Calculate the percentage of PSA10
+                                        $psa10 = $populations['PSA10'] ?? 0;
+                                        $totalPopulation = $totalPopulation ?? 1; // Ensure totalPopulation is not zero to avoid division by zero
+                                        $percentage = ($psa10 / $totalPopulation) * 100;
 
                                         // Determine difficulty label and color based on percentage
                                         if ($percentage < 5) {
@@ -417,12 +479,16 @@ new class extends Component {
                                             $color = 'text-indigo-500'; // Very Easy (indigo)
                                         }
 
-                                        // Ensure PSA10 value is not zero to avoid division by zero error
-                                        $psa10 = $populations['PSA10'] ?? 1; // Default to 1 if PSA10 is 0
+                                        // PSA10 and PSA9 values, ensure no division by zero
                                         $psa9 = $populations['PSA9'] ?? 0;
+                                        $psa10 = $populations['PSA10'] ?? 1; // Default to 1 if PSA10 is zero to avoid division by zero
 
-                                        // Calculate the PSA 9/10 ratio
-                                        $ratio = $psa9 / $psa10;
+                                        // Calculate the PSA 9/10 ratio, only if PSA10 is greater than zero
+                                        if ($psa10 > 0) {
+                                            $ratio = $psa9 / $psa10;
+                                        } else {
+                                            $ratio = 0; // Or handle differently, such as setting it to null
+                                        }
                                     @endphp
 
                                     <div class="w-full flex flex-col md:flex-row gap-5 my-5">
@@ -2147,3 +2213,4 @@ new class extends Component {
         </div>
     </div>
 </div>
+

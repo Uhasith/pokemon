@@ -2,12 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\ImportPokeCardPriceTimeSeriesJob;
 use Illuminate\Console\Command;
-use App\Jobs\ImportPokeCardPricesJob;
-use App\Models\CardPrice;
 use Illuminate\Support\Facades\Log;
 
-class PokeCardPricesImport extends Command
+class PokeCardPriceTimeSeriesImport extends Command
 {
     /**
      * The name and signature of the console command.
@@ -32,8 +31,9 @@ class PokeCardPricesImport extends Command
         $filePath = storage_path('app/json-files/price_timeseries_data.json');
 
         // Check if the file exists
-        if (!file_exists($filePath)) {
-            Log::error("File not found: " . $filePath);
+        if (! file_exists($filePath)) {
+            Log::error('File not found: '.$filePath);
+
             return;
         }
 
@@ -41,8 +41,9 @@ class PokeCardPricesImport extends Command
         $jsonData = file_get_contents($filePath);
         $data = json_decode($jsonData, true);
 
-        if (!is_array($data)) {
-            Log::error("Invalid JSON format");
+        if (! is_array($data)) {
+            Log::error('Invalid JSON format');
+
             return;
         }
 
@@ -54,9 +55,9 @@ class PokeCardPricesImport extends Command
 
         foreach ($chunks as $chunk) {
             // Dispatch each chunk to the job for processing
-            ImportPokeCardPricesJob::dispatch($chunk); // Pass chunk to the job
+            ImportPokeCardPriceTimeSeriesJob::dispatch($chunk); // Pass chunk to the job
         }
 
-        Log::info("All chunks dispatched for background processing.");
+        Log::info('All chunks dispatched for background processing.');
     }
 }

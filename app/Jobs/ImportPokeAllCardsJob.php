@@ -2,14 +2,12 @@
 
 namespace App\Jobs;
 
-use App\Models\CardTcgp;
 use App\Models\PokeAllCard;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class ImportPokeAllCardsJob implements ShouldQueue
 {
@@ -32,7 +30,7 @@ class ImportPokeAllCardsJob implements ShouldQueue
     {
         foreach ($this->chunk as $row) {
 
-            Log::info('Processing chunk: ' . json_encode($row));
+            Log::info('Processing chunk: '.json_encode($row));
 
             $data = [
                 'tcg_id' => $row['id'] ?? null,

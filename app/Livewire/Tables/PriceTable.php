@@ -3,7 +3,6 @@
 namespace App\Livewire\Tables;
 
 use App\Models\PokeCardPrice;
-use App\Models\Price;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\View\View;
 use PowerComponents\LivewirePowerGrid\Button;

@@ -3,9 +3,9 @@
 namespace App\Imports;
 
 use App\Models\PokeCardTcgPCRelation;
-use Maatwebsite\Excel\Concerns\ToModel;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithEvents;
@@ -73,7 +73,7 @@ class CardTcgPcImport implements ShouldQueue, ToModel, WithBatchInserts, WithChu
         return [
             ImportFailed::class => function (ImportFailed $event) {
                 $exceptionMessage = $event->getException()->getMessage();
-                Log::error('Failed to import row: ' . $exceptionMessage);
+                Log::error('Failed to import row: '.$exceptionMessage);
             },
         ];
     }

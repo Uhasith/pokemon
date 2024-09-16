@@ -3,7 +3,6 @@
 namespace App\Imports;
 
 use App\Models\PokeCardPrice;
-use App\Models\Price;
 use Carbon\Carbon;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Log;

@@ -12,6 +12,4 @@ class PokeCardTcgPCRelation extends Model
     protected $guarded = [];
 
     protected $table = 'poke_card_tcg_pc_relations';
-
-
 }

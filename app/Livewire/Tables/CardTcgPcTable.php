@@ -2,22 +2,19 @@
 
 namespace App\Livewire\Tables;
 
-use Illuminate\View\View;
-use Illuminate\Support\Carbon;
-use WireUi\Traits\WireUiActions;
 use App\Models\PokeCardTcgPCRelation;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\View\View;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
 use PowerComponents\LivewirePowerGrid\Footer;
 use PowerComponents\LivewirePowerGrid\Header;
 use PowerComponents\LivewirePowerGrid\PowerGrid;
-use PowerComponents\LivewirePowerGrid\Exportable;
-use PowerComponents\LivewirePowerGrid\Responsive;
-use PowerComponents\LivewirePowerGrid\Facades\Filter;
-use PowerComponents\LivewirePowerGrid\PowerGridFields;
-use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 use PowerComponents\LivewirePowerGrid\PowerGridComponent;
+use PowerComponents\LivewirePowerGrid\PowerGridFields;
+use PowerComponents\LivewirePowerGrid\Responsive;
+use PowerComponents\LivewirePowerGrid\Traits\WithExport;
+use WireUi\Traits\WireUiActions;
 
 final class CardTcgPcTable extends PowerGridComponent
 {
@@ -87,7 +84,7 @@ final class CardTcgPcTable extends PowerGridComponent
             'accept' => [
                 'label' => 'Yes, delete it',
                 'method' => 'deleteProduct',
-                'params' => '' . $rowId . '',
+                'params' => ''.$rowId.'',
             ],
         ]);
     }
@@ -103,7 +100,6 @@ final class CardTcgPcTable extends PowerGridComponent
     {
         return view('actions.table-actions', ['row' => $row]);
     }
-
 
     /*
     public function actionRules($row): array

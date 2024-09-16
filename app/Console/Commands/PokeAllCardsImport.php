@@ -2,11 +2,9 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use App\Imports\CardTcgpsImport;
 use App\Jobs\ImportPokeAllCardsJob;
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
-use Maatwebsite\Excel\Facades\Excel;
 
 class PokeAllCardsImport extends Command
 {
@@ -33,8 +31,9 @@ class PokeAllCardsImport extends Command
         $filePath = storage_path('app/json-files/tcg_all_card.json');
 
         // Check if the file exists
-        if (!file_exists($filePath)) {
-            Log::error("File not found: " . $filePath);
+        if (! file_exists($filePath)) {
+            Log::error('File not found: '.$filePath);
+
             return;
         }
 
@@ -42,8 +41,9 @@ class PokeAllCardsImport extends Command
         $jsonData = file_get_contents($filePath);
         $data = json_decode($jsonData, true);
 
-        if (!is_array($data)) {
-            Log::error("Invalid JSON format");
+        if (! is_array($data)) {
+            Log::error('Invalid JSON format');
+
             return;
         }
 
@@ -58,6 +58,6 @@ class PokeAllCardsImport extends Command
             ImportPokeAllCardsJob::dispatch($chunk); // Pass chunk to the job
         }
 
-        Log::info("All chunks dispatched for background processing.");
+        Log::info('All chunks dispatched for background processing.');
     }
 }

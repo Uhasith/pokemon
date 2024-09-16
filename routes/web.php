@@ -1,7 +1,6 @@
 <?php
 
 use App\Livewire\ShopPage;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
