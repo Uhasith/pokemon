@@ -5,6 +5,7 @@ use Livewire\Attributes\Url;
 use App\Models\PokeCard;
 use App\Models\PokeAllCard;
 use Illuminate\Support\Facades\Log;
+use Livewire\Attributes\Lazy;
 
 new class extends Component {
     #[Url]
@@ -18,7 +19,7 @@ new class extends Component {
     public $prices = [];
     public $imageUrl;
 
-    public function booted()
+    public function mount()
     {
         // Load the card with necessary relationships and sort populations by date_checked
         $this->card = PokeCard::where('card_id', $this->card_id)
@@ -2213,4 +2214,3 @@ new class extends Component {
         </div>
     </div>
 </div>
-

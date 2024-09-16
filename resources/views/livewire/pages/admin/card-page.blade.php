@@ -9,7 +9,8 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\CardsImport;
 use Livewire\Attributes\Layout;
 
-new #[Layout('layouts.admin')] class extends Component {
+new #[Layout('layouts.admin')] 
+class extends Component {
     use WithFileUploads;
 
     public $file;

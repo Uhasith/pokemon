@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('poke_card_tcg_pc_relations', function (Blueprint $table) {
+        Schema::create('poke_card_transaction_time_series', function (Blueprint $table) {
             $table->id();
-            $table->uuid('card_id')->index();
-            $table->uuid('tcg_id')->index();
-            $table->uuid('pc_id')->index()->nullable();
+            $table->uuid('card_id')->nullable();
+            $table->integer('psa_grade')->nullable();
+            $table->json('timeseries_data')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('poke_card_tcg_pc_relations');
+        Schema::dropIfExists('poke_card_transaction_time_series');
     }
 };

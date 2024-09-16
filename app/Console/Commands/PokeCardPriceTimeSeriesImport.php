@@ -13,14 +13,14 @@ class PokeCardPriceTimeSeriesImport extends Command
      *
      * @var string
      */
-    protected $signature = 'app:card-prices-import';
+    protected $signature = 'app:poke-card-price-time-series-import';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Import Poke Card Price Time Series data from JSON file';
 
     /**
      * Execute the console command.

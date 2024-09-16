@@ -7,7 +7,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
 
 class ImportPokeAllCardsJob implements ShouldQueue
 {
@@ -29,8 +28,6 @@ class ImportPokeAllCardsJob implements ShouldQueue
     public function handle()
     {
         foreach ($this->chunk as $row) {
-
-            Log::info('Processing chunk: '.json_encode($row));
 
             $data = [
                 'tcg_id' => $row['id'] ?? null,

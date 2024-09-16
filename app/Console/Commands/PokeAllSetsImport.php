@@ -2,25 +2,25 @@
 
 namespace App\Console\Commands;
 
-use App\Jobs\ImportPokeAllCardsJob;
+use App\Jobs\ImportPokeAllSetsJob;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
-class PokeAllCardsImport extends Command
+class PokeAllSetsImport extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'app:poke-all-card-import';
+    protected $signature = 'app:poke-all-sets-import';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Import Poke All Cards data from JSON file';
+    protected $description = 'Command description';
 
     /**
      * Execute the console command.
@@ -28,7 +28,7 @@ class PokeAllCardsImport extends Command
     public function handle()
     {
         // Path to the JSON file
-        $filePath = storage_path('app/json-files/tcg_all_card.json');
+        $filePath = storage_path('app/json-files/tcg_all_set.json');
 
         // Check if the file exists
         if (! file_exists($filePath)) {
@@ -55,7 +55,7 @@ class PokeAllCardsImport extends Command
 
         foreach ($chunks as $chunk) {
             // Dispatch each chunk to the job for processing
-            ImportPokeAllCardsJob::dispatch($chunk); // Pass chunk to the job
+            ImportPokeAllSetsJob::dispatch($chunk); // Pass chunk to the job
         }
 
         Log::info('All chunks dispatched for background processing.');
