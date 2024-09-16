@@ -268,13 +268,13 @@ new class extends Component {
                 {{-- right content section --}}
                 <div class="w-4/5 mx-auto lg:w-8/12 xl:w-[60%] xl:px-3 lg:ml-8 xl:ml-5">
                     <div>
-                        <h1 class="font-manrope text-3xl lg:text-4xl font-bold text-white">Pikachu - SV05: Temporal
-                            Forces (TEF)</h1>
+                        <h1 class="font-manrope text-3xl lg:text-4xl font-bold text-white">
+                            {{ $card->name }} - ({{ $relatedAllCard->number }} / {{ $relatedAllCard->set_printed_total ?? 0 }})
+                        </h1>
                     </div>
                     <div class="flex flex-row gap-2 items-center justify-start my-3">
-                        <h3 class="font-manrope font-medium text-sm text-white">SV05: Temporal Forces</h3>
-
-                        <a href=""
+                        <h3 class="font-manrope font-medium text-sm text-white">{{ $relatedAllCard->set_name }}</h3>
+                        <a href="#"
                             class="flex gap-2 items-center justify-center text-yellowish font-manrope font-medium text-sm">
                             <span>All versions</span>
                             <span><svg width="16" height="17" viewBox="0 0 16 17" fill="none"
