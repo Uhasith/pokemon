@@ -2,22 +2,24 @@
 
 namespace App\Livewire\Tables;
 
-use App\Models\PokeCardPopulation;
-use App\Models\Population;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\View\View;
+use Illuminate\Support\Carbon;
+use WireUi\Traits\WireUiActions;
+use App\Models\PokeCardTcgPCRelation;
+use Illuminate\Database\Eloquent\Builder;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
 use PowerComponents\LivewirePowerGrid\Footer;
 use PowerComponents\LivewirePowerGrid\Header;
 use PowerComponents\LivewirePowerGrid\PowerGrid;
-use PowerComponents\LivewirePowerGrid\PowerGridComponent;
-use PowerComponents\LivewirePowerGrid\PowerGridFields;
+use PowerComponents\LivewirePowerGrid\Exportable;
 use PowerComponents\LivewirePowerGrid\Responsive;
+use PowerComponents\LivewirePowerGrid\Facades\Filter;
+use PowerComponents\LivewirePowerGrid\PowerGridFields;
 use PowerComponents\LivewirePowerGrid\Traits\WithExport;
-use WireUi\Traits\WireUiActions;
+use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 
-final class PopulationTable extends PowerGridComponent
+final class CardTcgPcTable extends PowerGridComponent
 {
     use WireUiActions;
     use WithExport;
@@ -39,7 +41,7 @@ final class PopulationTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        return PokeCardPopulation::query();
+        return PokeCardTcgPCRelation::query();
     }
 
     public function relationSearch(): array
@@ -51,19 +53,8 @@ final class PopulationTable extends PowerGridComponent
     {
         return PowerGrid::fields()
             ->add('id')
-            ->add('population_id')
             ->add('card_id')
-            ->add('pop1')
-            ->add('pop2')
-            ->add('pop3')
-            ->add('pop4')
-            ->add('pop5')
-            ->add('pop6')
-            ->add('pop7')
-            ->add('pop8')
-            ->add('pop9')
-            ->add('pop10')
-            ->add('date_checked')
+            ->add('tcg_id')
             ->add('created_at');
     }
 
@@ -71,19 +62,8 @@ final class PopulationTable extends PowerGridComponent
     {
         return [
             Column::make('Id', 'id'),
-            Column::make('Population Id', 'population_id')->sortable()->searchable(),
             Column::make('Card Id', 'card_id')->sortable()->searchable(),
-            Column::make('Date Checked', 'date_checked')->sortable()->searchable(),
-            Column::make('POP 1', 'pop1'),
-            Column::make('POP 2', 'pop2'),
-            Column::make('POP 3', 'pop3'),
-            Column::make('POP 4', 'pop4'),
-            Column::make('POP 5', 'pop5'),
-            Column::make('POP 6', 'pop6'),
-            Column::make('POP 7', 'pop7'),
-            Column::make('POP 8', 'pop8'),
-            Column::make('POP 9', 'pop9'),
-            Column::make('POP 10', 'pop10'),
+            Column::make('Tcg Id', 'tcg_id')->sortable()->searchable(),
             // Column::action('Action')
         ];
     }
@@ -107,14 +87,14 @@ final class PopulationTable extends PowerGridComponent
             'accept' => [
                 'label' => 'Yes, delete it',
                 'method' => 'deleteProduct',
-                'params' => ''.$rowId.'',
+                'params' => '' . $rowId . '',
             ],
         ]);
     }
 
     public function deleteProduct($id)
     {
-        $product = PokeCardPopulation::find($id);
+        $product = PokeCardTcgPCRelation::find($id);
         $product->orders()->detach();
         $product->delete();
     }
@@ -123,6 +103,7 @@ final class PopulationTable extends PowerGridComponent
     {
         return view('actions.table-actions', ['row' => $row]);
     }
+
 
     /*
     public function actionRules($row): array

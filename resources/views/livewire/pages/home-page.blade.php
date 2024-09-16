@@ -2,7 +2,7 @@
 
 use Livewire\Volt\Component;
 use Livewire\WithPagination;
-use App\Models\Card;
+use App\Models\PokeCard;
 
 new class extends Component {
     use WithPagination;
@@ -10,7 +10,7 @@ new class extends Component {
     public function with(): array
     {
         return [
-            'cards' => Card::paginate(20),
+            'cards' => PokeCard::paginate(20),
         ];
     }
 }; ?>
@@ -484,7 +484,7 @@ new class extends Component {
                         </div>
                     </div>
 
-                    {{ $cards->links(data: ['scrollTo' => '#section2']) }}
+                    {{ $cards->onEachSide(0)->links(data: ['scrollTo' => '#section2']) }}
                 </div>
             </div>
         </div>

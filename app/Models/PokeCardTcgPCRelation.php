@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Population extends Model
+class PokeCardTcgPCRelation extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['id'];
+    protected $guarded = [];
 
-    protected $casts = [
-        'date_checked' => 'date',
-    ];
+    protected $table = 'poke_card_tcg_pc_relations';
+
+
 }

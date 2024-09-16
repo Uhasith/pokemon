@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Tables;
 
-use App\Models\Card;
+use App\Models\PokeCard;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\View\View;
 use PowerComponents\LivewirePowerGrid\Button;
@@ -38,7 +38,7 @@ final class CardTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        return Card::query();
+        return PokeCard::query();
     }
 
     public function relationSearch(): array
@@ -92,14 +92,14 @@ final class CardTable extends PowerGridComponent
             'accept' => [
                 'label' => 'Yes, delete it',
                 'method' => 'deleteProduct',
-                'params' => ''.$rowId.'',
+                'params' => '' . $rowId . '',
             ],
         ]);
     }
 
     public function deleteProduct($id)
     {
-        $product = Card::find($id);
+        $product = PokeCard::find($id);
         $product->orders()->detach();
         $product->delete();
     }

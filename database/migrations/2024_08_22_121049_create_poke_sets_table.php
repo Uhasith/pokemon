@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sets', function (Blueprint $table) {
+        Schema::create('poke_sets', function (Blueprint $table) {
             $table->id();
             $table->uuid('set_id')->unique()->index();
             $table->string('set_name')->nullable();
@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('set_image')->nullable();
             $table->string('language')->nullable();
             $table->boolean('is_promo')->default(false);
+            $table->string('set_name_clean')->nullable();
             $table->timestamps();
         });
     }

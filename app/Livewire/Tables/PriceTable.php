@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Tables;
 
+use App\Models\PokeCardPrice;
 use App\Models\Price;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\View\View;
@@ -38,7 +39,7 @@ final class PriceTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        return Price::query();
+        return PokeCardPrice::query();
     }
 
     public function relationSearch(): array
@@ -107,7 +108,7 @@ final class PriceTable extends PowerGridComponent
 
     public function deleteProduct($id)
     {
-        $product = Price::find($id);
+        $product = PokeCardPrice::find($id);
         $product->orders()->detach();
         $product->delete();
     }

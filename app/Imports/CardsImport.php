@@ -2,7 +2,7 @@
 
 namespace App\Imports;
 
-use App\Models\Card;
+use App\Models\PokeCard;
 use Carbon\Carbon;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Log;
@@ -69,14 +69,14 @@ class CardsImport implements ShouldQueue, ToModel, WithBatchInserts, WithChunkRe
         });
 
         // Attempt to find the set by Set Id or any alternative identifiers
-        $set = Card::where('card_id', $card_id)->where('set_id', $set_id)->first();
+        $set = PokeCard::where('card_id', $card_id)->where('set_id', $set_id)->first();
 
         if ($set) {
             // Update the existing set
             $set->update($filteredExcelMapping);
         } else {
             // Create a new set if no conflicts
-            Card::create($filteredExcelMapping);
+            PokeCard::create($filteredExcelMapping);
         }
 
         return null; // Return null because database insertion is handled manually
@@ -87,7 +87,7 @@ class CardsImport implements ShouldQueue, ToModel, WithBatchInserts, WithChunkRe
         return [
             ImportFailed::class => function (ImportFailed $event) {
                 $exceptionMessage = $event->getException()->getMessage();
-                Log::error('Failed to import row: '.$exceptionMessage);
+                Log::error('Failed to import row: ' . $exceptionMessage);
             },
         ];
     }

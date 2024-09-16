@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Tables;
 
+use App\Models\PokeSet;
 use App\Models\Set;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\View\View;
@@ -38,7 +39,7 @@ final class SetTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        return Set::query();
+        return PokeSet::query();
     }
 
     public function relationSearch(): array
@@ -106,7 +107,7 @@ final class SetTable extends PowerGridComponent
 
     public function deleteProduct($id)
     {
-        $product = Set::find($id);
+        $product = PokeSet::find($id);
         $product->orders()->detach();
         $product->delete();
     }

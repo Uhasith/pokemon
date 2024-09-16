@@ -233,4 +233,18 @@ return [
             'value' => 'content_group',
         ],
     ],
+    'cardTcgPcTableColumns' => [
+        [
+            'name' => 'Card Id (UUID)',
+            'value' => 'card_id',
+        ],
+        [
+            'name' => 'Tcg Id (UUID)',
+            'value' => 'tcg_id',
+        ],
+        [
+            'name' => 'Pc Id (UUID)',
+            'value' => 'pc_id',
+        ],
+    ],
 ];

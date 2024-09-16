@@ -2,25 +2,75 @@
 
 use Livewire\Volt\Component;
 use Livewire\Attributes\Url;
-use App\Models\Card;
+use App\Models\PokeCard;
+use App\Models\CardTcgp;
 use Illuminate\Support\Facades\Log;
 
 new class extends Component {
     #[Url]
     public $card_id;
-
     public $card;
+    public $cardTcgp;
+    public $cardPrices = [];
+    public $population;
+    public $totalPopulation;
+    public $populations = [];
+    public $prices = [];
 
     public function mount()
     {
-        Log::info($this->card_id);
-        $this->card = Card::where('card_id', $this->card_id)->with('tcgp')->first();
-        Log::info($this->card->tcgp->toArray()['attacks']);
+        $this->card = Card::where('card_id', $this->card_id)
+            ->with('card_tcgp', 'populations', 'card_prices')
+            ->first();
+        $this->cardTcgp = $this->card->card_tcgp;
+        $this->cardPrices = $this->card->card_prices->toArray();
+        $this->population = $this->card->populations->sortByDesc('date_checked')->first();
+
+        // Initialize prices array with default values as '-'
+        $this->prices = [
+            'PSA10' => '-',
+            'PSA9' => '-',
+            'PSA8' => '-',
+            'PSA7' => '-',
+            'PSA6' => '-',
+            'PSA5' => '-',
+            'PSA4' => '-',
+            'PSA3' => '-',
+            'PSA2' => '-',
+            'PSA1' => '-',
+        ];
+
+        // Loop through the cardPrices array to populate the prices array based on psa_grade
+        foreach ($this->cardPrices as $price) {
+            $psaGrade = 'PSA' . $price['psa_grade'];
+            if (isset($this->prices[$psaGrade])) {
+                // Round the price to an integer (removing decimals) and append a '$' sign
+                $this->prices[$psaGrade] = '$ ' . round($price['fair_price']);
+            }
+        }
+
+        $this->populations = [
+            'PSA10' => $this->population->pop10,
+            'PSA9' => $this->population->pop9,
+            'PSA8' => $this->population->pop8,
+            'PSA7' => $this->population->pop7,
+            'PSA6' => $this->population->pop6,
+            'PSA5' => $this->population->pop5,
+            'PSA4' => $this->population->pop4,
+            'PSA3' => $this->population->pop3,
+            'PSA2' => $this->population->pop2,
+            'PSA1' => $this->population->pop1,
+        ];
+
+        $this->totalPopulation = array_sum($this->populations);
     }
 }; ?>
 
 <div>
     <div class="w-full bg-darkblackbg" x-init="initFlowbite();">
+        {{-- @php
+            print_r(json_decode($this->cardTcgp->card_market, true));
+        @endphp --}}
         {{-- Single Product Details Section --}}
         <div class="max-w-[1440px] 2xl:max-w-[1500px] bg-darkbg mx-auto relative flex flex-col lg:px-8 xl:px-0">
             <div class="my-12 px-8 lg:px-0">
@@ -308,70 +358,23 @@ new class extends Component {
                                         <div class="w-full md:w-9/12 bg-[#27292B] rounded-xl p-4">
                                             <div class="w-full overflow-x-auto relative">
                                                 <div class="flex justify-start w-full mb-3">
-                                                    <h2 class="font-manrope font-bold text-base text-white">PSA
-                                                        Population price</h2>
+                                                    <h2 class="font-manrope font-bold text-base text-white">
+                                                        PSA Population price
+                                                    </h2>
                                                 </div>
                                                 <div class="grid grid-cols-10 gap-4 w-full">
-                                                    <div class="w-full flex flex-col gap-2 justify-center">
-                                                        <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">
-                                                            PSA10</h4>
-                                                        <h4 class="font-manrope font-semibold text-sm text-white">$67
-                                                        </h4>
-                                                    </div>
-                                                    <div class="w-full flex flex-col gap-2 justify-center">
-                                                        <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">
-                                                            PSA9</h4>
-                                                        <h4 class="font-manrope font-semibold text-sm text-white">$453
-                                                        </h4>
-                                                    </div>
-                                                    <div class="w-full flex flex-col gap-2 justify-center">
-                                                        <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">
-                                                            PSA8</h4>
-                                                        <h4 class="font-manrope font-semibold text-sm text-white">$364
-                                                        </h4>
-                                                    </div>
-                                                    <div class="w-full flex flex-col gap-2 justify-center">
-                                                        <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">
-                                                            PSA7</h4>
-                                                        <h4 class="font-manrope font-semibold text-sm text-white">$230
-                                                        </h4>
-                                                    </div>
-                                                    <div class="w-full flex flex-col gap-2 justify-center">
-                                                        <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">
-                                                            PSA6</h4>
-                                                        <h4 class="font-manrope font-semibold text-sm text-white">$203
-                                                        </h4>
-                                                    </div>
-                                                    <div class="w-full flex flex-col gap-2 justify-center">
-                                                        <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">
-                                                            PSA5</h4>
-                                                        <h4 class="font-manrope font-semibold text-sm text-white">$154
-                                                        </h4>
-                                                    </div>
-                                                    <div class="w-full flex flex-col gap-2 justify-center">
-                                                        <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">
-                                                            PSA4</h4>
-                                                        <h4 class="font-manrope font-semibold text-sm text-white">$59
-                                                        </h4>
-                                                    </div>
-                                                    <div class="w-full flex flex-col gap-2 justify-center">
-                                                        <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">
-                                                            PSA3</h4>
-                                                        <h4 class="font-manrope font-semibold text-sm text-white">$37
-                                                        </h4>
-                                                    </div>
-                                                    <div class="w-full flex flex-col gap-2 justify-center">
-                                                        <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">
-                                                            PSA2</h4>
-                                                        <h4 class="font-manrope font-semibold text-sm text-white">$10
-                                                        </h4>
-                                                    </div>
-                                                    <div class="w-full flex flex-col gap-2 justify-center">
-                                                        <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">
-                                                            PSA1</h4>
-                                                        <h4 class="font-manrope font-semibold text-sm text-white">$17
-                                                        </h4>
-                                                    </div>
+                                                    @foreach ($prices as $key => $value)
+                                                        <div class="w-full flex flex-col gap-2 justify-center">
+                                                            <h4
+                                                                class="font-manrope font-semibold text-sm text-[#BEBFBF]">
+                                                                {{ $key }}
+                                                            </h4>
+                                                            <h4
+                                                                class="font-manrope font-semibold text-sm text-white text-center">
+                                                                {{ $value }}
+                                                            </h4>
+                                                        </div>
+                                                    @endforeach
                                                 </div>
                                             </div>
                                         </div>
@@ -390,6 +393,38 @@ new class extends Component {
                                         </div>
                                     </div>
 
+                                    @php
+                                        $percentage = ($populations['PSA10'] / $totalPopulation) * 100;
+
+                                        // Determine difficulty label and color based on percentage
+                                        if ($percentage < 5) {
+                                            $difficulty = 'Extremely Hard';
+                                            $color = 'text-red-500'; // Extremely hard (red)
+                                        } elseif ($percentage < 10) {
+                                            $difficulty = 'Very Hard';
+                                            $color = 'text-orange-500'; // Very hard (orange)
+                                        } elseif ($percentage < 20) {
+                                            $difficulty = 'Hard';
+                                            $color = 'text-yellow-500'; // Hard (yellow)
+                                        } elseif ($percentage < 40) {
+                                            $difficulty = 'Moderate';
+                                            $color = 'text-blue-500'; // Moderate (blue)
+                                        } elseif ($percentage < 60) {
+                                            $difficulty = 'Easy';
+                                            $color = 'text-green-500'; // Easy (green)
+                                        } else {
+                                            $difficulty = 'Very Easy';
+                                            $color = 'text-indigo-500'; // Very Easy (indigo)
+                                        }
+
+                                        // Ensure PSA10 value is not zero to avoid division by zero error
+                                        $psa10 = $populations['PSA10'] ?? 1; // Default to 1 if PSA10 is 0
+                                        $psa9 = $populations['PSA9'] ?? 0;
+
+                                        // Calculate the PSA 9/10 ratio
+                                        $ratio = $psa9 / $psa10;
+                                    @endphp
+
                                     <div class="w-full flex flex-col md:flex-row gap-5 my-5">
                                         <div
                                             class="w-full md:w-9/12 bg-[#27292B] rounded-xl p-4 overflow-x-auto relative flex flex-col justify-between">
@@ -402,90 +437,51 @@ new class extends Component {
                                                     <div class="w-1/4 flex flex-col gap-2 justify-between">
                                                         <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">
                                                             PSA total population</h4>
-                                                        <h4 class="font-manrope font-semibold text-sm text-white">1860
+                                                        <h4
+                                                            class="font-manrope font-semibold text-sm text-white text-center">
+                                                            {{ $totalPopulation }}
                                                         </h4>
                                                     </div>
                                                     <div class="w-1/5 flex flex-col gap-2 justify-between">
                                                         <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">
                                                             PSA 10 chance</h4>
-                                                        <h4 class="font-manrope font-semibold text-sm text-greenprice">
-                                                            14.13%</h4>
+                                                        <h4
+                                                            class="font-manrope font-semibold text-sm text-center text-greenprice">
+                                                            {{ number_format($percentage, 2) }} %
+                                                        </h4>
                                                     </div>
                                                     <div class="w-1/5 flex flex-col gap-2 justify-between">
                                                         <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">
-                                                            PSA 9/10 Ratio</h4>
-                                                        <h4 class="font-manrope font-semibold text-sm text-greenprice">
-                                                            5.99:1</h4>
+                                                            PSA 9/10 Ratio
+                                                        </h4>
+                                                        <h4
+                                                            class="font-manrope font-semibold text-sm text-center text-greenprice">
+                                                            {{ number_format($ratio, 2) }} : 1
+                                                        </h4>
                                                     </div>
                                                     <div class="w-1/4 flex flex-col gap-2 justify-between">
                                                         <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">
                                                             PSA Grade Difficulty</h4>
-                                                        <h4 class="font-manrope font-semibold text-sm text-redprice">
-                                                            Very Hard</h4>
+                                                        <h4
+                                                            class="font-manrope font-semibold text-sm text-center {{ $color }}">
+                                                            {{ $difficulty }}
+                                                        </h4>
                                                     </div>
                                                 </div>
                                                 <hr class="my-2">
                                                 <div class="grid grid-cols-10 gap-4 w-full">
-                                                    <div class="w-full flex flex-col gap-2 justify-center">
-                                                        <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">
-                                                            PSA10</h4>
-                                                        <h4 class="font-manrope font-semibold text-sm text-white">$67
-                                                        </h4>
-                                                    </div>
-                                                    <div class="w-full flex flex-col gap-2 justify-center">
-                                                        <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">
-                                                            PSA9</h4>
-                                                        <h4 class="font-manrope font-semibold text-sm text-white">$453
-                                                        </h4>
-                                                    </div>
-                                                    <div class="w-full flex flex-col gap-2 justify-center">
-                                                        <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">
-                                                            PSA8</h4>
-                                                        <h4 class="font-manrope font-semibold text-sm text-white">$364
-                                                        </h4>
-                                                    </div>
-                                                    <div class="w-full flex flex-col gap-2 justify-center">
-                                                        <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">
-                                                            PSA7</h4>
-                                                        <h4 class="font-manrope font-semibold text-sm text-white">$230
-                                                        </h4>
-                                                    </div>
-                                                    <div class="w-full flex flex-col gap-2 justify-center">
-                                                        <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">
-                                                            PSA6</h4>
-                                                        <h4 class="font-manrope font-semibold text-sm text-white">$203
-                                                        </h4>
-                                                    </div>
-                                                    <div class="w-full flex flex-col gap-2 justify-center">
-                                                        <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">
-                                                            PSA5</h4>
-                                                        <h4 class="font-manrope font-semibold text-sm text-white">$154
-                                                        </h4>
-                                                    </div>
-                                                    <div class="w-full flex flex-col gap-2 justify-center">
-                                                        <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">
-                                                            PSA4</h4>
-                                                        <h4 class="font-manrope font-semibold text-sm text-white">$59
-                                                        </h4>
-                                                    </div>
-                                                    <div class="w-full flex flex-col gap-2 justify-center">
-                                                        <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">
-                                                            PSA3</h4>
-                                                        <h4 class="font-manrope font-semibold text-sm text-white">$37
-                                                        </h4>
-                                                    </div>
-                                                    <div class="w-full flex flex-col gap-2 justify-center">
-                                                        <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">
-                                                            PSA2</h4>
-                                                        <h4 class="font-manrope font-semibold text-sm text-white">$10
-                                                        </h4>
-                                                    </div>
-                                                    <div class="w-full flex flex-col gap-2 justify-center">
-                                                        <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">
-                                                            PSA1</h4>
-                                                        <h4 class="font-manrope font-semibold text-sm text-white">$17
-                                                        </h4>
-                                                    </div>
+                                                    @foreach ($populations as $key => $value)
+                                                        <div class="w-full flex flex-col gap-2 justify-center">
+                                                            <h4
+                                                                class="font-manrope font-semibold text-sm text-[#BEBFBF]">
+                                                                {{ $key }}
+                                                            </h4>
+                                                            <h4
+                                                                class="font-manrope font-semibold text-sm text-white text-center">
+                                                                {{ $value }}
+                                                            </h4>
+                                                        </div>
+                                                    @endforeach
                                                 </div>
                                             </div>
                                         </div>
@@ -642,9 +638,7 @@ new class extends Component {
                                         </div>
                                     </div>
 
-                                    <div id="chart-container" style="width: 90%; height: 300px; margin: auto;">
-                                        <canvas id="myChart"></canvas>
-                                    </div>
+                                    <livewire:pages.components.charts.card-detail-history-chart />
                                 </div>
                                 <div class="hidden p-4 rounded-lg bg-gray-50" id="styled-dashboard" role="tabpanel"
                                     aria-labelledby="dashboard-tab">
@@ -1604,8 +1598,7 @@ new class extends Component {
                                                         </g>
                                                         <defs>
                                                             <clipPath id="clip0_318_19463">
-                                                                <rect width="49.9002" height="20"
-                                                                    fill="white"
+                                                                <rect width="49.9002" height="20" fill="white"
                                                                     transform="translate(0.0499268)" />
                                                             </clipPath>
                                                         </defs>

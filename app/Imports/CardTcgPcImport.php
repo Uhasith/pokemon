@@ -2,12 +2,10 @@
 
 namespace App\Imports;
 
-use App\Models\PokeCardPrice;
-use App\Models\Price;
-use Carbon\Carbon;
+use App\Models\PokeCardTcgPCRelation;
+use Maatwebsite\Excel\Concerns\ToModel;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Log;
-use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithEvents;
@@ -15,7 +13,7 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Events\AfterImport;
 use Maatwebsite\Excel\Events\ImportFailed;
 
-class PricesImport implements ShouldQueue, ToModel, WithBatchInserts, WithChunkReading, WithEvents, WithHeadingRow
+class CardTcgPcImport implements ShouldQueue, ToModel, WithBatchInserts, WithChunkReading, WithEvents, WithHeadingRow
 {
     protected $columnMappings;
 
@@ -37,29 +35,16 @@ class PricesImport implements ShouldQueue, ToModel, WithBatchInserts, WithChunkR
             if ($dbColumn !== 'id') {
                 $value = $row[$excelColumnIndex] ?? null;
 
-                if ($value !== null) {
-                    try {
-                        if (in_array($dbColumn, ['sale_date']) && ! empty($value)) {
-                            // Format the date to a standardized format (e.g., Y-m-d)
-                            $value = Carbon::parse($value)->format('Y-m-d');
-                        }
-                    } catch (\Exception $e) {
-                        // Log the exception for debugging purposes
-                        Log::error("Failed to parse date for $dbColumn with value: $value", ['exception' => $e]);
-                        $value = null; // Set value to null if parsing fails
-                    }
-                }
-
                 $excelMapping[$dbColumn] = $value;
             }
         }
 
-        $price_id = $excelMapping['price_id'] ?? null;
         $card_id = $excelMapping['card_id'] ?? null;
+        $tcg_id = $excelMapping['tcg_id'] ?? null;
 
-        if ($price_id === null || $card_id === null) {
+        if ($card_id === null || $tcg_id === null) {
             // Log an error and skip processing this row
-            Log::error('Price Id or Card Id is missing for a row, skipping the row.', ['row' => $row]);
+            Log::error('Card Id or Tcg Id is missing for a row, skipping the row.', ['row' => $row]);
 
             return null; // Skip this row
         }
@@ -70,14 +55,14 @@ class PricesImport implements ShouldQueue, ToModel, WithBatchInserts, WithChunkR
         });
 
         // Attempt to find the set by Set Id or any alternative identifiers
-        $set = PokeCardPrice::where('price_id', $price_id)->where('card_id', $card_id)->first();
+        $set = PokeCardTcgPCRelation::where('card_id', $card_id)->where('tcg_id', $tcg_id)->first();
 
         if ($set) {
             // Update the existing set
             $set->update($filteredExcelMapping);
         } else {
             // Create a new set if no conflicts
-            PokeCardPrice::create($filteredExcelMapping);
+            PokeCardTcgPCRelation::create($filteredExcelMapping);
         }
 
         return null; // Return null because database insertion is handled manually
@@ -88,7 +73,7 @@ class PricesImport implements ShouldQueue, ToModel, WithBatchInserts, WithChunkR
         return [
             ImportFailed::class => function (ImportFailed $event) {
                 $exceptionMessage = $event->getException()->getMessage();
-                Log::error('Failed to import row: '.$exceptionMessage);
+                Log::error('Failed to import row: ' . $exceptionMessage);
             },
         ];
     }

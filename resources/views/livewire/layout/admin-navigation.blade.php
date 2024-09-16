@@ -44,6 +44,9 @@ new class extends Component {
                     <x-nav-link :href="route('population-page')" :active="request()->routeIs('population-page')" wire:navigate>
                         {{ __('Population') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('card-tcg-pc-page')" :active="request()->routeIs('card-tcg-pc-page')" wire:navigate>
+                        {{ __('Card TCG & PC') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('submitted-data-page')" :active="request()->routeIs('submitted-data-page')" wire:navigate>
                         {{ __('Submitted Data') }}
                     </x-nav-link>

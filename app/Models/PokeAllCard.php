@@ -5,14 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CardTcgp extends Model
+class PokeAllCard extends Model
 {
     use HasFactory;
 
     protected $guarded = ['id'];
 
+    protected $table = 'poke_all_cards';
+
     protected $casts = [
         'abilities' => 'array',
+        'ancient_trait' => 'array',
         'attacks' => 'array',
         'card_market' => 'array',
         'images' => 'array',

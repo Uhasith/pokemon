@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\Models\PokeSet;
 use App\Models\Set;
 use Carbon\Carbon;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -71,14 +72,14 @@ class SetsImport implements ShouldQueue, ToModel, WithBatchInserts, WithChunkRea
         });
 
         // Attempt to find the set by Set Id or any alternative identifiers
-        $set = Set::where('set_id', $set_id)->first();
+        $set = PokeSet::where('set_id', $set_id)->first();
 
         if ($set) {
             // Update the existing set
             $set->update($filteredExcelMapping);
         } else {
             // Create a new set if no conflicts
-            Set::create($filteredExcelMapping);
+            PokeSet::create($filteredExcelMapping);
         }
 
         return null; // Return null because database insertion is handled manually

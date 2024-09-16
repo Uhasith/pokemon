@@ -2,22 +2,20 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Price extends Model
+class PokeSet extends Model
 {
     use HasFactory;
 
     protected $guarded = ['id'];
 
-    protected $casts = [
-        'sale_date' => 'date',
-    ];
+    protected $table = 'poke_sets';
 
-    public function getSaleDateAttribute($value)
-    {
-        return Carbon::parse($value)->format('Y-m-d');
-    }
+    protected $casts = [
+        'release_date' => 'date',
+        'last_pop_updated' => 'date',
+        'is_promo' => 'boolean',
+    ];
 }

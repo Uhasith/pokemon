@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\Models\PokeCardPopulation;
 use App\Models\Population;
 use Carbon\Carbon;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -69,14 +70,14 @@ class PopulationsImport implements ShouldQueue, ToModel, WithBatchInserts, WithC
         });
 
         // Attempt to find the set by Set Id or any alternative identifiers
-        $set = Population::where('population_id', $population_id)->where('card_id', $card_id)->first();
+        $set = PokeCardPopulation::where('population_id', $population_id)->where('card_id', $card_id)->first();
 
         if ($set) {
             // Update the existing set
             $set->update($filteredExcelMapping);
         } else {
             // Create a new set if no conflicts
-            Population::create($filteredExcelMapping);
+            PokeCardPopulation::create($filteredExcelMapping);
         }
 
         return null; // Return null because database insertion is handled manually

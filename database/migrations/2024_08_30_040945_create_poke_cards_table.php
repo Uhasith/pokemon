@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cards', function (Blueprint $table) {
+        Schema::create('poke_cards', function (Blueprint $table) {
             $table->id();
             $table->uuid('card_id')->unique()->index();
             $table->uuid('set_id');
@@ -30,7 +30,7 @@ return new class extends Migration
             $table->index('set_id');
 
             // Foreign key constraint
-            $table->foreign('set_id')->references('set_id')->on('sets')->onDelete('cascade');
+            $table->foreign('set_id')->references('set_id')->on('poke_sets')->onDelete('cascade');
         });
     }
 
