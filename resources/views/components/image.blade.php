@@ -15,12 +15,12 @@
 </div>
 
 <script>
-    function imageLoader(src, extraClass, alt) {
+    function imageLoader(src, extraClass, altText = 'image') {
         return {
             isLoading: true,
             imageSrc: src,
             extraClass: extraClass,
-            altText: alt,
+            altText: altText,
             init() {
                 this.imageSrc = src;
                 this.altText = altText;

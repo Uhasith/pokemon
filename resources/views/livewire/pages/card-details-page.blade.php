@@ -12,7 +12,7 @@ new class extends Component {
     public $card_id;
     public $card;
     public $relatedAllCard;
-    public $cardPricesTieseries = [];
+    public $cardPricesTimeseries = [];
     public $population;
     public $totalPopulation;
     public $populations = [];
@@ -30,17 +30,18 @@ new class extends Component {
                 },
                 'card_prices',
                 'price_timeseries',
+                'all_card',
             ])
             ->first();
 
-        $this->relatedAllCard = PokeAllCard::where('tcg_id', $this->card->tcg->tcg_id)->first();
+        $this->relatedAllCard = $this->card->all_card;
 
         if ($this->relatedAllCard) {
             $this->imageUrl = $this->relatedAllCard->images['large'];
         }
 
         // Initialize the timeseries data and population from the related data
-        $this->cardPricesTieseries = $this->card->price_timeseries->toArray();
+        $this->cardPricesTimeseries = $this->card->price_timeseries->toArray();
         $this->population = $this->card->populations->first();
 
         // Initialize prices array with default values of '-'
@@ -61,7 +62,7 @@ new class extends Component {
      */
     private function populatePrices()
     {
-        foreach ($this->cardPricesTieseries as $price) {
+        foreach ($this->cardPricesTimeseries as $price) {
             $psaGrade = 'PSA' . $price['psa_grade'];
 
             if (isset($this->prices[$psaGrade])) {
@@ -269,12 +270,14 @@ new class extends Component {
                 <div class="w-4/5 mx-auto lg:w-8/12 xl:w-[60%] xl:px-3 lg:ml-8 xl:ml-5">
                     <div>
                         <h1 class="font-manrope text-3xl lg:text-4xl font-bold text-white">
-                            {{ $card->name }} - ({{ $relatedAllCard->number }} / {{ $relatedAllCard->set['printedTotal'] ?? 0 }})
+                            {{ $card?->name }} - ({{ $relatedAllCard?->number }} /
+                            {{ $relatedAllCard?->set['printedTotal'] ?? 0 }})
                         </h1>
-                        <h2 class="font-manrope font-medium text-3xl text-white mt-2">{{ $relatedAllCard->set['name'] }}</h2>
+                        <h2 class="font-manrope font-medium text-3xl text-white mt-2">
+                            {{ $relatedAllCard?->set['name'] }}</h2>
                     </div>
                     <div class="flex flex-row gap-2 items-center justify-start my-3">
-                   
+
                         <a href="#"
                             class="flex gap-2 items-center justify-center text-yellowish font-manrope font-medium text-sm">
                             <span>All versions</span>
@@ -514,7 +517,7 @@ new class extends Component {
                                                         <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">
                                                             PSA 10 chance</h4>
                                                         <h4
-                                                            class="font-manrope font-semibold text-sm text-center text-greenprice">
+                                                            class="font-manrope font-semibold text-sm text-center {{ $color }}">
                                                             {{ number_format($percentage, 2) }} %
                                                         </h4>
                                                     </div>
@@ -523,7 +526,7 @@ new class extends Component {
                                                             PSA 9/10 Ratio
                                                         </h4>
                                                         <h4
-                                                            class="font-manrope font-semibold text-sm text-center text-greenprice">
+                                                            class="font-manrope font-semibold text-sm text-center {{ $color }}">
                                                             {{ number_format($ratio, 2) }} : 1
                                                         </h4>
                                                     </div>
@@ -599,133 +602,8 @@ new class extends Component {
                     </div>
 
                     <div class="py-5">
-                        <h2 class="font-manrope font-bold text-white text-xl mb-5">Market Price History</h2>
-
-                        <div>
-                            <div class="border-b border-gray-200 dark:border-gray-700">
-                                <ul class="flex -mb-px text-sm font-medium text-center bg-evengray rounded-t-xl relative overflow-x-auto"
-                                    id="default-styled-tab" data-tabs-toggle="#default-styled-tab-content"
-                                    data-tabs-active-classes="tabactive bg-yellowish rounded-b-lg text-black"
-                                    data-tabs-inactive-classes="text-gray-500 hover:text-black hover:bg-yellowish hover:rounded-lg"
-                                    role="tablist">
-                                    <li class="bg-grayish p-3 rounded-t-xl" role="presentation">
-                                        <button class="inline-block p-4 rounded-t-lg" id="profile-styled-tab"
-                                            data-tabs-target="#styled-profile" type="button" role="tab"
-                                            aria-controls="profile" aria-selected="false">Price Changes - $</button>
-                                    </li>
-                                    <li class="bg-evengray p-3 rounded-t-xl" role="presentation">
-                                        <button class="inline-block p-4 rounded-t-lg" id="dashboard-styled-tab"
-                                            data-tabs-target="#styled-dashboard" type="button" role="tab"
-                                            aria-controls="dashboard" aria-selected="false">Number of Sales - Bar
-                                            chart</button>
-                                    </li>
-                                    <li class="bg-evengray p-3 rounded-t-xl" role="presentation">
-                                        <button class="inline-block p-4 rounded-t-lg" id="settings-styled-tab"
-                                            data-tabs-target="#styled-settings" type="button" role="tab"
-                                            aria-controls="settings" aria-selected="false">Population</button>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div id="default-styled-tab-content">
-                                <div class="hidden p-4 rounded-b-xl bg-grayish" id="styled-profile" role="tabpanel"
-                                    aria-labelledby="profile-tab">
-                                    <div class="flex justify-between items-center mb-5">
-                                        <div class="flex rounded-lg bg-evengray p-1 w-auto gap-3">
-                                            <div>
-                                                <div
-                                                    class="p-2 rounded bg-yellowish hover:bg-yellowish group cursor-pointer">
-                                                    <p
-                                                        class="font-manrope font-bold text-sm text-center group-hover:text-black">
-                                                        6M</p>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div class="p-2 rounded hover:bg-yellowish group cursor-pointer">
-                                                    <p
-                                                        class="font-manrope font-bold text-sm text-center text-white group-hover:text-black">
-                                                        1Y</p>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div class="p-2 rounded hover:bg-yellowish group cursor-pointer">
-                                                    <p
-                                                        class="font-manrope font-bold text-sm text-center text-white group-hover:text-black">
-                                                        5Y</p>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div class="p-2 rounded hover:bg-yellowish group cursor-pointer">
-                                                    <p
-                                                        class="font-manrope font-bold text-sm text-center text-white group-hover:text-black">
-                                                        All</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div>
-
-                                            <button id="dropdownSelectGrades" data-dropdown-toggle="dropdown"
-                                                class="text-white bg-evengray font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
-                                                type="button">
-                                                Select Grades
-                                                <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true"
-                                                    xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                    viewBox="0 0 10 6">
-                                                    <path stroke="currentColor" stroke-linecap="round"
-                                                        stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
-                                                </svg>
-                                            </button>
-
-                                            <!-- Dropdown menu -->
-                                            <div id="dropdown"
-                                                class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
-                                                    aria-labelledby="dropdownSelectGrades">
-                                                    <li>
-                                                        <a href="#"
-                                                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">PSA
-                                                            1</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#"
-                                                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">PSA
-                                                            2</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#"
-                                                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">PSA
-                                                            3</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#"
-                                                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">PSA
-                                                            4</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                    <livewire:pages.components.charts.card-detail-history-chart />
-                                </div>
-                                <div class="hidden p-4 rounded-lg bg-gray-50" id="styled-dashboard" role="tabpanel"
-                                    aria-labelledby="dashboard-tab">
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder
-                                        content the <strong class="font-medium text-gray-800 dark:text-white">Dashboard
-                                            tab's associated content</strong>. Clicking another tab will toggle the
-                                        visibility of this one for the next. The tab JavaScript swaps classes to control
-                                        the content visibility and styling.</p>
-                                </div>
-                                <div class="hidden p-4 rounded-lg bg-gray-50" id="styled-settings" role="tabpanel"
-                                    aria-labelledby="settings-tab">
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder
-                                        content the <strong class="font-medium text-gray-800 dark:text-white">Settings
-                                            tab's associated content</strong>. Clicking another tab will toggle the
-                                        visibility of this one for the next. The tab JavaScript swaps classes to control
-                                        the content visibility and styling.</p>
-                                </div>
-                            </div>
-                        </div>
+                        <livewire:pages.components.charts.card-detail-history-chart :card="$card" :populations="$populations"
+                            :cardPricesTimeseries="$cardPricesTimeseries" />
                     </div>
 
                     {{-- <div class="py-5">
@@ -1723,8 +1601,7 @@ new class extends Component {
                                                         </g>
                                                         <defs>
                                                             <clipPath id="clip0_318_19463">
-                                                                <rect width="49.9002" height="20"
-                                                                    fill="white"
+                                                                <rect width="49.9002" height="20" fill="white"
                                                                     transform="translate(0.0499268)" />
                                                             </clipPath>
                                                         </defs>
@@ -1781,8 +1658,7 @@ new class extends Component {
                                                         </g>
                                                         <defs>
                                                             <clipPath id="clip0_318_19463">
-                                                                <rect width="49.9002" height="20"
-                                                                    fill="white"
+                                                                <rect width="49.9002" height="20" fill="white"
                                                                     transform="translate(0.0499268)" />
                                                             </clipPath>
                                                         </defs>
@@ -1794,8 +1670,7 @@ new class extends Component {
 
                                     <div class="flex gap-5 items-center w-full rounded-lg bg-[#262626] p-5">
                                         <div class="w-1/3">
-                                            <img src="{{ asset('assets/card-images/Flareon.png') }}"
-                                                alt="">
+                                            <img src="{{ asset('assets/card-images/Flareon.png') }}" alt="">
                                         </div>
                                         <div class="w-2/3 relative">
                                             <div class="flex items-center justify-center gap-2 w-full h-10 bg-no-repeat bg-center bg-contain absolute -top-14 md:-top-9 lg:-top-14 xl:-top-11"

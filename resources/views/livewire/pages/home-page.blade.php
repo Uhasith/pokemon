@@ -10,7 +10,7 @@ new class extends Component {
     public function with(): array
     {
         return [
-            'cards' => PokeCard::paginate(20),
+            'cards' => PokeCard::with('tcg','all_card')->paginate(20),
         ];
     }
 }; ?>
@@ -241,12 +241,13 @@ new class extends Component {
                                     <div class="flex w-full">
                                         <div
                                             class="p-4 rounded-2xl bg-[#2C2C2C] bg-blend-screen relative cursor-pointer">
-                                            @if ($card->image_url)
+                                            @if ($card?->all_card?->images['small'] !== null)
                                                 <a href="{{ route('card-details', ['card_id' => $card->card_id]) }}">
-                                                    <x-image :src="$card->image_url" :alt="$card->name" skeltonWidth="160"
+                                                    <x-image :src="$card?->all_card?->images['small']" :alt="$card->name" skeltonWidth="160"
                                                         skeltonHeight="220" />
                                                 </a>
                                             @else
+                                             <a href="{{ route('card-details', ['card_id' => $card->card_id]) }}">
                                                 <div class="flex items-center justify-center bg-gray-300 rounded dark:bg-gray-700 animate-pulse"
                                                     style="width: 160px; height: 220px;">
                                                     <svg class="w-10 h-10 text-gray-200 dark:text-gray-600"
@@ -256,6 +257,7 @@ new class extends Component {
                                                             d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z" />
                                                     </svg>
                                                 </div>
+                                                </a>
                                             @endif
                                         </div>
                                         <div class="relative">
