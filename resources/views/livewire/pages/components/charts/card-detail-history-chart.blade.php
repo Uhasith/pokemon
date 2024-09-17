@@ -9,6 +9,12 @@ new class extends Component {
     public $cardPricesTimeseries;
     public $chartGrade = 'PSA10';
     public $timeFrame = 'ALL';
+    public $timeFrameAvailability = [
+        '6M' => false,
+        '1Y' => false,
+        '5Y' => false,
+        'All' => true, // Default is 'All'
+    ];
 
     public $chartData = [
         'labels' => [],
@@ -49,19 +55,39 @@ new class extends Component {
             $timeseries = collect($filteredData['timeseries_data']);
 
             // Get the latest date in the timeseries (to use as the reference point)
-            $latestDate = Carbon::parse($timeseries->last()['date']);
+            // $latestDate = Carbon::parse($timeseries->last()['date']);
+
+            // Define time frames to check
+            $timeFrames = [
+                '6M' => Carbon::now()->subMonths(6),
+                '1Y' => Carbon::now()->subYear(),
+                '5Y' => Carbon::now()->subYears(5),
+            ];
+
+            // Check if data exists for each time frame and set availability flags
+            foreach ($timeFrames as $key => $startDate) {
+                $timeFrameData = $timeseries->filter(function ($item) use ($startDate) {
+                    $date = Carbon::parse($item['date']);
+                    return $date->greaterThanOrEqualTo($startDate);
+                });
+
+                if ($timeFrameData->isNotEmpty()) {
+                    $this->timeFrameAvailability[$key] = true;
+                }
+            }
 
             // Determine the start date based on the selected time frame
             $startDate = null;
             switch ($this->timeFrame) {
                 case '6M':
-                    $startDate = $latestDate->copy()->subMonths(6);
+                    // $latestDate->copy()
+                    $startDate = Carbon::now()->subMonths(6);
                     break;
                 case '1Y':
-                    $startDate = $latestDate->copy()->subYear();
+                    $startDate = Carbon::now()->subYear();
                     break;
                 case '5Y':
-                    $startDate = $latestDate->copy()->subYears(5);
+                    $startDate = Carbon::now()->subYears(5);
                     break;
                 default:
                     // 'All' or any other case: no filtering based on time
@@ -134,14 +160,16 @@ new class extends Component {
         <div id="default-styled-tab-content">
             <div class="hidden p-4 rounded-b-xl bg-grayish" id="styled-profile" role="tabpanel"
                 aria-labelledby="profile-tab">
-                <div class="flex justify-between items-center mb-5" x-data="{ timeFrame: $wire.entangle('timeFrame').live }">
+                <div class="flex justify-between items-center mb-5" x-data="{ timeFrame: $wire.entangle('timeFrame').live, timeFrameAvailability: $wire.entangle('timeFrameAvailability').live }">
                     <div class="flex rounded-lg bg-evengray p-1 w-auto gap-3">
                         <!-- 6M Button -->
                         <div>
-                            <div @click="timeFrame = '6M'" class="p-2 rounded cursor-pointer"
+                            <div @click="timeFrameAvailability['6M'] && (timeFrame = '6M')"
+                                :disabled="!timeFrameAvailability['6M']" class="p-2 rounded cursor-pointer"
                                 :class="{
                                     'bg-yellowish text-black': timeFrame === '6M',
-                                    'bg-evengray text-white': timeFrame !== '6M'
+                                    'bg-evengray text-white': timeFrame !== '6M',
+                                    'opacity-50 cursor-not-allowed': !timeFrameAvailability['6M']
                                 }">
                                 <p class="font-manrope font-bold text-sm text-center">6M</p>
                             </div>
@@ -149,10 +177,12 @@ new class extends Component {
 
                         <!-- 1Y Button -->
                         <div>
-                            <div @click="timeFrame = '1Y'" class="p-2 rounded cursor-pointer"
+                            <div @click="timeFrameAvailability['1Y'] && (timeFrame = '1Y')"
+                                :disabled="!timeFrameAvailability['1Y']" class="p-2 rounded cursor-pointer"
                                 :class="{
                                     'bg-yellowish text-black': timeFrame === '1Y',
-                                    'bg-evengray text-white': timeFrame !== '1Y'
+                                    'bg-evengray text-white': timeFrame !== '1Y',
+                                    'opacity-50 cursor-not-allowed': !timeFrameAvailability['1Y']
                                 }">
                                 <p class="font-manrope font-bold text-sm text-center">1Y</p>
                             </div>
@@ -160,10 +190,12 @@ new class extends Component {
 
                         <!-- 5Y Button -->
                         <div>
-                            <div @click="timeFrame = '5Y'" class="p-2 rounded cursor-pointer"
+                            <div @click="timeFrameAvailability['5Y'] && (timeFrame = '5Y')"
+                                :disabled="!timeFrameAvailability['5Y']" class="p-2 rounded cursor-pointer"
                                 :class="{
                                     'bg-yellowish text-black': timeFrame === '5Y',
-                                    'bg-evengray text-white': timeFrame !== '5Y'
+                                    'bg-evengray text-white': timeFrame !== '5Y',
+                                    'opacity-50 cursor-not-allowed': !timeFrameAvailability['5Y']
                                 }">
                                 <p class="font-manrope font-bold text-sm text-center">5Y</p>
                             </div>

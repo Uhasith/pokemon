@@ -276,13 +276,14 @@ new class extends Component {
                                         </div>
                                     </div>
                                     <h2 class="font-manrope font-bold text-sm xl:text-base text-white mt-2">
-                                        {{ $card->name }} - SV05: {{ $card->psa_name }} (TEF)
+                                        {{ $card->name }} - {{ $card->psa_name }}
                                     </h2>
                                     <div class="flex justify-between items-center mt-2">
                                         <p class="font-manrope text-yellowish text-sm xl:text-base font-semibold">
                                             Price :
                                         </p>
-                                        <p class="font-manrope text-white text-sm xl:text-base font-bold">$36.00
+                                        <p class="font-manrope text-white text-sm xl:text-base font-bold">
+                                            $36.00
                                         </p>
                                     </div>
                                 </div>
