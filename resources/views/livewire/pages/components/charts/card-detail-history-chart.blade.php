@@ -8,7 +8,7 @@ new class extends Component {
     public $populations;
     public $cardPricesTimeseries;
     public $chartGrade = 'PSA10';
-    public $timeFrame = '6M';
+    public $timeFrame = 'ALL';
 
     public $chartData = [
         'labels' => [],
@@ -16,6 +16,12 @@ new class extends Component {
     ];
 
     public function updatedChartGrade()
+    {
+        $this->getChartData();
+        $this->dispatch('chartDataUpdated');
+    }
+
+    public function updatedTimeFrame()
     {
         $this->getChartData();
         $this->dispatch('chartDataUpdated');
@@ -31,9 +37,6 @@ new class extends Component {
         // Remove 'PSA' from the string and convert the remaining part to an integer
         $numericGrade = (int) preg_replace('/[^0-9]/', '', $this->chartGrade);
 
-        // Log the numeric grade for debugging
-        Log::info('Numeric Grade: ' . $numericGrade);
-
         // Now use $numericGrade to filter the data
         $filteredData = collect($this->cardPricesTimeseries)
             ->filter(function ($item) use ($numericGrade) {
@@ -43,24 +46,58 @@ new class extends Component {
 
         // If there is data for the selected grade
         if ($filteredData) {
-            $timeseries = $filteredData['timeseries_data'];
+            $timeseries = collect($filteredData['timeseries_data']);
 
-            // Extract the dates and fair prices
-            // Format the dates to 'M d' (e.g., Aug 23, Sep 03)
-            $dates = collect($timeseries)
+            // Get the latest date in the timeseries (to use as the reference point)
+            $latestDate = Carbon::parse($timeseries->last()['date']);
+
+            // Determine the start date based on the selected time frame
+            $startDate = null;
+            switch ($this->timeFrame) {
+                case '6M':
+                    $startDate = $latestDate->copy()->subMonths(6);
+                    break;
+                case '1Y':
+                    $startDate = $latestDate->copy()->subYear();
+                    break;
+                case '5Y':
+                    $startDate = $latestDate->copy()->subYears(5);
+                    break;
+                default:
+                    // 'All' or any other case: no filtering based on time
+                    $startDate = Carbon::parse($timeseries->first()['date']); // Oldest date in timeseries
+                    break;
+            }
+
+            // Filter the timeseries data to include only entries within the start date and the latest date
+            $filteredTimeseries = $timeseries->filter(function ($item) use ($startDate) {
+                $date = Carbon::parse($item['date']);
+                return $date->greaterThanOrEqualTo($startDate);
+            });
+
+            // Sort the filtered data by date (in case it's not already sorted)
+            $filteredTimeseries = $filteredTimeseries->sortBy('date');
+
+            // Extract the dates and fair prices based on the time frame
+            $dates = $filteredTimeseries
                 ->pluck('date')
                 ->map(function ($date) {
-                    return Carbon::parse($date)->format('M d');
+                    // Format the date depending on the time frame
+                    if ($this->timeFrame === '6M') {
+                        return Carbon::parse($date)->format('M Y'); // Show only month for 6M
+                    } elseif (in_array($this->timeFrame, ['1Y', '5Y'])) {
+                        return Carbon::parse($date)->format('M Y'); // Month and year for 1Y and 5Y
+                    } else {
+                        return Carbon::parse($date)->format('M d, Y'); // Full date for All
+                    }
                 })
                 ->toArray();
-            $fairPrices = collect($timeseries)->pluck('fair_price')->toArray();
+
+            $fairPrices = $filteredTimeseries->pluck('fair_price')->toArray();
 
             // Set the chart data
             $this->chartData['labels'] = $dates;
             $this->chartData['prices'] = $fairPrices;
-
-            // Log the chart data for debugging
-            Log::info($this->chartData);
         } else {
             Log::info('No data found for the selected grade.');
         }
@@ -69,7 +106,6 @@ new class extends Component {
 
 <div>
     <h2 class="font-manrope font-bold text-white text-xl mb-5">Market Price History</h2>
-
     <div wire:ignore>
         <div class="border-b border-gray-200 dark:border-gray-700">
             <ul class="flex -mb-px text-sm font-medium text-center bg-evengray rounded-t-xl relative overflow-x-auto"
@@ -98,33 +134,54 @@ new class extends Component {
         <div id="default-styled-tab-content">
             <div class="hidden p-4 rounded-b-xl bg-grayish" id="styled-profile" role="tabpanel"
                 aria-labelledby="profile-tab">
-                <div class="flex justify-between items-center mb-5">
+                <div class="flex justify-between items-center mb-5" x-data="{ timeFrame: $wire.entangle('timeFrame').live }">
                     <div class="flex rounded-lg bg-evengray p-1 w-auto gap-3">
+                        <!-- 6M Button -->
                         <div>
-                            <div class="p-2 rounded bg-yellowish hover:bg-yellowish group cursor-pointer">
-                                <p class="font-manrope font-bold text-sm text-center group-hover:text-black">
-                                    6M</p>
+                            <div @click="timeFrame = '6M'" class="p-2 rounded cursor-pointer"
+                                :class="{
+                                    'bg-yellowish text-black': timeFrame === '6M',
+                                    'bg-evengray text-white': timeFrame !== '6M'
+                                }">
+                                <p class="font-manrope font-bold text-sm text-center">6M</p>
                             </div>
                         </div>
+
+                        <!-- 1Y Button -->
                         <div>
-                            <div class="p-2 rounded hover:bg-yellowish group cursor-pointer">
-                                <p class="font-manrope font-bold text-sm text-center text-white group-hover:text-black">
-                                    1Y</p>
+                            <div @click="timeFrame = '1Y'" class="p-2 rounded cursor-pointer"
+                                :class="{
+                                    'bg-yellowish text-black': timeFrame === '1Y',
+                                    'bg-evengray text-white': timeFrame !== '1Y'
+                                }">
+                                <p class="font-manrope font-bold text-sm text-center">1Y</p>
                             </div>
                         </div>
+
+                        <!-- 5Y Button -->
                         <div>
-                            <div class="p-2 rounded hover:bg-yellowish group cursor-pointer">
-                                <p class="font-manrope font-bold text-sm text-center text-white group-hover:text-black">
-                                    5Y</p>
+                            <div @click="timeFrame = '5Y'" class="p-2 rounded cursor-pointer"
+                                :class="{
+                                    'bg-yellowish text-black': timeFrame === '5Y',
+                                    'bg-evengray text-white': timeFrame !== '5Y'
+                                }">
+                                <p class="font-manrope font-bold text-sm text-center">5Y</p>
                             </div>
                         </div>
+
+                        <!-- All Button -->
                         <div>
-                            <div class="p-2 rounded hover:bg-yellowish group cursor-pointer">
-                                <p class="font-manrope font-bold text-sm text-center text-white group-hover:text-black">
-                                    All</p>
+                            <div @click="timeFrame = 'ALL'" class="p-2 rounded cursor-pointer"
+                                :class="{
+                                    'bg-yellowish text-black': timeFrame === 'ALL',
+                                    'bg-evengray text-white': timeFrame !== 'ALL'
+                                }">
+                                <p class="font-manrope font-bold text-sm text-center">All</p>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Grade Selector -->
                     <div>
                         <x-wui-select placeholder="Select Grades" wire:model.live='chartGrade' :options="array_keys($this->populations)" />
                     </div>
