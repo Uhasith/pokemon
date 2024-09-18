@@ -44,6 +44,11 @@ class PokeCard extends Model
         return $this->hasMany(PokeCardPriceTimeSeries::class, 'card_id', 'card_id');
     }
 
+    public function transaction_timeseries(): HasMany
+    {
+        return $this->hasMany(PokeCardTransactionTimeSeries::class, 'card_id', 'card_id');
+    }
+
     public function card_prices(): HasMany
     {
         return $this->hasMany(PokeCardPrice::class, 'card_id', 'card_id');

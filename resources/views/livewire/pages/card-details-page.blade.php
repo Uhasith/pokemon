@@ -6,6 +6,9 @@ use App\Models\PokeCard;
 use App\Models\PokeAllCard;
 use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Lazy;
+use App\Actions\Cards\GetCardLatestFairPrice;
+use App\Actions\Cards\GetCardPopulationPrices;
+use App\Actions\Cards\GetCardPopulationData;
 
 new class extends Component {
     #[Url]
@@ -44,80 +47,19 @@ new class extends Component {
         $this->cardPricesTimeseries = $this->card->price_timeseries->toArray();
         $this->population = $this->card->populations->first();
 
-        // Initialize prices array with default values of '-'
-        $this->prices = array_map(fn() => '-', array_flip(['PSA10', 'PSA9', 'PSA8', 'PSA7', 'PSA6', 'PSA5', 'PSA4', 'PSA3', 'PSA2', 'PSA1']));
+        // Instantiate action classes
+        $getCardpopulationPricesAction = new GetCardPopulationPrices();
+        $getCardPopulationDataAction = new GetCardPopulationData();
 
-        // Populate prices with the latest fair prices
-        $this->populatePrices();
+        // Populate prices with the latest fair prices using the action class
+        $this->prices = $getCardpopulationPricesAction->handle($this->cardPricesTimeseries);
 
         // Populate populations from the fetched population data
-        $this->populations = $this->getPopulationData();
+        $this->populations = $getCardPopulationDataAction->handle($this->population);
 
-        // Calculate the total population
         $this->totalPopulation = array_sum($this->populations);
     }
 
-    /**
-     * Populate the prices array by fetching the latest fair prices from the timeseries data
-     */
-    private function populatePrices()
-    {
-        foreach ($this->cardPricesTimeseries as $price) {
-            $psaGrade = 'PSA' . $price['psa_grade'];
-
-            if (isset($this->prices[$psaGrade])) {
-                $latestFairPrice = $this->getLatestFairPrice($price['timeseries_data'] ?? []);
-
-                if (!is_null($latestFairPrice)) {
-                    $this->prices[$psaGrade] = '$ ' . round($latestFairPrice);
-                }
-            }
-        }
-    }
-
-    /**
-     * Get the latest fair price from the timeseries data
-     *
-     * @param array $timeseriesData
-     * @return float|null
-     */
-    private function getLatestFairPrice(array $timeseriesData)
-    {
-        $latestDate = null;
-        $latestFairPrice = null;
-
-        foreach ($timeseriesData as $timeSeriesPrice) {
-            $currentDate = new DateTime($timeSeriesPrice['date']);
-
-            if (is_null($latestDate) || $currentDate > $latestDate) {
-                $latestDate = $currentDate;
-                $latestFairPrice = $timeSeriesPrice['fair_price'];
-            }
-        }
-
-        return $latestFairPrice;
-    }
-
-    /**
-     * Extract population data for different PSA grades
-     *
-     * @return array
-     */
-    private function getPopulationData()
-    {
-        return [
-            'PSA10' => $this->population->pop10,
-            'PSA9' => $this->population->pop9,
-            'PSA8' => $this->population->pop8,
-            'PSA7' => $this->population->pop7,
-            'PSA6' => $this->population->pop6,
-            'PSA5' => $this->population->pop5,
-            'PSA4' => $this->population->pop4,
-            'PSA3' => $this->population->pop3,
-            'PSA2' => $this->population->pop2,
-            'PSA1' => $this->population->pop1,
-        ];
-    }
 }; ?>
 
 <div>
