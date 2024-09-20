@@ -13,30 +13,27 @@ new class extends Component {
 
     public function with(): array
     {
-        // Extract the PSA grade number from the string
+        // Extract the PSA grade number from the price string
         $psa_grade = preg_replace('/[^0-9]/', '', $this->price);
 
-        // Base query for fetching cards with their relationships
-        $query = PokeCard::with(['all_card']);
-        // ->where('set_id', $this->set_id);
+        // Base query for fetching cards with their relationships and a join on price_timeseries for sorting
+        $query = PokeCard::with(['all_card'])
+            // Join with price_timeseries table to retrieve the latest price for sorting
+            ->leftJoin('poke_card_price_time_series as pts', function ($join) use ($psa_grade) {
+                $join->on('poke_cards.card_id', '=', 'pts.card_id')->where('pts.psa_grade', '=', $psa_grade);
+            })
+            // Select necessary columns, including the fair_price
+            ->select('poke_cards.*', 'pts.latest_fair_price as fair_price');
 
-        // Join the price_timeseries table once for better performance
-        $query->leftJoin('poke_card_price_time_series', function ($join) use ($psa_grade) {
-            $join->on('poke_cards.card_id', '=', 'poke_card_price_time_series.card_id')->where('poke_card_price_time_series.psa_grade', $psa_grade);
-        });
-
-        // Add a subquery for the latest price
-        $query->addSelect(['poke_cards.*', DB::raw('JSON_UNQUOTE(JSON_EXTRACT(poke_card_price_time_series.timeseries_data, "$[0].fair_price")) as latest_price'), DB::raw('JSON_UNQUOTE(JSON_EXTRACT(poke_card_price_time_series.timeseries_data, "$[0].date")) as latest_date')]);
-
-        // Apply sorting logic based on the sortBy selection
+        // Apply sorting logic based on `fair_price`
         if ($this->sortBy === 'Value High to Low') {
-            $query->orderByDesc(DB::raw('latest_price'));
+            $query->orderByRaw('fair_price IS NULL, fair_price DESC');
         } elseif ($this->sortBy === 'Value Low to High') {
-            $query->orderBy(DB::raw('latest_price'));
+            $query->orderByRaw('fair_price IS NULL, fair_price ASC');
         } elseif ($this->sortBy === 'Alphabetical') {
-            $query->orderBy('name', 'asc');
+            $query->orderByRaw('fair_price IS NULL, name ASC');
         } elseif ($this->sortBy === 'Reversed Alphabetical') {
-            $query->orderBy('name', 'desc');
+            $query->orderByRaw('fair_price IS NULL, name DESC');
         }
 
         // Paginate the result after applying sorting
@@ -142,7 +139,7 @@ new class extends Component {
                             Price :
                         </p>
                         <p class="font-manrope text-white text-sm xl:text-base font-bold">
-                            {{ $card->latest_price ? '$ ' . $card->latest_price : 'N/A' }}
+                            {{ $card->fair_price ?? 'N/A' }}
                         </p>
                     </div>
                 </div>

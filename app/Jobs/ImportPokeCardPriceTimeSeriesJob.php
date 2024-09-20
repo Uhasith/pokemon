@@ -2,11 +2,12 @@
 
 namespace App\Jobs;
 
-use App\Models\PokeCardPriceTimeSeries;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Queue\Queueable;
-use Illuminate\Queue\InteractsWithQueue;
+use Carbon\Carbon;
 use Illuminate\Queue\SerializesModels;
+use App\Models\PokeCardPriceTimeSeries;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
 class ImportPokeCardPriceTimeSeriesJob implements ShouldQueue
 {
@@ -28,11 +29,19 @@ class ImportPokeCardPriceTimeSeriesJob implements ShouldQueue
     public function handle()
     {
         foreach ($this->chunk as $row) {
-            // Insert the data into the database
-            PokeCardPriceTimeSeries::create([
+            // Get the timeseries prices
+            $timeseriesPrices = $row['timeseries_prices'];
+
+            // Create the new record in the database with the latest record data
+            PokeCardPriceTimeSeries::updateOrCreate(['card_id' => $row['CardId'], 'psa_grade' => $row['Grade']], [
                 'card_id' => $row['CardId'],
                 'psa_grade' => $row['Grade'],
-                'timeseries_data' => $row['timeseries_prices'],
+                'latest_fair_price' => $row['latest_fair_price'],
+                'latest_low_price' => $row['latest_low_price'],
+                'latest_high_price' => $row['latest_high_price'],
+                'latest_price_type' => $row['latest_price_type'],
+                'latest_confidence' => $row['latest_confidence'],
+                'timeseries_data' => $timeseriesPrices
             ]);
         }
     }
