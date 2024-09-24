@@ -139,7 +139,7 @@ new class extends Component {
                             Price :
                         </p>
                         <p class="font-manrope text-white text-sm xl:text-base font-bold">
-                            {{ $card->fair_price ?? 'N/A' }}
+                            {{ '$ ' . $card->fair_price ?? 'N/A' }}
                         </p>
                     </div>
                 </div>
@@ -277,17 +277,33 @@ new class extends Component {
                                     </div>
                                 </td>
                                 <td class="p-3 text-white">
-                                    1
+                                    <a href="{{ route('card-details', ['card_id' => $card->card_id]) }}">
+                                        {{ $card->id }}
+                                    </a>
                                 </td>
                                 <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">
-                                    <div class="flex items-center gap-3 hyphens-auto">
-                                        <img src="{{ asset('assets/card-images/Flareon.png') }}" class="w-14 md:w-8"
-                                            alt="">
-                                        Iron Valiant - 080/162 - SV05: <br>Temporal Forces (TEF)
-                                    </div>
+                                    <a href="{{ route('card-details', ['card_id' => $card->card_id]) }}">
+                                        <div class="flex items-center gap-3 hyphens-auto cursor-pointer">
+                                            @if ($card?->all_card?->images['small'] !== null)
+                                                <x-image :src="$card?->all_card?->images['small']" class="w-14 md:w-8" :alt="$card->name"
+                                                    skeltonWidth="32" skeltonHeight="45" />
+                                            @else
+                                                <div class="flex items-center justify-center bg-gray-300 rounded dark:bg-gray-700 animate-pulse"
+                                                    style="width: 32px; height: 45px;">
+                                                    <svg class="w-10 h-10 text-gray-200 dark:text-gray-600"
+                                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                                        fill="currentColor" viewBox="0 0 20 18">
+                                                        <path
+                                                            d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z" />
+                                                    </svg>
+                                                </div>
+                                            @endif
+                                            {{ $card->name }} - {{ $card->variant ?? 'N/A' }}
+                                        </div>
+                                    </a>
                                 </th>
-                                <td class="px-6 py-4 text-white">
-                                    $36.00
+                                <td class="px-2 py-4 text-white">
+                                    {{ '$ ' . $card->fair_price ?? 'N/A' }}
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="flex gap-1 items-center text-redprice">

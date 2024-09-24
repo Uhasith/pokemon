@@ -34,8 +34,11 @@ new class extends Component {
                 'card_prices',
                 'price_timeseries',
                 'all_card',
+                'set',
             ])
             ->first();
+
+        // Log::info($this->card->toArray()['related_sets']);
 
         $this->relatedAllCard = $this->card->all_card;
 
@@ -59,7 +62,6 @@ new class extends Component {
 
         $this->totalPopulation = array_sum($this->populations);
     }
-
 }; ?>
 
 <div>
@@ -606,360 +608,9 @@ new class extends Component {
         </div>
 
         {{-- Second Section --}}
-        <div class="w-full bg-blackish py-12">
-            <div
-                class="max-w-[1440px] 2xl:max-w-[1500px] bg-blackish flex relative mx-auto flex-col xl:flex-row gap-12 items-center justify-center px-8 xl:px-0">
-                <div class="w-full xl:w-10/12">
-                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 xl:table-fixed">
-                            <thead class="text-xs text-white uppercase bg-evengray">
-                                <tr>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-yellowish font-manrope font-semibold text-sm normal-case w-auto xl:w-[13%]">
-                                        Sale Price (USD)
-                                    </th>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-yellowish font-manrope font-semibold text-sm normal-case w-auto xl:w-[7%]">
-                                        Grade
-                                    </th>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-yellowish font-manrope font-semibold text-sm normal-case w-auto xl:w-[10%]">
-                                        #Bids
-                                    </th>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-yellowish font-manrope font-semibold text-sm normal-case w-auto xl:w-[12%]">
-                                        Date Sold
-                                    </th>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-yellowish font-manrope font-semibold text-sm normal-case">
-                                        Listing ID
-                                    </th>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-yellowish font-manrope font-semibold text-sm normal-case w-auto xl:w-[30%]">
-                                        Title
-                                    </th>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-yellowish font-manrope font-semibold text-sm normal-case w-auto xl:w-[8%]">
-
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="odd:bg-oddgray text-white even:bg-evengray">
-                                    <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">
-                                        $54.00
-                                    </th>
-                                    <td class="px-6 py-4">
-                                        Raw
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        No Auction
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        13 Jun 2024
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        405034296439nichmcg-38
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        Walking Wake ex 205/162 Pokemon Temporal Forces Special Illustration Rare (CB)
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <svg width="42" height="42" viewBox="0 0 42 42" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <circle opacity="0.04" cx="21" cy="21" r="21"
-                                                fill="white" />
-                                            <g opacity="0.8">
-                                                <path
-                                                    d="M15.2734 10.917C15.6531 10.917 15.9609 11.2248 15.9609 11.6045V13.3003L17.5382 12.9849C19.0512 12.6823 20.6195 12.8263 22.0521 13.3993L22.2388 13.474C23.6699 14.0464 25.2449 14.1533 26.7402 13.7795C27.4344 13.6059 28.1068 14.1309 28.1068 14.8465V21.5996C28.1068 22.1902 27.7048 22.705 27.1318 22.8482L26.9352 22.8974C25.3132 23.3029 23.6045 23.1869 22.0521 22.566C20.6195 21.9929 19.0512 21.8489 17.5382 22.1515L15.9609 22.467V29.9378C15.9609 30.3175 15.6531 30.6253 15.2734 30.6253C14.8937 30.6253 14.5859 30.3175 14.5859 29.9378V11.6045C14.5859 11.2248 14.8937 10.917 15.2734 10.917Z"
-                                                    fill="white" />
-                                            </g>
-                                        </svg>
-                                    </td>
-                                </tr>
-                                <tr class="odd:bg-oddgray text-white even:bg-evengray">
-                                    <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">
-                                        $54.00
-                                    </th>
-                                    <td class="px-6 py-4">
-                                        Raw
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        No Auction
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        13 Jun 2024
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        405034296439nichmcg-38
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        Walking Wake ex 205/162 Pokemon Temporal Forces Special Illustration Rare (CB)
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <svg width="42" height="42" viewBox="0 0 42 42" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <circle opacity="0.04" cx="21" cy="21" r="21"
-                                                fill="white" />
-                                            <g opacity="0.8">
-                                                <path
-                                                    d="M15.2734 10.917C15.6531 10.917 15.9609 11.2248 15.9609 11.6045V13.3003L17.5382 12.9849C19.0512 12.6823 20.6195 12.8263 22.0521 13.3993L22.2388 13.474C23.6699 14.0464 25.2449 14.1533 26.7402 13.7795C27.4344 13.6059 28.1068 14.1309 28.1068 14.8465V21.5996C28.1068 22.1902 27.7048 22.705 27.1318 22.8482L26.9352 22.8974C25.3132 23.3029 23.6045 23.1869 22.0521 22.566C20.6195 21.9929 19.0512 21.8489 17.5382 22.1515L15.9609 22.467V29.9378C15.9609 30.3175 15.6531 30.6253 15.2734 30.6253C14.8937 30.6253 14.5859 30.3175 14.5859 29.9378V11.6045C14.5859 11.2248 14.8937 10.917 15.2734 10.917Z"
-                                                    fill="white" />
-                                            </g>
-                                        </svg>
-                                    </td>
-                                </tr>
-                                <tr class="odd:bg-oddgray text-white even:bg-evengray">
-                                    <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">
-                                        $54.00
-                                    </th>
-                                    <td class="px-6 py-4">
-                                        Raw
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        No Auction
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        13 Jun 2024
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        405034296439nichmcg-38
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        Walking Wake ex 205/162 Pokemon Temporal Forces Special Illustration Rare (CB)
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <svg width="42" height="42" viewBox="0 0 42 42" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <circle opacity="0.04" cx="21" cy="21" r="21"
-                                                fill="white" />
-                                            <g opacity="0.8">
-                                                <path
-                                                    d="M15.2734 10.917C15.6531 10.917 15.9609 11.2248 15.9609 11.6045V13.3003L17.5382 12.9849C19.0512 12.6823 20.6195 12.8263 22.0521 13.3993L22.2388 13.474C23.6699 14.0464 25.2449 14.1533 26.7402 13.7795C27.4344 13.6059 28.1068 14.1309 28.1068 14.8465V21.5996C28.1068 22.1902 27.7048 22.705 27.1318 22.8482L26.9352 22.8974C25.3132 23.3029 23.6045 23.1869 22.0521 22.566C20.6195 21.9929 19.0512 21.8489 17.5382 22.1515L15.9609 22.467V29.9378C15.9609 30.3175 15.6531 30.6253 15.2734 30.6253C14.8937 30.6253 14.5859 30.3175 14.5859 29.9378V11.6045C14.5859 11.2248 14.8937 10.917 15.2734 10.917Z"
-                                                    fill="white" />
-                                            </g>
-                                        </svg>
-                                    </td>
-                                </tr>
-                                <tr class="odd:bg-oddgray text-white even:bg-evengray">
-                                    <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">
-                                        $54.00
-                                    </th>
-                                    <td class="px-6 py-4">
-                                        Raw
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        No Auction
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        13 Jun 2024
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        405034296439nichmcg-38
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        Walking Wake ex 205/162 Pokemon Temporal Forces Special Illustration Rare (CB)
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <svg width="42" height="42" viewBox="0 0 42 42" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <circle opacity="0.04" cx="21" cy="21" r="21"
-                                                fill="white" />
-                                            <g opacity="0.8">
-                                                <path
-                                                    d="M15.2734 10.917C15.6531 10.917 15.9609 11.2248 15.9609 11.6045V13.3003L17.5382 12.9849C19.0512 12.6823 20.6195 12.8263 22.0521 13.3993L22.2388 13.474C23.6699 14.0464 25.2449 14.1533 26.7402 13.7795C27.4344 13.6059 28.1068 14.1309 28.1068 14.8465V21.5996C28.1068 22.1902 27.7048 22.705 27.1318 22.8482L26.9352 22.8974C25.3132 23.3029 23.6045 23.1869 22.0521 22.566C20.6195 21.9929 19.0512 21.8489 17.5382 22.1515L15.9609 22.467V29.9378C15.9609 30.3175 15.6531 30.6253 15.2734 30.6253C14.8937 30.6253 14.5859 30.3175 14.5859 29.9378V11.6045C14.5859 11.2248 14.8937 10.917 15.2734 10.917Z"
-                                                    fill="white" />
-                                            </g>
-                                        </svg>
-                                    </td>
-                                </tr>
-                                <tr class="odd:bg-oddgray text-white even:bg-evengray">
-                                    <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">
-                                        $54.00
-                                    </th>
-                                    <td class="px-6 py-4">
-                                        Raw
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        No Auction
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        13 Jun 2024
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        405034296439nichmcg-38
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        Walking Wake ex 205/162 Pokemon Temporal Forces Special Illustration Rare (CB)
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <svg width="42" height="42" viewBox="0 0 42 42" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <circle opacity="0.04" cx="21" cy="21" r="21"
-                                                fill="white" />
-                                            <g opacity="0.8">
-                                                <path
-                                                    d="M15.2734 10.917C15.6531 10.917 15.9609 11.2248 15.9609 11.6045V13.3003L17.5382 12.9849C19.0512 12.6823 20.6195 12.8263 22.0521 13.3993L22.2388 13.474C23.6699 14.0464 25.2449 14.1533 26.7402 13.7795C27.4344 13.6059 28.1068 14.1309 28.1068 14.8465V21.5996C28.1068 22.1902 27.7048 22.705 27.1318 22.8482L26.9352 22.8974C25.3132 23.3029 23.6045 23.1869 22.0521 22.566C20.6195 21.9929 19.0512 21.8489 17.5382 22.1515L15.9609 22.467V29.9378C15.9609 30.3175 15.6531 30.6253 15.2734 30.6253C14.8937 30.6253 14.5859 30.3175 14.5859 29.9378V11.6045C14.5859 11.2248 14.8937 10.917 15.2734 10.917Z"
-                                                    fill="white" />
-                                            </g>
-                                        </svg>
-                                    </td>
-                                </tr>
-                                <tr class="odd:bg-oddgray text-white even:bg-evengray">
-                                    <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">
-                                        $54.00
-                                    </th>
-                                    <td class="px-6 py-4">
-                                        Raw
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        No Auction
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        13 Jun 2024
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        405034296439nichmcg-38
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        Walking Wake ex 205/162 Pokemon Temporal Forces Special Illustration Rare (CB)
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <svg width="42" height="42" viewBox="0 0 42 42" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <circle opacity="0.04" cx="21" cy="21" r="21"
-                                                fill="white" />
-                                            <g opacity="0.8">
-                                                <path
-                                                    d="M15.2734 10.917C15.6531 10.917 15.9609 11.2248 15.9609 11.6045V13.3003L17.5382 12.9849C19.0512 12.6823 20.6195 12.8263 22.0521 13.3993L22.2388 13.474C23.6699 14.0464 25.2449 14.1533 26.7402 13.7795C27.4344 13.6059 28.1068 14.1309 28.1068 14.8465V21.5996C28.1068 22.1902 27.7048 22.705 27.1318 22.8482L26.9352 22.8974C25.3132 23.3029 23.6045 23.1869 22.0521 22.566C20.6195 21.9929 19.0512 21.8489 17.5382 22.1515L15.9609 22.467V29.9378C15.9609 30.3175 15.6531 30.6253 15.2734 30.6253C14.8937 30.6253 14.5859 30.3175 14.5859 29.9378V11.6045C14.5859 11.2248 14.8937 10.917 15.2734 10.917Z"
-                                                    fill="white" />
-                                            </g>
-                                        </svg>
-                                    </td>
-                                </tr>
-                                <tr class="odd:bg-oddgray text-white even:bg-evengray">
-                                    <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">
-                                        $54.00
-                                    </th>
-                                    <td class="px-6 py-4">
-                                        Raw
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        No Auction
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        13 Jun 2024
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        405034296439nichmcg-38
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        Walking Wake ex 205/162 Pokemon Temporal Forces Special Illustration Rare (CB)
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <svg width="42" height="42" viewBox="0 0 42 42" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <circle opacity="0.04" cx="21" cy="21" r="21"
-                                                fill="white" />
-                                            <g opacity="0.8">
-                                                <path
-                                                    d="M15.2734 10.917C15.6531 10.917 15.9609 11.2248 15.9609 11.6045V13.3003L17.5382 12.9849C19.0512 12.6823 20.6195 12.8263 22.0521 13.3993L22.2388 13.474C23.6699 14.0464 25.2449 14.1533 26.7402 13.7795C27.4344 13.6059 28.1068 14.1309 28.1068 14.8465V21.5996C28.1068 22.1902 27.7048 22.705 27.1318 22.8482L26.9352 22.8974C25.3132 23.3029 23.6045 23.1869 22.0521 22.566C20.6195 21.9929 19.0512 21.8489 17.5382 22.1515L15.9609 22.467V29.9378C15.9609 30.3175 15.6531 30.6253 15.2734 30.6253C14.8937 30.6253 14.5859 30.3175 14.5859 29.9378V11.6045C14.5859 11.2248 14.8937 10.917 15.2734 10.917Z"
-                                                    fill="white" />
-                                            </g>
-                                        </svg>
-                                    </td>
-                                </tr>
-                                <tr class="odd:bg-oddgray text-white even:bg-evengray">
-                                    <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">
-                                        $54.00
-                                    </th>
-                                    <td class="px-6 py-4">
-                                        Raw
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        No Auction
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        13 Jun 2024
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        405034296439nichmcg-38
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        Walking Wake ex 205/162 Pokemon Temporal Forces Special Illustration Rare (CB)
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <svg width="42" height="42" viewBox="0 0 42 42" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <circle opacity="0.04" cx="21" cy="21" r="21"
-                                                fill="white" />
-                                            <g opacity="0.8">
-                                                <path
-                                                    d="M15.2734 10.917C15.6531 10.917 15.9609 11.2248 15.9609 11.6045V13.3003L17.5382 12.9849C19.0512 12.6823 20.6195 12.8263 22.0521 13.3993L22.2388 13.474C23.6699 14.0464 25.2449 14.1533 26.7402 13.7795C27.4344 13.6059 28.1068 14.1309 28.1068 14.8465V21.5996C28.1068 22.1902 27.7048 22.705 27.1318 22.8482L26.9352 22.8974C25.3132 23.3029 23.6045 23.1869 22.0521 22.566C20.6195 21.9929 19.0512 21.8489 17.5382 22.1515L15.9609 22.467V29.9378C15.9609 30.3175 15.6531 30.6253 15.2734 30.6253C14.8937 30.6253 14.5859 30.3175 14.5859 29.9378V11.6045C14.5859 11.2248 14.8937 10.917 15.2734 10.917Z"
-                                                    fill="white" />
-                                            </g>
-                                        </svg>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="w-full flex justify-center items-center my-8">
-                        <nav aria-label="Page navigation example">
-                            <ul class="flex items-center -space-x-px h-10 text-base">
-                                <li>
-                                    <a href="#"
-                                        class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-white">
-                                        <span class="sr-only">Previous</span>
-                                        <svg class="w-3 h-3 rtl:rotate-180" aria-hidden="true"
-                                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                            <path stroke="currentColor" stroke-linecap="round"
-                                                stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4" />
-                                        </svg>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                        class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500">1</a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                        class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500">2</a>
-                                </li>
-                                <li>
-                                    <a href="#" aria-current="page"
-                                        class="z-10 flex items-center justify-center px-4 h-10 leading-tight text-black rounded-lg bg-yellowish">3</a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                        class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500">4</a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                        class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500">5</a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                        class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500">
-                                        <span class="sr-only">Next</span>
-                                        <svg class="w-3 h-3 rtl:rotate-180" aria-hidden="true"
-                                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                            <path stroke="currentColor" stroke-linecap="round"
-                                                stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
-                                        </svg>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-                <div class="w-full xl:w-2/12 h-full">
-                    <div class="w-full h-full rounded-3xl bg-darkblackbg p-8 flex items-center justify-center">
-                        <h1 class="text-white">addvertisements</h1>
-                    </div>
-                </div>
-            </div>
+        <div id="price-table" class="w-full bg-blackish py-12">
+            {{-- Card Prices Table --}}
+            <livewire:pages.components.card.price-table :card="$card" />
         </div>
 
         {{-- Third Section --}}
@@ -967,225 +618,8 @@ new class extends Component {
             <div
                 class="max-w-[1440px] 2xl:max-w-[1500px] bg-darkblackbg flex relative mx-auto flex-col xl:flex-row gap-12 items-center justify-center">
                 <div class="w-full xl:w-10/12 px-8 xl:px-0">
-                    <div
-                        class="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-5 items-center justify-center">
-                        {{-- Item - 01 --}}
-                        <div
-                            class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
-                            <div>
-                                <svg width="66" height="66" viewBox="0 0 66 66" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="66" height="66" rx="33" fill="white"
-                                        fill-opacity="0.08" />
-                                    <path
-                                        d="M27.1358 23.1397C29.4503 20.8252 30.6075 19.668 32.0455 19.668C33.4836 19.668 34.6408 20.8252 36.9553 23.1397L42.847 29.0314C45.1615 31.3459 46.3187 32.5031 46.3187 33.9411C46.3187 35.3792 45.1615 36.5364 42.847 38.8509C40.5325 41.1654 39.3753 42.3226 37.9372 42.3226C36.4992 42.3226 35.342 41.1654 33.0275 38.8509L27.1358 32.9592C24.8213 30.6447 23.6641 29.4875 23.6641 28.0494C23.6641 26.6114 24.8213 25.4542 27.1358 23.1397Z"
-                                        fill="#FFC107" />
-                                    <path
-                                        d="M26.7094 35.3602L20.7651 41.3045C20.3086 41.7611 20.0803 41.9894 19.9431 42.2269C19.571 42.8714 19.571 43.6654 19.9431 44.3099C20.0803 44.5474 20.3085 44.7757 20.7651 45.2323C21.2217 45.6888 21.45 45.9172 21.6875 46.0543C22.332 46.4264 23.1261 46.4264 23.7706 46.0543C24.0081 45.9172 24.2363 45.6889 24.6929 45.2323L30.6372 39.288L26.7094 35.3602Z"
-                                        fill="#FFC107" />
-                                    <path
-                                        d="M28.1236 33.946L28.1295 33.9402L32.0573 37.868L32.0514 37.8738L28.1236 33.946Z"
-                                        fill="#FFC107" />
-                                    <path
-                                        d="M43.2221 26.5771C43.5618 25.9434 43.5511 25.1772 43.19 24.5518C43.0529 24.3143 42.8246 24.086 42.368 23.6294C41.9114 23.1728 41.6831 22.9445 41.4457 22.8074C40.8203 22.4463 40.054 22.4356 39.4203 22.7753L43.2221 26.5771Z"
-                                        fill="#FFC107" />
-                                </svg>
-                            </div>
-                            <div>
-                                <h5 class="font-manrope font-medium text-sm text-white">Type</h5>
-                                <h3 class="font-manrope font-semibold text-base text-white">Pokémon</h3>
-                            </div>
-                        </div>
-
-                        {{-- Item - 02 --}}
-                        <div
-                            class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
-                            <div>
-                                <svg width="66" height="66" viewBox="0 0 66 66" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="66" height="66" rx="33" fill="white"
-                                        fill-opacity="0.08" />
-                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                        d="M32.9974 47.3337C25.0813 47.3337 18.6641 40.9165 18.6641 33.0003C18.6641 25.0842 25.0813 18.667 32.9974 18.667C40.9135 18.667 47.3307 25.0842 47.3307 33.0003C47.3307 40.9165 40.9135 47.3337 32.9974 47.3337ZM34.7095 26.6614C34.3331 25.8988 33.7438 25.3337 32.9955 25.3337C32.2481 25.3337 31.6569 25.8978 31.277 26.6598L30.0215 29.1915L30.0196 29.1954C29.9814 29.274 29.8909 29.3846 29.7553 29.486C29.62 29.5872 29.4891 29.6422 29.4058 29.6567L27.1323 30.0375C26.3101 30.1757 25.6228 30.5789 25.4005 31.2806C25.1789 31.9803 25.5052 32.7079 26.0922 33.2998L27.8606 35.0827C27.9306 35.1534 28.0091 35.2865 28.0583 35.4598C28.1072 35.6319 28.1115 35.7886 28.0893 35.8899L28.089 35.8914L27.5836 38.095C27.3732 39.0115 27.4462 39.9195 28.0927 40.3951C28.742 40.8729 29.6281 40.665 30.4331 40.1834L32.5611 38.9131L32.5625 38.9125C32.6578 38.8569 32.8149 38.8142 32.9991 38.8142C33.1847 38.8142 33.3385 38.8575 33.4279 38.911L35.5602 40.1837C36.3662 40.6637 37.2534 40.8751 37.9026 40.3979C38.5495 39.9225 38.619 39.0127 38.4094 38.0954L37.9038 35.8914L37.9035 35.8899C37.8813 35.7886 37.8857 35.6319 37.9345 35.4598C37.9837 35.2865 38.0622 35.1534 38.1322 35.0827L39.8993 33.3011C40.4901 32.7093 40.8181 31.9805 40.5946 31.2797C40.371 30.5783 39.6823 30.1756 38.8607 30.0376L36.5861 29.6565C36.4987 29.6418 36.3659 29.5862 36.2302 29.4853C36.0945 29.3842 36.0042 29.2738 35.9661 29.1954L34.7095 26.6614Z"
-                                        fill="#FFC107" />
-                                </svg>
-                            </div>
-                            <div>
-                                <h5 class="font-manrope font-medium text-sm text-white">Retreat</h5>
-                                <h3 class="font-manrope font-semibold text-base text-white">X1</h3>
-                            </div>
-                        </div>
-
-                        {{-- Item - 03 --}}
-                        <div
-                            class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
-                            <div>
-                                <svg width="66" height="66" viewBox="0 0 66 66" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="66" height="66" rx="33" fill="white"
-                                        fill-opacity="0.08" />
-                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                        d="M23.3055 20.6169C23.7127 20.218 24.2844 19.9579 25.364 19.8157C26.4753 19.6693 27.9482 19.667 30.0601 19.667H35.9451C38.057 19.667 39.5299 19.6693 40.6412 19.8157C41.7208 19.9579 42.2925 20.218 42.6997 20.6169C43.1069 21.0159 43.3724 21.576 43.5175 22.6337C43.6669 23.7224 43.6693 25.1655 43.6693 27.2346V37.685L26.7968 37.685C25.5933 37.6846 24.7722 37.6843 24.0679 37.8692C23.4383 38.0345 22.8542 38.3045 22.3359 38.6593V27.2346C22.3359 25.1655 22.3383 23.7224 22.4877 22.6337C22.6328 21.576 22.8983 21.0159 23.3055 20.6169ZM27.1175 24.712C26.5081 24.712 26.0141 25.1961 26.0141 25.7931C26.0141 26.3902 26.5081 26.8742 27.1175 26.8742H38.8877C39.4971 26.8742 39.9911 26.3902 39.9911 25.7931C39.9911 25.1961 39.4971 24.712 38.8877 24.712H27.1175ZM26.0141 30.8382C26.0141 30.2411 26.5081 29.7571 27.1175 29.7571H34.4739C35.0833 29.7571 35.5773 30.2411 35.5773 30.8382C35.5773 31.4352 35.0833 31.9192 34.4739 31.9192H27.1175C26.5081 31.9192 26.0141 31.4352 26.0141 30.8382Z"
-                                        fill="#FFC107" />
-                                    <path
-                                        d="M26.9672 39.8472C25.5279 39.8472 25.0247 39.8565 24.6391 39.9577C23.5808 40.2355 22.7371 41.0062 22.3753 42.008C22.3977 42.518 22.4327 42.9665 22.4877 43.367C22.6328 44.4247 22.8983 44.9848 23.3055 45.3837C23.7127 45.7827 24.2844 46.0428 25.364 46.185C26.4753 46.3314 27.9482 46.3337 30.0601 46.3337H35.9451C38.057 46.3337 39.5299 46.3314 40.6412 46.185C41.7208 46.0428 42.2925 45.7827 42.6997 45.3837C42.9885 45.1008 43.2061 44.7367 43.3599 44.1715H27.1175C26.5081 44.1715 26.0141 43.6875 26.0141 43.0904C26.0141 42.4934 26.5081 42.0093 27.1175 42.0093H43.6298C43.6571 41.388 43.6655 40.6755 43.6681 39.8472H26.9672Z"
-                                        fill="#FFC107" />
-                                </svg>
-                            </div>
-                            <div>
-                                <h5 class="font-manrope font-medium text-sm text-white">Form</h5>
-                                <h3 class="font-manrope font-semibold text-base text-white">Basic</h3>
-                            </div>
-                        </div>
-
-                        {{-- Item - 04 --}}
-                        <div
-                            class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
-                            <div>
-                                <svg width="66" height="66" viewBox="0 0 66 66" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="66" height="66" rx="33" fill="white"
-                                        fill-opacity="0.08" />
-                                    <path
-                                        d="M24.562 30.2195L28.6448 24.6954C31.284 21.1247 32.6035 19.3393 33.8347 19.7166C35.0658 20.0939 35.0658 22.2836 35.0658 26.6631V27.0761C35.0658 28.6557 35.0658 29.4455 35.5706 29.9409L35.5973 29.9665C36.1129 30.4515 36.9349 30.4515 38.5789 30.4515C41.5374 30.4515 43.0167 30.4515 43.5166 31.3487C43.5249 31.3636 43.5329 31.3786 43.5408 31.3937C44.0127 32.3048 43.1562 33.4636 41.4432 35.7812L37.3603 41.3052C34.7211 44.876 33.4015 46.6613 32.1704 46.284C30.9392 45.9067 30.9393 43.717 30.9393 39.3374L30.9393 38.9247C30.9394 37.345 30.9394 36.5552 30.4347 36.0598L30.408 36.0342C29.8923 35.5492 29.0703 35.5492 27.4263 35.5492C24.4678 35.5492 22.9885 35.5492 22.4886 34.652C22.4803 34.6371 22.4723 34.6221 22.4645 34.607C21.9925 33.6959 22.849 32.5371 24.562 30.2195Z"
-                                        fill="#FFC107" />
-                                </svg>
-                            </div>
-                            <div>
-                                <h5 class="font-manrope font-medium text-sm text-white">Typings</h5>
-                                <h3 class="font-manrope font-semibold text-base text-white">Lightning</h3>
-                            </div>
-                        </div>
-
-                        {{-- Item - 05 --}}
-                        <div
-                            class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
-                            <div>
-                                <svg width="66" height="66" viewBox="0 0 66 66" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="66" height="66" rx="33" fill="white"
-                                        fill-opacity="0.08" />
-                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                        d="M36.8938 20.2382C34.6879 18.1433 31.3069 18.1433 29.1009 20.2382C27.3943 21.859 25.3031 24.0931 23.6324 26.6557C21.9693 29.2069 20.6641 32.1733 20.6641 35.2377C20.6641 41.1949 25.3406 47.3337 32.9974 47.3337C40.6542 47.3337 45.3307 41.1949 45.3307 35.2377C45.3307 32.1733 44.0255 29.2069 42.3623 26.6557C40.6917 24.0931 38.6005 21.859 36.8938 20.2382ZM36.9974 35.6669C36.9974 37.8761 35.2066 39.6669 32.9974 39.6669C32.261 39.6669 31.6641 40.2639 31.6641 41.0002C31.6641 41.7366 32.261 42.3335 32.9974 42.3335C36.6793 42.3335 39.6641 39.3489 39.6641 35.6669C39.6641 34.9306 39.0671 34.3335 38.3307 34.3335C37.5943 34.3335 36.9974 34.9306 36.9974 35.6669Z"
-                                        fill="#FFC107" />
-                                </svg>
-                            </div>
-                            <div>
-                                <h5 class="font-manrope font-medium text-sm text-white">HP</h5>
-                                <h3 class="font-manrope font-semibold text-base text-white">50</h3>
-                            </div>
-                        </div>
-
-                        {{-- Item - 06 --}}
-                        <div
-                            class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
-                            <div>
-                                <svg width="66" height="66" viewBox="0 0 66 66" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="66" height="66" rx="33" fill="white"
-                                        fill-opacity="0.08" />
-                                    <path
-                                        d="M33.5344 27.7731V19.6878C33.5344 19.0163 33.1008 18.4371 32.4554 18.2472C31.6272 18.0078 30.6442 18.0067 29.8106 18.2483C29.168 18.4371 28.7344 19.0163 28.7344 19.6878V26.0665H29.801C30.9776 26.0665 31.9344 27.0232 31.9344 28.1998C31.9344 28.9752 31.6938 29.7107 31.2629 30.3283C32.5168 30.2627 33.5344 29.1177 33.5344 27.7731Z"
-                                        fill="#FFC107" />
-                                    <path
-                                        d="M27.6672 20.733C27.6672 20.0615 27.2336 19.4823 26.5883 19.2924C25.7915 19.0519 24.7397 19.053 23.9493 19.2914C23.3008 19.4823 22.8672 20.0615 22.8672 20.733V26.0663H27.6672V20.733Z"
-                                        fill="#FFC107" />
-                                    <path
-                                        d="M37.1274 30.3302C38.3813 30.2672 39.4016 29.12 39.4016 27.7744V20.7334C39.4016 20.0608 38.9685 19.4816 38.3242 19.2923C37.9125 19.1707 37.4677 19.1094 37.0016 19.1094C36.5354 19.1094 36.0906 19.1707 35.6794 19.2923C35.0346 19.4816 34.6016 20.0608 34.6016 20.7334V27.935C34.6016 28.5995 34.8661 29.2171 35.3461 29.6736C35.8266 30.1302 36.4528 30.3622 37.1274 30.3302Z"
-                                        fill="#FFC107" />
-                                    <path
-                                        d="M42.9907 30.3302C44.2446 30.2673 45.2648 29.1201 45.2648 27.7745V22.3574C45.2648 21.6849 44.8318 21.1051 44.1875 20.9158C43.7752 20.7947 43.3304 20.7334 42.8648 20.7334C42.3992 20.7334 41.9544 20.7947 41.5416 20.9163C40.8979 21.1051 40.4648 21.6849 40.4648 22.3574V27.935C40.4648 28.5995 40.7294 29.2171 41.2094 29.6737C41.6899 30.1302 42.3176 30.3622 42.9907 30.3302Z"
-                                        fill="#FFC107" />
-                                    <path
-                                        d="M20.7344 35.6666C20.7344 42.4309 26.2373 47.9333 33.001 47.9333C39.7648 47.9333 45.2677 42.4309 45.2677 35.6666V30.3685C44.6821 30.9642 43.904 31.3525 43.0474 31.3957C42.9866 31.3989 42.9258 31.3999 42.8656 31.3999C41.9696 31.3999 41.1274 31.065 40.4768 30.4463C40.2512 30.2319 40.0624 29.9909 39.9056 29.7333C39.3141 30.6826 38.3136 31.3386 37.1808 31.3957C37.12 31.3989 37.0592 31.3999 36.9989 31.3999C36.1029 31.3999 35.2608 31.065 34.6101 30.4463C34.3845 30.2319 34.1957 29.9909 34.0384 29.7327C33.4474 30.6815 32.4474 31.337 31.3157 31.3941C31.2533 31.3973 31.1909 31.3994 31.129 31.3994C30.8448 31.3994 30.5637 31.3519 30.2858 31.281C29.6714 31.6959 28.9456 31.9333 28.2005 31.9333H26.2336C26.5008 33.0527 26.8565 35.2794 26.0106 36.9717C25.9173 37.1589 25.729 37.2666 25.5328 37.2666C25.4528 37.2666 25.3712 37.2485 25.2949 37.2106C25.0314 37.0789 24.9248 36.7583 25.0565 36.4949C26.0133 34.5813 25.0373 31.5983 25.0277 31.569C24.9733 31.4063 25.001 31.2271 25.1013 31.0885C25.2016 30.9493 25.3626 30.8671 25.5338 30.8671H28.2005C28.808 30.8671 29.3802 30.6682 29.8554 30.2917C29.8554 30.2917 29.8565 30.2917 29.857 30.2911C30.4992 29.7807 30.8677 29.0191 30.8677 28.2005C30.8677 27.6122 30.3893 27.1338 29.801 27.1338H22.8677C21.6912 27.1338 20.7344 28.0906 20.7344 29.2671V35.6666Z"
-                                        fill="#FFC107" />
-                                </svg>
-                            </div>
-                            <div>
-                                <h5 class="font-manrope font-medium text-sm text-white">Weakness</h5>
-                                <h3 class="font-manrope font-semibold text-base text-white">X2</h3>
-                            </div>
-                        </div>
-
-                        {{-- Item - 07 --}}
-                        <div
-                            class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
-                            <div>
-                                <svg width="66" height="66" viewBox="0 0 66 66" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="66" height="66" rx="33" fill="white"
-                                        fill-opacity="0.08" />
-                                    <path
-                                        d="M27.3307 20.333C27.3307 19.7807 26.883 19.333 26.3307 19.333C25.7784 19.333 25.3307 19.7807 25.3307 20.333V22.4387C23.4116 22.5924 22.1518 22.9695 21.2262 23.8951C20.3006 24.8207 19.9234 26.0806 19.7697 27.9997H46.225C46.0714 26.0806 45.6942 24.8207 44.7686 23.8951C43.843 22.9695 42.5832 22.5924 40.6641 22.4387V20.333C40.6641 19.7807 40.2163 19.333 39.6641 19.333C39.1118 19.333 38.6641 19.7807 38.6641 20.333V22.3502C37.777 22.333 36.7828 22.333 35.6641 22.333H30.3307C29.212 22.333 28.2177 22.333 27.3307 22.3502V20.333Z"
-                                        fill="#FFC107" />
-                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                        d="M19.6641 32.9997C19.6641 31.881 19.6641 30.8867 19.6813 29.9997H46.3135C46.3307 30.8867 46.3307 31.881 46.3307 32.9997V35.6663C46.3307 40.6947 46.3307 43.2088 44.7686 44.7709C43.2065 46.333 40.6924 46.333 35.6641 46.333H30.3307C25.3024 46.333 22.7883 46.333 21.2262 44.7709C19.6641 43.2088 19.6641 40.6947 19.6641 35.6663V32.9997ZM39.6641 35.6663C40.4004 35.6663 40.9974 35.0694 40.9974 34.333C40.9974 33.5966 40.4004 32.9997 39.6641 32.9997C38.9277 32.9997 38.3307 33.5966 38.3307 34.333C38.3307 35.0694 38.9277 35.6663 39.6641 35.6663ZM39.6641 40.9997C40.4004 40.9997 40.9974 40.4027 40.9974 39.6663C40.9974 38.93 40.4004 38.333 39.6641 38.333C38.9277 38.333 38.3307 38.93 38.3307 39.6663C38.3307 40.4027 38.9277 40.9997 39.6641 40.9997ZM34.3307 34.333C34.3307 35.0694 33.7338 35.6663 32.9974 35.6663C32.261 35.6663 31.6641 35.0694 31.6641 34.333C31.6641 33.5966 32.261 32.9997 32.9974 32.9997C33.7338 32.9997 34.3307 33.5966 34.3307 34.333ZM34.3307 39.6663C34.3307 40.4027 33.7338 40.9997 32.9974 40.9997C32.261 40.9997 31.6641 40.4027 31.6641 39.6663C31.6641 38.93 32.261 38.333 32.9974 38.333C33.7338 38.333 34.3307 38.93 34.3307 39.6663ZM26.3307 35.6663C27.0671 35.6663 27.6641 35.0694 27.6641 34.333C27.6641 33.5966 27.0671 32.9997 26.3307 32.9997C25.5943 32.9997 24.9974 33.5966 24.9974 34.333C24.9974 35.0694 25.5943 35.6663 26.3307 35.6663ZM26.3307 40.9997C27.0671 40.9997 27.6641 40.4027 27.6641 39.6663C27.6641 38.93 27.0671 38.333 26.3307 38.333C25.5943 38.333 24.9974 38.93 24.9974 39.6663C24.9974 40.4027 25.5943 40.9997 26.3307 40.9997Z"
-                                        fill="#FFC107" />
-                                </svg>
-                            </div>
-                            <div>
-                                <h5 class="font-manrope font-medium text-sm text-white">Release Date</h5>
-                                <h3 class="font-manrope font-semibold text-base text-white">1997-07-01</h3>
-                            </div>
-                        </div>
-
-                        {{-- Item - 08 --}}
-                        <div
-                            class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
-                            <div>
-                                <svg width="66" height="66" viewBox="0 0 66 66" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="66" height="66" rx="33" fill="white"
-                                        fill-opacity="0.08" />
-                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                        d="M31.4598 46.246C24.8202 45.4836 19.6641 39.8441 19.6641 33.0003C19.6641 25.6365 25.6336 19.667 32.9974 19.667C40.3612 19.667 46.3307 25.6365 46.3307 33.0003C46.3307 39.8757 41.9538 39.3103 38.2154 38.8274C36.0593 38.5488 34.1155 38.2978 33.3466 39.5176C32.8207 40.3518 33.3892 41.3921 34.0865 42.0894C34.9578 42.9607 34.9578 44.3733 34.0865 45.2446C33.3892 45.9419 32.4395 46.3585 31.4598 46.246ZM31.7774 26.3333C31.7774 27.4379 30.882 28.3333 29.7774 28.3333C28.6728 28.3333 27.7774 27.4379 27.7774 26.3333C27.7774 25.2288 28.6728 24.3333 29.7774 24.3333C30.882 24.3333 31.7774 25.2288 31.7774 26.3333ZM25.6641 34.3336C26.7686 34.3336 27.6641 33.4382 27.6641 32.3336C27.6641 31.2291 26.7686 30.3336 25.6641 30.3336C24.5595 30.3336 23.6641 31.2291 23.6641 32.3336C23.6641 33.4382 24.5595 34.3336 25.6641 34.3336ZM40.3307 34.3336C41.4353 34.3336 42.3307 33.4382 42.3307 32.3336C42.3307 31.2291 41.4353 30.3336 40.3307 30.3336C39.2262 30.3336 38.3307 31.2291 38.3307 32.3336C38.3307 33.4382 39.2262 34.3336 40.3307 34.3336ZM36.3307 28.3336C37.4353 28.3336 38.3307 27.4382 38.3307 26.3336C38.3307 25.2291 37.4353 24.3336 36.3307 24.3336C35.2262 24.3336 34.3307 25.2291 34.3307 26.3336C34.3307 27.4382 35.2262 28.3336 36.3307 28.3336Z"
-                                        fill="#FFC107" />
-                                </svg>
-                            </div>
-                            <div>
-                                <h5 class="font-manrope font-medium text-sm text-white">Artist</h5>
-                                <h3 class="font-manrope font-semibold text-base text-white">Kagemaru Himeno</h3>
-                            </div>
-                        </div>
-
-                        {{-- Item - 09 --}}
-                        <div
-                            class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
-                            <div>
-                                <svg width="66" height="66" viewBox="0 0 66 66" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="66" height="66" rx="33" fill="white"
-                                        fill-opacity="0.08" />
-                                    <path
-                                        d="M46.0804 22.2531C44.3338 26.6131 40.3471 32.3065 36.5471 36.0265C36.0004 32.5865 33.2538 29.8931 29.7871 29.4131C33.5204 25.5998 39.2538 21.5598 43.6271 19.7998C44.4004 19.5065 45.1738 19.7331 45.6538 20.2131C46.1604 20.7198 46.4004 21.4798 46.0804 22.2531Z"
-                                        fill="#FFC107" />
-                                    <path
-                                        d="M35.3734 37.1199C35.1067 37.3466 34.84 37.5733 34.5734 37.7866L32.1867 39.6933C32.1867 39.6533 32.1734 39.5999 32.1734 39.5466C31.9867 38.1199 31.32 36.7999 30.24 35.7199C29.1467 34.6266 27.7867 33.9599 26.2934 33.7733C26.2534 33.7733 26.2 33.7599 26.16 33.7599L28.0934 31.3199C28.28 31.0799 28.48 30.8533 28.6934 30.6133L29.6 30.7333C32.4667 31.1333 34.7734 33.3866 35.2267 36.2399L35.3734 37.1199Z"
-                                        fill="#FFC107" />
-                                    <path
-                                        d="M30.9057 40.4934C30.9057 41.9601 30.3457 43.3601 29.279 44.4134C28.4657 45.2401 27.3724 45.8001 26.039 45.9601L22.7724 46.3201C20.9857 46.5201 19.4524 44.9868 19.6524 43.1868L20.0124 39.9068C20.3324 36.9868 22.7724 35.1201 25.359 35.0668C25.6124 35.0534 25.8924 35.0668 26.159 35.0934C27.2924 35.2401 28.3857 35.7601 29.3057 36.6668C30.199 37.5601 30.7057 38.6134 30.8524 39.7201C30.879 39.9868 30.9057 40.2401 30.9057 40.4934Z"
-                                        fill="#FFC107" />
-                                </svg>
-                            </div>
-                            <div>
-                                <h5 class="font-manrope font-medium text-sm text-white">Regulation mark</h5>
-                                <h3 class="font-manrope font-semibold text-base text-white">D</h3>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="my-12">
-                        <h2 class="font-manrope font-bold text-xl text-white mb-2">Battle sense (Ability)</h2>
-                        <h3 class="font-manrope font-medium text-base text-white">Once during your turn, you may look
-                            at the top 3 cards of your deck and put 1 of them into your hand. Discard the other cards
-                        </h3>
-                    </div>
-                    <div>
-                        <h2 class="font-manrope font-bold text-xl text-white mb-2">Royal Blaze : 100</h2>
-                        <h3 class="font-manrope font-medium text-base text-white">This attack does more damage for each
-                            Leon card in your discard pile.</h3>
-                    </div>
+                    {{-- Card Widgets Section --}}
+                    <livewire:pages.components.card.widgets-section :card="$card" :set="$card->set" :allCardRecord="$card->all_card" />
                 </div>
                 <div class="w-full xl:w-2/12 h-full">
                     <div class="w-full h-full rounded-3xl bg-addbg p-8 flex items-center justify-center">
@@ -1197,179 +631,8 @@ new class extends Component {
 
         {{-- Fourth Section --}}
         <div class="w-full bg-blackish py-12">
-            <div
-                class="max-w-[1440px] 2xl:max-w-[1500px] bg-blackish flex relative mx-auto flex-col xl:flex-row gap-12 items-center justify-center">
-                <div class="w-full xl:w-10/12 px-8 xl:px-0">
-                    <div>
-                        <h2 class="font-manrope font-bold text-center text-2xl lg:text-3xl text-white">Similar Cards to
-                            Pikachu</h2>
-                    </div>
-                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 my-12">
-                        <div class="flex w-full">
-                            <div class="p-6 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
-                                <img src="{{ asset('assets/card-images/pikachu60.png') }}" alt="">
-                            </div>
-                            <div class="relative">
-                                <div class="bg-[#555555e3] p-2 rounded-full w-auto absolute top-[10px] -ml-[50px]">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M19.4626 4.99415C16.7809 3.34923 14.4404 4.01211 13.0344 5.06801C12.4578 5.50096 12.1696 5.71743 12 5.71743C11.8304 5.71743 11.5422 5.50096 10.9656 5.06801C9.55962 4.01211 7.21909 3.34923 4.53744 4.99415C1.01807 7.15294 0.221721 14.2749 8.33953 20.2834C9.88572 21.4278 10.6588 22 12 22C13.3412 22 14.1143 21.4278 15.6605 20.2834C23.7783 14.2749 22.9819 7.15294 19.4626 4.99415Z"
-                                            stroke="white" stroke-width="1.5" stroke-linecap="round" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex w-full">
-                            <div class="p-6 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
-                                <img src="{{ asset('assets/card-images/Flareonflash.png') }}" alt="">
-                            </div>
-                            <div class="relative">
-                                <div class="bg-[#555555e3] p-2 rounded-full w-auto absolute top-[10px] -ml-[50px]">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M19.4626 4.99415C16.7809 3.34923 14.4404 4.01211 13.0344 5.06801C12.4578 5.50096 12.1696 5.71743 12 5.71743C11.8304 5.71743 11.5422 5.50096 10.9656 5.06801C9.55962 4.01211 7.21909 3.34923 4.53744 4.99415C1.01807 7.15294 0.221721 14.2749 8.33953 20.2834C9.88572 21.4278 10.6588 22 12 22C13.3412 22 14.1143 21.4278 15.6605 20.2834C23.7783 14.2749 22.9819 7.15294 19.4626 4.99415Z"
-                                            stroke="white" stroke-width="1.5" stroke-linecap="round" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex w-full">
-                            <div class="p-6 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
-                                <img src="{{ asset('assets/card-images/Flareonfire.png') }}" alt="">
-                            </div>
-                            <div class="relative">
-                                <div class="bg-[#555555e3] p-2 rounded-full w-auto absolute top-[10px] -ml-[50px]">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M19.4626 4.99415C16.7809 3.34923 14.4404 4.01211 13.0344 5.06801C12.4578 5.50096 12.1696 5.71743 12 5.71743C11.8304 5.71743 11.5422 5.50096 10.9656 5.06801C9.55962 4.01211 7.21909 3.34923 4.53744 4.99415C1.01807 7.15294 0.221721 14.2749 8.33953 20.2834C9.88572 21.4278 10.6588 22 12 22C13.3412 22 14.1143 21.4278 15.6605 20.2834C23.7783 14.2749 22.9819 7.15294 19.4626 4.99415Z"
-                                            stroke="white" stroke-width="1.5" stroke-linecap="round" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex w-full">
-                            <div class="p-6 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
-                                <img src="{{ asset('assets/card-images/Flareon.png') }}" alt="">
-                            </div>
-                            <div class="relative">
-                                <div class="bg-[#555555e3] p-2 rounded-full w-auto absolute top-[10px] -ml-[50px]">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M19.4626 4.99415C16.7809 3.34923 14.4404 4.01211 13.0344 5.06801C12.4578 5.50096 12.1696 5.71743 12 5.71743C11.8304 5.71743 11.5422 5.50096 10.9656 5.06801C9.55962 4.01211 7.21909 3.34923 4.53744 4.99415C1.01807 7.15294 0.221721 14.2749 8.33953 20.2834C9.88572 21.4278 10.6588 22 12 22C13.3412 22 14.1143 21.4278 15.6605 20.2834C23.7783 14.2749 22.9819 7.15294 19.4626 4.99415Z"
-                                            stroke="white" stroke-width="1.5" stroke-linecap="round" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex w-full">
-                            <div class="p-6 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
-                                <img src="{{ asset('assets/card-images/pikashuelectro.png') }}" alt="">
-                            </div>
-                            <div class="relative">
-                                <div class="bg-[#555555e3] p-2 rounded-full w-auto absolute top-[10px] -ml-[50px]">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M19.4626 4.99415C16.7809 3.34923 14.4404 4.01211 13.0344 5.06801C12.4578 5.50096 12.1696 5.71743 12 5.71743C11.8304 5.71743 11.5422 5.50096 10.9656 5.06801C9.55962 4.01211 7.21909 3.34923 4.53744 4.99415C1.01807 7.15294 0.221721 14.2749 8.33953 20.2834C9.88572 21.4278 10.6588 22 12 22C13.3412 22 14.1143 21.4278 15.6605 20.2834C23.7783 14.2749 22.9819 7.15294 19.4626 4.99415Z"
-                                            stroke="white" stroke-width="1.5" stroke-linecap="round" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-8">
-                        <h2 class="font-manrope font-bold text-center text-2xl lg:text-3xl text-white">Similar Cards
-                            from Wizards Black Star Promos </h2>
-                    </div>
-                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 my-12">
-                        <div class="flex w-full">
-                            <div class="p-6 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
-                                <img src="{{ asset('assets/card-images/pikachuthunder.png') }}" alt="">
-                            </div>
-                            <div class="relative">
-                                <div class="bg-[#555555e3] p-2 rounded-full w-auto absolute top-[10px] -ml-[50px]">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M19.4626 4.99415C16.7809 3.34923 14.4404 4.01211 13.0344 5.06801C12.4578 5.50096 12.1696 5.71743 12 5.71743C11.8304 5.71743 11.5422 5.50096 10.9656 5.06801C9.55962 4.01211 7.21909 3.34923 4.53744 4.99415C1.01807 7.15294 0.221721 14.2749 8.33953 20.2834C9.88572 21.4278 10.6588 22 12 22C13.3412 22 14.1143 21.4278 15.6605 20.2834C23.7783 14.2749 22.9819 7.15294 19.4626 4.99415Z"
-                                            stroke="white" stroke-width="1.5" stroke-linecap="round" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex w-full">
-                            <div class="p-6 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
-                                <img src="{{ asset('assets/card-images/pikashuelectro.png') }}" alt="">
-                            </div>
-                            <div class="relative">
-                                <div class="bg-[#555555e3] p-2 rounded-full w-auto absolute top-[10px] -ml-[50px]">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M19.4626 4.99415C16.7809 3.34923 14.4404 4.01211 13.0344 5.06801C12.4578 5.50096 12.1696 5.71743 12 5.71743C11.8304 5.71743 11.5422 5.50096 10.9656 5.06801C9.55962 4.01211 7.21909 3.34923 4.53744 4.99415C1.01807 7.15294 0.221721 14.2749 8.33953 20.2834C9.88572 21.4278 10.6588 22 12 22C13.3412 22 14.1143 21.4278 15.6605 20.2834C23.7783 14.2749 22.9819 7.15294 19.4626 4.99415Z"
-                                            stroke="white" stroke-width="1.5" stroke-linecap="round" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex w-full">
-                            <div class="p-6 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
-                                <img src="{{ asset('assets/card-images/starly.png') }}" alt="">
-                            </div>
-                            <div class="relative">
-                                <div class="bg-[#555555e3] p-2 rounded-full w-auto absolute top-[10px] -ml-[50px]">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M19.4626 4.99415C16.7809 3.34923 14.4404 4.01211 13.0344 5.06801C12.4578 5.50096 12.1696 5.71743 12 5.71743C11.8304 5.71743 11.5422 5.50096 10.9656 5.06801C9.55962 4.01211 7.21909 3.34923 4.53744 4.99415C1.01807 7.15294 0.221721 14.2749 8.33953 20.2834C9.88572 21.4278 10.6588 22 12 22C13.3412 22 14.1143 21.4278 15.6605 20.2834C23.7783 14.2749 22.9819 7.15294 19.4626 4.99415Z"
-                                            stroke="white" stroke-width="1.5" stroke-linecap="round" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex w-full">
-                            <div class="p-6 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
-                                <img src="{{ asset('assets/card-images/zapdos.png') }}" alt="">
-                            </div>
-                            <div class="relative">
-                                <div class="bg-[#555555e3] p-2 rounded-full w-auto absolute top-[10px] -ml-[50px]">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M19.4626 4.99415C16.7809 3.34923 14.4404 4.01211 13.0344 5.06801C12.4578 5.50096 12.1696 5.71743 12 5.71743C11.8304 5.71743 11.5422 5.50096 10.9656 5.06801C9.55962 4.01211 7.21909 3.34923 4.53744 4.99415C1.01807 7.15294 0.221721 14.2749 8.33953 20.2834C9.88572 21.4278 10.6588 22 12 22C13.3412 22 14.1143 21.4278 15.6605 20.2834C23.7783 14.2749 22.9819 7.15294 19.4626 4.99415Z"
-                                            stroke="white" stroke-width="1.5" stroke-linecap="round" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex w-full">
-                            <div class="p-6 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
-                                <img src="{{ asset('assets/card-images/prinpulp.png') }}" alt="">
-                            </div>
-                            <div class="relative">
-                                <div class="bg-[#555555e3] p-2 rounded-full w-auto absolute top-[10px] -ml-[50px]">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M19.4626 4.99415C16.7809 3.34923 14.4404 4.01211 13.0344 5.06801C12.4578 5.50096 12.1696 5.71743 12 5.71743C11.8304 5.71743 11.5422 5.50096 10.9656 5.06801C9.55962 4.01211 7.21909 3.34923 4.53744 4.99415C1.01807 7.15294 0.221721 14.2749 8.33953 20.2834C9.88572 21.4278 10.6588 22 12 22C13.3412 22 14.1143 21.4278 15.6605 20.2834C23.7783 14.2749 22.9819 7.15294 19.4626 4.99415Z"
-                                            stroke="white" stroke-width="1.5" stroke-linecap="round" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="w-full xl:w-2/12 h-full">
-                    <div class="w-full h-full rounded-3xl bg-darkblackbg p-8 flex items-center justify-center">
-                        <h1 class="text-white">addvertisements</h1>
-                    </div>
-                </div>
-            </div>
+            {{-- Related Section --}}
+          <livewire:pages.components.card.related-section :card="$card" />
         </div>
 
         {{-- Fifth Section --}}
@@ -1656,8 +919,7 @@ new class extends Component {
                                                         </g>
                                                         <defs>
                                                             <clipPath id="clip0_318_19463">
-                                                                <rect width="49.9002" height="20"
-                                                                    fill="white"
+                                                                <rect width="49.9002" height="20" fill="white"
                                                                     transform="translate(0.0499268)" />
                                                             </clipPath>
                                                         </defs>
@@ -1714,8 +976,7 @@ new class extends Component {
                                                         </g>
                                                         <defs>
                                                             <clipPath id="clip0_318_19463">
-                                                                <rect width="49.9002" height="20"
-                                                                    fill="white"
+                                                                <rect width="49.9002" height="20" fill="white"
                                                                     transform="translate(0.0499268)" />
                                                             </clipPath>
                                                         </defs>
@@ -1772,8 +1033,7 @@ new class extends Component {
                                                         </g>
                                                         <defs>
                                                             <clipPath id="clip0_318_19463">
-                                                                <rect width="49.9002" height="20"
-                                                                    fill="white"
+                                                                <rect width="49.9002" height="20" fill="white"
                                                                     transform="translate(0.0499268)" />
                                                             </clipPath>
                                                         </defs>
@@ -1830,8 +1090,7 @@ new class extends Component {
                                                         </g>
                                                         <defs>
                                                             <clipPath id="clip0_318_19463">
-                                                                <rect width="49.9002" height="20"
-                                                                    fill="white"
+                                                                <rect width="49.9002" height="20" fill="white"
                                                                     transform="translate(0.0499268)" />
                                                             </clipPath>
                                                         </defs>
@@ -1843,8 +1102,7 @@ new class extends Component {
 
                                     <div class="flex gap-5 items-center w-full rounded-lg bg-[#262626] p-5">
                                         <div class="w-1/3">
-                                            <img src="{{ asset('assets/card-images/Flareon.png') }}"
-                                                alt="">
+                                            <img src="{{ asset('assets/card-images/Flareon.png') }}" alt="">
                                         </div>
                                         <div class="w-2/3 relative">
                                             <div class="flex items-center justify-center gap-2 w-full h-10 bg-no-repeat bg-center bg-contain absolute -top-14 md:-top-9 lg:-top-14 xl:-top-11"
@@ -1888,8 +1146,7 @@ new class extends Component {
                                                         </g>
                                                         <defs>
                                                             <clipPath id="clip0_318_19463">
-                                                                <rect width="49.9002" height="20"
-                                                                    fill="white"
+                                                                <rect width="49.9002" height="20" fill="white"
                                                                     transform="translate(0.0499268)" />
                                                             </clipPath>
                                                         </defs>
@@ -1946,8 +1203,7 @@ new class extends Component {
                                                         </g>
                                                         <defs>
                                                             <clipPath id="clip0_318_19463">
-                                                                <rect width="49.9002" height="20"
-                                                                    fill="white"
+                                                                <rect width="49.9002" height="20" fill="white"
                                                                     transform="translate(0.0499268)" />
                                                             </clipPath>
                                                         </defs>
