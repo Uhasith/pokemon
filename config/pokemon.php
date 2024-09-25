@@ -247,4 +247,22 @@ return [
             'value' => 'pc_id',
         ],
     ],
+    'cardSetTableColumns' => [
+        [
+            'name' => 'Card Id (UUID)',
+            'value' => 'card_id',
+        ],
+        [
+            'name' => 'Set Id (UUID)',
+            'value' => 'set_id',
+        ],
+        [
+            'name' => 'Related Sets (String)',
+            'value' => 'related_sets',
+        ],
+        [
+            'name' => 'Related Cards (String)',
+            'value' => 'related_cards',
+        ],
+    ],
 ];

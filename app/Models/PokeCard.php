@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class PokeCard extends Model
@@ -21,6 +23,11 @@ class PokeCard extends Model
         'is_holo' => 'boolean',
         'is_reverse_holo' => 'boolean',
     ];
+
+    public function set(): BelongsTo
+    {
+        return $this->belongsTo(PokeSet::class);
+    }
 
     public function tcg(): HasOne
     {
@@ -44,6 +51,11 @@ class PokeCard extends Model
         return $this->hasMany(PokeCardPriceTimeSeries::class, 'card_id', 'card_id');
     }
 
+    public function transaction_timeseries(): HasMany
+    {
+        return $this->hasMany(PokeCardTransactionTimeSeries::class, 'card_id', 'card_id');
+    }
+
     public function card_prices(): HasMany
     {
         return $this->hasMany(PokeCardPrice::class, 'card_id', 'card_id');
@@ -52,5 +64,20 @@ class PokeCard extends Model
     public function populations(): HasMany
     {
         return $this->hasMany(PokeCardPopulation::class, 'card_id', 'card_id');
+    }
+
+    public function related_sets(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            PokeSet::class,               // The related model
+            'poke_card_set_relations',    // The pivot table
+            'card_id',                    // Foreign key on the pivot table pointing to PokeCard
+            'set_id',                     // Foreign key on the pivot table pointing to PokeSet
+            'card_id',                    // Local key on the PokeCard model
+            'set_id'                      // Local key on the PokeSet model
+        )
+        ->using(PokeCardSetRelation::class)   // Custom pivot model
+        ->withPivot('related_cards', 'related_sets')  // Additional fields in the pivot table
+        ->withTimestamps();  // Include timestamps from the pivot table
     }
 }

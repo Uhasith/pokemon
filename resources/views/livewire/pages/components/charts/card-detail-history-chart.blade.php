@@ -9,12 +9,7 @@ new class extends Component {
     public $cardPricesTimeseries;
     public $chartGrade = 'PSA10';
     public $timeFrame = 'ALL';
-    public $timeFrameAvailability = [
-        '6M' => false,
-        '1Y' => false,
-        '5Y' => false,
-        'All' => true, // Default is 'All'
-    ];
+    public $timeFrameAvailability = [];
 
     public $chartData = [
         'labels' => [],
@@ -57,6 +52,13 @@ new class extends Component {
             // Get the latest date in the timeseries (to use as the reference point)
             // $latestDate = Carbon::parse($timeseries->last()['date']);
 
+            $this->timeFrameAvailability = [
+                '6M' => false,
+                '1Y' => false,
+                '5Y' => false,
+                'All' => true, // Default is 'All'
+            ];
+
             // Define time frames to check
             $timeFrames = [
                 '6M' => Carbon::now()->subMonths(6),
@@ -81,13 +83,13 @@ new class extends Component {
             switch ($this->timeFrame) {
                 case '6M':
                     // $latestDate->copy()
-                    $startDate = Carbon::now()->subMonths(6);
+                    $startDate = $timeFrames['6M'];
                     break;
                 case '1Y':
-                    $startDate = Carbon::now()->subYear();
+                    $startDate = $timeFrames['1Y'];
                     break;
                 case '5Y':
-                    $startDate = Carbon::now()->subYears(5);
+                    $startDate = $timeFrames['5Y'];
                     break;
                 default:
                     // 'All' or any other case: no filtering based on time

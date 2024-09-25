@@ -10,7 +10,7 @@ class PokeCardTcgPCRelation extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $guarded = ['id'];
 
     protected $table = 'poke_card_tcg_pc_relations';
 
