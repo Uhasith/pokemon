@@ -89,6 +89,8 @@ class PokeCard extends Model
  
     // $array['all_card']  = 
 
-    return $array;
+    return [
+        'name' => $this->name
+    ];
     }
 }
