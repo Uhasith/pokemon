@@ -42,6 +42,10 @@ return [
             'name' => 'Is Promo (Boolean)',
             'value' => 'is_promo',
         ],
+        [
+            'name' => 'Set Name Clean (String)',
+            'value' => 'set_name_clean',
+        ],
     ],
     'cardTableColumns' => [
         [
@@ -87,6 +91,10 @@ return [
         [
             'name' => 'Is Reverse Holo (Boolean)',
             'value' => 'is_reverse_holo',
+        ],
+        [
+            'name' => 'PSA Grade Market Cap (Decimal)',
+            'value' => 'psa_grade_market_cap',
         ],
     ],
     'priceTableColumns' => [
