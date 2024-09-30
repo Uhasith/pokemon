@@ -94,7 +94,7 @@ new class extends Component {
             </div>
 
             <div class="py-8">
-                {{ $prices->onEachSide(0)->links(data: ['scrollTo' => '#price-table']) }}
+                {{ $prices->onEachSide(1)->links(data: ['scrollTo' => '#price-table']) }}
             </div>
         </div>
         <div class="w-full xl:w-2/12 h-full">

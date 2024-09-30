@@ -77,20 +77,18 @@ class PokeCard extends Model
             'card_id',                    // Local key on the PokeCard model
             'set_id'                      // Local key on the PokeSet model
         )
-        ->using(PokeCardSetRelation::class)   // Custom pivot model
-        ->withPivot('related_cards', 'related_sets')  // Additional fields in the pivot table
-        ->withTimestamps();  // Include timestamps from the pivot table
+            ->using(PokeCardSetRelation::class)   // Custom pivot model
+            ->withPivot('related_cards', 'related_sets')  // Additional fields in the pivot table
+            ->withTimestamps();  // Include timestamps from the pivot table
     }
 
     public function toSearchableArray()
     {
-    $array = $this->toArray();
-    $this->loadMissing('all_card');
- 
-    // $array['all_card']  = 
+        // $array = $this->toArray();
+        $this->loadMissing('all_card');
 
-    return [
-        'name' => $this->name
-    ];
+        return [
+            'name' => $this->name
+        ];
     }
 }

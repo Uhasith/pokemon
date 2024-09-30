@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('variant')->nullable();
             $table->boolean('is_holo')->default(false);
             $table->boolean('is_reverse_holo')->default(false);
+            $table->decimal('psa_grade_maket_cap')->nullable();
             $table->timestamps();
 
             // Indexes

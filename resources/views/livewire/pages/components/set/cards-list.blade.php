@@ -378,5 +378,5 @@ new class extends Component {
             </div>
         </div>
     </div>
-    {{ $cards->onEachSide(0)->links(data: ['scrollTo' => '#section2']) }}
+    {{ $cards->onEachSide(1)->links(data: ['scrollTo' => '#section2']) }}
 </div>
