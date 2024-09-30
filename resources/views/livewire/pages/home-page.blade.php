@@ -35,6 +35,7 @@ new class extends Component {
 }; ?>
 
 <div>
+
     <div class="bg-darkblackbg w-full relative">
         {{-- First hero Section --}}
         <div class="w-full h-56 bg-blend-darken bg-no-repeat bg-center bg-cover relative flex justify-center items-center"
@@ -145,6 +146,7 @@ new class extends Component {
                 </div>
                 {{-- Cards Loading Section With Paginations --}}
                 <livewire:pages.components.set.cards-list :set_id="$set_id" />
+
             </div>
         </div>
     </div>

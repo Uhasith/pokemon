@@ -9,10 +9,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
+use Laravel\Scout\Searchable;
 
 class PokeCard extends Model
 {
-    use HasFactory;
+    use HasFactory, Searchable;
 
     protected $guarded = ['id'];
 
@@ -79,5 +80,15 @@ class PokeCard extends Model
         ->using(PokeCardSetRelation::class)   // Custom pivot model
         ->withPivot('related_cards', 'related_sets')  // Additional fields in the pivot table
         ->withTimestamps();  // Include timestamps from the pivot table
+    }
+
+    public function toSearchableArray()
+    {
+    $array = $this->toArray();
+    $this->loadMissing('all_card');
+ 
+    // $array['all_card']  = 
+
+    return $array;
     }
 }

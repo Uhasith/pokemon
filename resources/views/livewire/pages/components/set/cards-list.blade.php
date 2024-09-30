@@ -3,45 +3,69 @@
 use Livewire\Volt\Component;
 use Livewire\WithPagination;
 use App\Models\PokeCard;
+use Livewire\Attributes\On; 
+use Laravel\Scout\Builder;
 
 new class extends Component {
     use WithPagination;
 
     public $sortBy = 'Value High to Low';
     public $price = 'PSA 10';
-    public $set_id;
+    public $set_id, $searchKw = '';
+
+     #[On('search-this')] 
+     public function search($kw)
+    {
+        $this->searchKw = $kw;
+        // $cards = App\Models\PokeCard::search($kw)->get();
+    }
 
     public function with(): array
     {
         // Extract the PSA grade number from the price string
         $psa_grade = preg_replace('/[^0-9]/', '', $this->price);
 
-        // Base query for fetching cards with their relationships and a join on price_timeseries for sorting
-        $query = PokeCard::with(['all_card'])
-            // Join with price_timeseries table to retrieve the latest price for sorting
-            ->leftJoin('poke_card_price_time_series as pts', function ($join) use ($psa_grade) {
-                $join->on('poke_cards.card_id', '=', 'pts.card_id')->where('pts.psa_grade', '=', $psa_grade);
-            })
-            // Select necessary columns, including the fair_price
-            ->select('poke_cards.*', 'pts.latest_fair_price as fair_price');
+        if(empty($this->searchKw)){
+            // Base query for fetching cards with their relationships and a join on price_timeseries for sorting
+            $query = PokeCard::with(['all_card'])
+                // Join with price_timeseries table to retrieve the latest price for sorting
+                ->leftJoin('poke_card_price_time_series as pts', function ($join) use ($psa_grade) {
+                    $join->on('poke_cards.card_id', '=', 'pts.card_id')->where('pts.psa_grade', '=', $psa_grade);
+                })
+                // Select necessary columns, including the fair_price
+                ->select('poke_cards.*', 'pts.latest_fair_price as fair_price');
 
-        // Apply sorting logic based on `fair_price`
-        if ($this->sortBy === 'Value High to Low') {
-            $query->orderByRaw('fair_price IS NULL, fair_price DESC');
-        } elseif ($this->sortBy === 'Value Low to High') {
-            $query->orderByRaw('fair_price IS NULL, fair_price ASC');
-        } elseif ($this->sortBy === 'Alphabetical') {
-            $query->orderByRaw('fair_price IS NULL, name ASC');
-        } elseif ($this->sortBy === 'Reversed Alphabetical') {
-            $query->orderByRaw('fair_price IS NULL, name DESC');
+            // Apply sorting logic based on `fair_price`
+            if ($this->sortBy === 'Value High to Low') {
+                $query->orderByRaw('fair_price IS NULL, fair_price DESC');
+            } elseif ($this->sortBy === 'Value Low to High') {
+                $query->orderByRaw('fair_price IS NULL, fair_price ASC');
+            } elseif ($this->sortBy === 'Alphabetical') {
+                $query->orderByRaw('fair_price IS NULL, name ASC');
+            } elseif ($this->sortBy === 'Reversed Alphabetical') {
+                $query->orderByRaw('fair_price IS NULL, name DESC');
+            }
+
+            // Paginate the result after applying sorting
+            $cards = $query->paginate(20);
+
+            return [
+                'cards' => $cards,
+            ];
+        }else{
+            $cards = PokeCard::search($this->searchKw)
+                ->query(function ($query) use ($psa_grade) {
+                    $query->with(['all_card'])
+                          ->leftJoin('poke_card_price_time_series as pts', function ($join) use ($psa_grade) {
+                              $join->on('poke_cards.card_id', '=', 'pts.card_id')
+                                   ->where('pts.psa_grade', '=', $psa_grade);
+                          })
+                          ->select('poke_cards.*', 'pts.latest_fair_price as fair_price');
+                })
+                ->paginate(20);
+
+                return [ 'cards' => $cards ];
         }
-
-        // Paginate the result after applying sorting
-        $cards = $query->paginate(20);
-
-        return [
-            'cards' => $cards,
-        ];
     }
 }; ?>
 
