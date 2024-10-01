@@ -15,7 +15,7 @@ new class extends Component {
 
     public function with(): array
     {
-        $sets = PokeSet::query()->where('is_promo', false)->paginate(20);
+        $sets = PokeSet::query()->where('is_promo', false)->get();
 
         return ['sets' => $sets];
     }
@@ -170,7 +170,7 @@ new class extends Component {
                             </a>
                         @endforeach
                     </div>
-                    {{ $sets->onEachSide(1)->links(data: ['scrollTo' => '#section3']) }}
+                    {{-- {{ $sets->onEachSide(1)->links(data: ['scrollTo' => '#section3']) }} --}}
                 </div>
             </div>
         </div>
