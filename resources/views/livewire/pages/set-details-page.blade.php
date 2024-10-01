@@ -72,7 +72,7 @@ new class extends Component {
                             </h5>
                         </div>
                     </div>
-                    <div
+                    {{-- <div
                         class="bg-addbg rounded-xl flex flex-col gap-3 justify-start items-start px-8 py-8 w-full mt-3">
                         <div>
                             <h3 class="font-manrope font-bold text-white text-xl mb-4">General</h3>
@@ -84,8 +84,8 @@ new class extends Component {
                             <h5 class="font-manrope font-medium text-gray-600 text-sm">Total Graded Population</h5>
                             <h5 class="font-manrope font-medium text-white text-base">1600</h5>
                         </div>
-                    </div>
-                    <div
+                    </div> --}}
+                    {{-- <div
                         class="bg-addbg rounded-xl flex flex-col gap-3 justify-start items-start px-8 py-8 w-full mt-3">
                         <div>
                             <h3 class="font-manrope font-bold text-white text-xl mb-4">PSA</h3>
@@ -136,9 +136,9 @@ new class extends Component {
                             </h5>
                             <h5 class="font-manrope font-medium text-white text-base">800</h5>
                         </div>
-                    </div>
+                    </div> --}}
                     <div
-                        class="bg-addbg rounded-xl flex flex-col gap-3 justify-center items-center px-8 py-8 w-full mt-3 h-auto">
+                        class="bg-addbg rounded-xl flex flex-col gap-3 justify-center items-center px-8 py-8 w-full mt-10 h-auto">
                         <div>
                             <h3 class="font-manrope font-bold text-white text-xl mb-4">Addvertisements</h3>
                         </div>

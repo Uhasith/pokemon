@@ -37,7 +37,7 @@ new class extends Component {
                 <div class="w-full md:w-2/12 xl:w-2/12">
                     <div class="font-manrope mt-20">
                         <h3 class="text-white font-bold text-xl mb-5">Categories</h3>
-                        <div class="text-white font-semibold text-base flex flex-col gap-2">
+                        {{-- <div class="text-white font-semibold text-base flex flex-col gap-2">
                             <h4>Scarlet & Violet</h4>
                             <h4>Sword & Shield</h4>
                             <h4>Sun & Moon</h4>
@@ -48,7 +48,7 @@ new class extends Component {
                             <h4>Diamond & Pearl</h4>
                             <h4>EX Ruby & Sapphire</h4>
                             <h4>Legendary Collection</h4>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="w-full md:w-10/12 xl:w-10/12">
