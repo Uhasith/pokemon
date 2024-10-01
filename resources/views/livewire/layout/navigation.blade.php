@@ -32,10 +32,10 @@ new class extends Component {
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex ">
                     <x-nav-link class="text-white font-manrope text-base font-medium" :href="route('set-index')" :active="request()->routeIs('set-index')"
                         wire:navigate>
-                        {{ __('Home') }}
+                        {{ __('Sets') }}
                     </x-nav-link>
 
-                    <x-nav-link class="text-white font-manrope text-base font-medium">
+                    {{-- <x-nav-link class="text-white font-manrope text-base font-medium">
                         Market
                     </x-nav-link>
 
@@ -49,14 +49,14 @@ new class extends Component {
 
                     <x-nav-link class="text-white font-manrope text-base font-medium">
                         Tools
-                    </x-nav-link>
+                    </x-nav-link> --}}
                 </div>
             </div>
 
             <div class="hidden xl:flex w-1/2 justify-end items-center">
                 <div class="flex items-center justify-end">
                     {{-- Language Dropdown --}}
-                    <div class="flex items-center justify-center">
+                    {{-- <div class="flex items-center justify-center">
                         <div class="flex items-center md:order-2 space-x-1 md:space-x-0 rtl:space-x-reverse">
                             <button type="button" data-dropdown-toggle="language-dropdown-menu"
                                 class="flex items-center font-medium justify-center px-4 py-2 text-sm text-white cursor-pointer">
@@ -180,10 +180,10 @@ new class extends Component {
                                 </svg>
                             </button>
                         </div>
-                    </div>
+                    </div> --}}
 
                     {{-- Currency Dropdown --}}
-                    <div>
+                    {{-- <div>
                         <div class="flex items-center md:order-2 space-x-1 md:space-x-0 rtl:space-x-reverse">
                             <button type="button" data-dropdown-toggle="currency-dropdown-menu"
                                 class="flex items-center font-medium justify-center px-4 py-2 text-sm text-white cursor-pointer">
@@ -320,7 +320,7 @@ new class extends Component {
                                 </svg>
                             </button>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
 
                 <div class="">
@@ -330,14 +330,14 @@ new class extends Component {
                 <!-- Settings Dropdown -->
                 <div class="hidden md:flex md:items-center">
                     <div class="grid grid-cols-2 gap-3 my-3 w-full">
-                        <button
+                        <a href="{{ route('login') }}"
                             class="w-full bg-yellowish rounded-lg text-center flex gap-3 items-center justify-center marker p-2 text-base">
                             <span>Log In</span>
-                        </button>
-                        <button
+                        </a>
+                        <a href="{{ route('register') }}"
                             class="w-full border border-yellowish text-yellowish rounded-lg text-center flex gap-3 items-center justify-center p-2 text-base">
                             <span>Sign Up</span>
-                        </button>
+                        </a>
                     </div>
                     {{-- <x-dropdown align="right" width="48">
                         <x-slot name="trigger">

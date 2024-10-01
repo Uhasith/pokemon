@@ -26,8 +26,9 @@ new class extends Component {
         {{-- First hero Section --}}
         <div class="w-full h-56 bg-blend-darken bg-no-repeat bg-center bg-cover relative flex justify-center items-center"
             style="background-image: url('{{ asset('assets/card-images/hero-background.png') }}');">
-            <h2 class="text-center font-manrope font-bold text-3xl lg:text-4xl xl:text-5xl text-white z-10 md:pl-24">1999
-                Base sets</h2>
+            <h2 class="text-center font-manrope font-bold text-3xl lg:text-4xl xl:text-7xl text-white z-10 md:pl-24">
+                Pokemon Sets
+            </h2>
             <div class="h-full w-full absolute top-0 right-0 bg-[#000000CC]"></div>
         </div>
 
@@ -37,6 +38,7 @@ new class extends Component {
                 <div class="w-full md:w-2/12 xl:w-2/12">
                     <div class="font-manrope mt-20">
                         <h3 class="text-white font-bold text-xl mb-5">Categories</h3>
+                        <p class="text-white font-normal text-md text-muted mb-5">Coming soon...</p>
                         {{-- <div class="text-white font-semibold text-base flex flex-col gap-2">
                             <h4>Scarlet & Violet</h4>
                             <h4>Sword & Shield</h4>
