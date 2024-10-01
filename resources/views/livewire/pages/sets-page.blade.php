@@ -54,7 +54,7 @@ new class extends Component {
                     </div>
                 </div>
                 <div class="w-full md:w-10/12 xl:w-10/12">
-                    <div class="flex items-center justify-start gap-4">
+                    {{-- <div class="flex items-center justify-start gap-4">
                         <div class="flex items-center gap-3 w-auto">
                             <h2 class="font-manrope font-semibold text-sm text-white">Filter Cards: </h2>
                             <div class="flex items-center w-auto">
@@ -135,9 +135,9 @@ new class extends Component {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
-                    <hr class="my-3">
+                    {{-- <hr class="my-3"> --}}
 
                     {{-- This is Grid View --}}
                     <div class="grid gap-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 my-5">
