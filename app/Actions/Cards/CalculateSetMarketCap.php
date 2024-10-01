@@ -10,21 +10,20 @@ class CalculateSetMarketCap
 
     public function __construct()
     {
-        $this->getCardLatestFairPriceAction = new GetCardLatestFairPrice(); // Inject the GetCardLatestFairPrice action
+        $this->getCardLatestFairPriceAction = new GetCardLatestFairPrice; // Inject the GetCardLatestFairPrice action
     }
 
     /**
      * Calculate the market cap for a given set ID
      *
-     * @param int $setId
-     * @return array
+     * @param  int  $setId
      */
     public function handle(string $setId): array
     {
         // Retrieve the set with related cards and price timeseries
         $set = PokeSet::with([
             'cards.price_timeseries',
-            'cards.transaction_timeseries'
+            'cards.transaction_timeseries',
         ])->where('set_id', $setId)->first();
 
         $cards = $set->cards;
@@ -40,10 +39,10 @@ class CalculateSetMarketCap
             $cardPricesTransactionTimeseries = $card->transaction_timeseries;
 
             foreach ($cardPricesTimeseries as $price) {
-                $psaGrade = 'PSA' . $price['psa_grade'];
+                $psaGrade = 'PSA'.$price['psa_grade'];
 
                 // Initialize the setCardsMarketCap for the specific PSA grade if not set
-                if (!isset($setCardsMarketCap[$psaGrade])) {
+                if (! isset($setCardsMarketCap[$psaGrade])) {
                     $setCardsMarketCap[$psaGrade] = 0;
                 }
 
@@ -51,7 +50,7 @@ class CalculateSetMarketCap
                 $latestFairPrice = $this->getCardLatestFairPriceAction->handle($price['timeseries_data'] ?? []);
 
                 // Add to total and per-PSA market cap only if there's a valid fair price
-                if (!is_null($latestFairPrice)) {
+                if (! is_null($latestFairPrice)) {
                     $setCardsMarketCap[$psaGrade] += round($latestFairPrice, 2);
                     $totalSetMarketCap += round($latestFairPrice, 2);
                 }
@@ -80,7 +79,7 @@ class CalculateSetMarketCap
         return [
             'totalSetMarketCap' => $totalSetMarketCap,
             'setCardsMarketCap' => $setCardsMarketCap,
-            'set' => $set
+            'set' => $set,
         ];
     }
 }

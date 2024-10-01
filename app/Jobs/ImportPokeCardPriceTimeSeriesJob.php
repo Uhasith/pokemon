@@ -2,12 +2,11 @@
 
 namespace App\Jobs;
 
-use Carbon\Carbon;
-use Illuminate\Queue\SerializesModels;
 use App\Models\PokeCardPriceTimeSeries;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
 class ImportPokeCardPriceTimeSeriesJob implements ShouldQueue
 {
@@ -41,7 +40,7 @@ class ImportPokeCardPriceTimeSeriesJob implements ShouldQueue
                 'latest_high_price' => $row['latest_high_price'],
                 'latest_price_type' => $row['latest_price_type'],
                 'latest_confidence' => $row['latest_confidence'],
-                'timeseries_data' => $timeseriesPrices
+                'timeseries_data' => $timeseriesPrices,
             ]);
         }
     }

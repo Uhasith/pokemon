@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\Pivot;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class PokeCardSetRelation extends Pivot
 {
@@ -18,12 +17,12 @@ class PokeCardSetRelation extends Pivot
     // Relationship to PokeCard
     public function card(): BelongsTo
     {
-        return $this->belongsTo(PokeCard::class, 'card_id', 'card_id');  
+        return $this->belongsTo(PokeCard::class, 'card_id', 'card_id');
     }
 
     // Relationship to PokeSet
     public function set(): BelongsTo
     {
-        return $this->belongsTo(PokeSet::class, 'set_id', 'set_id');  
+        return $this->belongsTo(PokeSet::class, 'set_id', 'set_id');
     }
 }
