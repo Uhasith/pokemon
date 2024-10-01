@@ -27,7 +27,7 @@ new class extends Component {
 
         if(empty($this->searchKw)){
             // Base query for fetching cards with their relationships and a join on price_timeseries for sorting
-            $query = PokeCard::with(['all_card'])
+            $query = PokeCard::with(['all_card'])->where('set_id', $this->set_id)
                 // Join with price_timeseries table to retrieve the latest price for sorting
                 ->leftJoin('poke_card_price_time_series as pts', function ($join) use ($psa_grade) {
                     $join->on('poke_cards.card_id', '=', 'pts.card_id')->where('pts.psa_grade', '=', $psa_grade);

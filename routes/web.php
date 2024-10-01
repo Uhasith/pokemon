@@ -11,10 +11,11 @@ Route::view('profile', 'profile')
     ->name('profile');
 
 Route::get('/', function () {
-    return redirect()->route('home', ['set_id' => '6763889C-2A51-48F5-B540-01626C1345C2']);
+    return redirect()->route('set-index');
 });
 
-Volt::route('/sets/cards', 'pages.home-page')->name('home');
+Volt::route('/sets', 'pages.sets-page')->name('set-index');
+Volt::route('/sets/cards', 'pages.set-details-page')->name('set-details');
 Volt::route('/cards/details', 'pages.card-details-page')->name('card-details');
 
 Route::middleware([
