@@ -14,6 +14,10 @@ class PokeCardPrice extends Model
 
     protected $table = 'poke_card_prices';
 
+    protected $casts = [
+        'lot_id' => 'integer',
+    ];
+
     public function card(): BelongsTo
     {
         return $this->belongsTo(PokeCard::class);
