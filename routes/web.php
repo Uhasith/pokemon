@@ -4,7 +4,7 @@ use App\Livewire\ShopPage;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])
@@ -20,6 +20,7 @@ Volt::route('/cards/details/{setSlug}/{slug}', 'pages.card-details-page')->name(
 
 Route::middleware([
     'auth',
+    'admin',
 ])->group(function () {
 
     // Full Page Components Routes
