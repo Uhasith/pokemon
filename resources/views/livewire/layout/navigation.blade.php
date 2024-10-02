@@ -22,8 +22,7 @@ new class extends Component {
             <div class="flex w-full xl:w-1/2">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('set-index') }}"
-                        wire:navigate>
+                    <a href="{{ route('set-index') }}" wire:navigate>
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                     </a>
                 </div>
@@ -323,22 +322,29 @@ new class extends Component {
                     </div> --}}
                 </div>
 
-                <div class="">
+                <div>
                     <livewire:global.search />
                 </div>
 
                 <!-- Settings Dropdown -->
-                <div class="hidden md:flex md:items-center">
-                    <div class="grid grid-cols-2 gap-3 my-3 w-full">
-                        <a href="{{ route('login') }}"
-                            class="w-full bg-yellowish rounded-lg text-center flex gap-3 items-center justify-center marker p-2 text-base">
-                            <span>Log In</span>
-                        </a>
-                        <a href="{{ route('register') }}"
+                <div class="hidden md:flex md:items-center ml-8">
+                    @auth
+                        <button wire:click="logout"
                             class="w-full border border-yellowish text-yellowish rounded-lg text-center flex gap-3 items-center justify-center p-2 text-base">
-                            <span>Sign Up</span>
-                        </a>
-                    </div>
+                            <span>Log out</span>
+                        </button>
+                    @else
+                        <div class="grid grid-cols-2 gap-3 my-3 w-full">
+                            <a href="{{ route('login') }}"
+                                class="w-full bg-yellowish rounded-lg text-center flex gap-3 items-center justify-center marker p-2 text-base">
+                                <span>Log In</span>
+                            </a>
+                            <a href="{{ route('register') }}"
+                                class="w-full border border-yellowish text-yellowish rounded-lg text-center flex gap-3 items-center justify-center p-2 text-base">
+                                <span>Sign Up</span>
+                            </a>
+                        </div>
+                    @endauth
                     {{-- <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-white dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
