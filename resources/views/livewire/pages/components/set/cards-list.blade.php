@@ -3,7 +3,7 @@
 use Livewire\Volt\Component;
 use Livewire\WithPagination;
 use App\Models\PokeCard;
-use Livewire\Attributes\On; 
+use Livewire\Attributes\On;
 use Laravel\Scout\Builder;
 
 new class extends Component {
@@ -11,10 +11,11 @@ new class extends Component {
 
     public $sortBy = 'Value High to Low';
     public $price = 'PSA 10';
-    public $set_id, $searchKw = '';
+    public $set_id,
+        $searchKw = '';
 
-     #[On('search-this')] 
-     public function search($kw)
+    #[On('search-this')]
+    public function search($kw)
     {
         $this->searchKw = $kw;
         // $cards = App\Models\PokeCard::search($kw)->get();
@@ -25,9 +26,10 @@ new class extends Component {
         // Extract the PSA grade number from the price string
         $psa_grade = preg_replace('/[^0-9]/', '', $this->price);
 
-        if(empty($this->searchKw)){
+        if (empty($this->searchKw)) {
             // Base query for fetching cards with their relationships and a join on price_timeseries for sorting
-            $query = PokeCard::with(['all_card'])->where('set_id', $this->set_id)
+            $query = PokeCard::with(['all_card', 'set'])
+                ->where('set_id', $this->set_id)
                 // Join with price_timeseries table to retrieve the latest price for sorting
                 ->leftJoin('poke_card_price_time_series as pts', function ($join) use ($psa_grade) {
                     $join->on('poke_cards.card_id', '=', 'pts.card_id')->where('pts.psa_grade', '=', $psa_grade);
@@ -52,19 +54,19 @@ new class extends Component {
             return [
                 'cards' => $cards,
             ];
-        }else{
+        } else {
             $cards = PokeCard::search($this->searchKw)
                 ->query(function ($query) use ($psa_grade) {
-                    $query->with(['all_card'])
-                          ->leftJoin('poke_card_price_time_series as pts', function ($join) use ($psa_grade) {
-                              $join->on('poke_cards.card_id', '=', 'pts.card_id')
-                                   ->where('pts.psa_grade', '=', $psa_grade);
-                          })
-                          ->select('poke_cards.*', 'pts.latest_fair_price as fair_price');
+                    $query
+                        ->with(['all_card', 'set'])
+                        ->leftJoin('poke_card_price_time_series as pts', function ($join) use ($psa_grade) {
+                            $join->on('poke_cards.card_id', '=', 'pts.card_id')->where('pts.psa_grade', '=', $psa_grade);
+                        })
+                        ->select('poke_cards.*', 'pts.latest_fair_price as fair_price');
                 })
                 ->paginate(20);
 
-                return [ 'cards' => $cards ];
+            return ['cards' => $cards];
         }
     }
 }; ?>
@@ -125,12 +127,14 @@ new class extends Component {
                     <div class="flex w-full">
                         <div class="p-4 rounded-2xl bg-[#2C2C2C] bg-blend-screen relative cursor-pointer">
                             @if ($card?->all_card?->images['small'] !== null)
-                                <a href="{{ route('card-details', ['card_id' => $card->card_id]) }}">
+                                <a
+                                    href="{{ route('card-details', ['slug' => $card->slug, 'setSlug' => $card->set->slug]) }}" wire:navigate>
                                     <x-image :src="$card?->all_card?->images['small']" :alt="$card->name" skeltonWidth="160"
                                         skeltonHeight="220" />
                                 </a>
                             @else
-                                <a href="{{ route('card-details', ['card_id' => $card->card_id]) }}">
+                                <a
+                                    href="{{ route('card-details', ['slug' => $card->slug, 'setSlug' => $card->set->slug]) }}" wire:navigate>
                                     <div class="flex items-center justify-center bg-gray-300 rounded dark:bg-gray-700 animate-pulse"
                                         style="width: 160px; height: 220px;">
                                         <svg class="w-10 h-10 text-gray-200 dark:text-gray-600" aria-hidden="true"
@@ -156,7 +160,7 @@ new class extends Component {
                         </div>
                     </div>
                     <h2 class="font-manrope font-bold text-sm xl:text-base text-white mt-2">
-                        {{ $card->name }} - {{ $card->variant ?? 'N/A' }}
+                        {{ $card->name }}{{ $card->variant ? ' - ' . $card->variant : '' }}
                     </h2>
                     <div class="flex justify-between items-center mt-2">
                         <p class="font-manrope text-yellowish text-sm xl:text-base font-semibold">
@@ -301,12 +305,14 @@ new class extends Component {
                                     </div>
                                 </td>
                                 <td class="p-3 text-white">
-                                    <a href="{{ route('card-details', ['card_id' => $card->card_id]) }}">
+                                    <a
+                                        href="{{ route('card-details', ['slug' => $card->slug ?? 'sword-shield/krabby-043', 'setSlug' => $card->set->slug]) }}" wire:navigate>
                                         {{ $card->id }}
                                     </a>
                                 </td>
                                 <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">
-                                    <a href="{{ route('card-details', ['card_id' => $card->card_id]) }}">
+                                    <a
+                                        href="{{ route('card-details', ['slug' => $card->slug ?? 'sword-shield/krabby-043', 'setSlug' => $card->set->slug]) }}" wire:navigate>
                                         <div class="flex items-center gap-3 hyphens-auto cursor-pointer">
                                             @if ($card?->all_card?->images['small'] !== null)
                                                 <x-image :src="$card?->all_card?->images['small']" class="w-14 md:w-8" :alt="$card->name"

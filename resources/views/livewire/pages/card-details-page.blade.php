@@ -22,10 +22,13 @@ new class extends Component {
     public $prices = [];
     public $imageUrl;
 
-    public function mount()
+    public function mount($slug, $setSlug)
     {
+        // Log::info($slug);
+        // Log::info($setSlug);
         // Load the card with necessary relationships and sort populations by date_checked
-        $this->card = PokeCard::where('card_id', $this->card_id)
+        $this->card = PokeCard::where('slug', $slug)
+            ->where('set_slug', $setSlug)
             ->with([
                 'tcg',
                 'populations' => function ($query) {
@@ -37,6 +40,8 @@ new class extends Component {
                 'set',
             ])
             ->first();
+
+        $this->card_id = $this->card->id;
 
         // Log::info($this->card->toArray()['related_sets']);
 
@@ -69,7 +74,9 @@ new class extends Component {
         <div class="max-w-[1440px] 2xl:max-w-[1500px] bg-darkbg mx-auto relative flex flex-col lg:px-8 xl:px-0">
             <div class="my-12 px-8 lg:px-0">
                 <h3 class="flex gap-3 items-center font-manrope">
-                    <span class="font-medium text-[#908F8C] text-sm">All Categories</span>
+                    <a href="{{ route('set-index') }}" wire:navigate>
+                        <span class="font-medium text-[#908F8C] text-sm cursor-pointer">All Sets</span>
+                    </a>
                     <span>
                         <svg width="16" height="17" viewBox="0 0 16 17" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
@@ -80,7 +87,10 @@ new class extends Component {
                             </g>
                         </svg>
                     </span>
-                    <span class="font-medium text-[#908F8C] text-sm">Pokemon Cards</span>
+                    <a href="{{ route('set-details', ['slug' => $this->card->set->slug]) }}" wire:navigate>
+                        <span
+                            class="font-medium text-[#908F8C] text-sm cursor-pointer">{{ $this->card->set->set_name }}</span>
+                    </a>
                     <span>
                         <svg width="16" height="17" viewBox="0 0 16 17" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
@@ -91,7 +101,8 @@ new class extends Component {
                             </g>
                         </svg>
                     </span>
-                    <span class="font-semibold text-white text-sm">Ancient Booster Energy Capsule</span>
+                    <span class="font-semibold text-white text-sm">{{ $this->card->card_number }}
+                        {{ $this->card->name }}</span>
                 </h3>
             </div>
 
@@ -619,7 +630,8 @@ new class extends Component {
                 class="max-w-[1440px] 2xl:max-w-[1500px] bg-darkblackbg flex relative mx-auto flex-col xl:flex-row gap-12 items-center justify-center">
                 <div class="w-full xl:w-10/12 px-8 xl:px-0">
                     {{-- Card Widgets Section --}}
-                    <livewire:pages.components.card.widgets-section :card="$card" :set="$card->set" :allCardRecord="$card->all_card" />
+                    <livewire:pages.components.card.widgets-section :card="$card" :set="$card->set"
+                        :allCardRecord="$card->all_card" />
                 </div>
                 <div class="w-full xl:w-2/12 h-full">
                     <div class="w-full h-full rounded-3xl bg-addbg p-8 flex items-center justify-center">
@@ -632,7 +644,7 @@ new class extends Component {
         {{-- Fourth Section --}}
         <div class="w-full bg-blackish py-12">
             {{-- Related Section --}}
-          <livewire:pages.components.card.related-section :card="$card" />
+            <livewire:pages.components.card.related-section :card="$card" />
         </div>
 
         {{-- Fifth Section --}}

@@ -11,6 +11,10 @@ return [
             'value' => 'set_name',
         ],
         [
+            'name' => 'Slug (String)',
+            'value' => 'slug',
+        ],
+        [
             'name' => 'PSA Set Name (String)',
             'value' => 'psa_set_name',
         ],
@@ -59,6 +63,14 @@ return [
         [
             'name' => 'Name (String)',
             'value' => 'name',
+        ],
+        [
+            'name' => 'Set Slug (String)',
+            'value' => 'set_slug',
+        ],
+        [
+            'name' => 'Slug (String)',
+            'value' => 'slug',
         ],
         [
             'name' => 'PSA Name (String)',

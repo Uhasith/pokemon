@@ -29,7 +29,7 @@ new class extends Component {
 
             // Fetch related cards if card IDs exist
             if (!empty($relatedCardIds)) {
-                $this->relatedCards = PokeCard::with('all_card')->whereIn('card_id', $relatedCardIds)->get();
+                $this->relatedCards = PokeCard::with('all_card', 'set')->whereIn('card_id', $relatedCardIds)->get();
                 Log::info($this->relatedCards);
             }
 
@@ -52,15 +52,16 @@ new class extends Component {
             </div>
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 my-12">
                 @foreach ($relatedCards as $card)
-                      <div class="flex w-full">
-                    <div class="p-6 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
-                          @if ($card?->all_card?->images['small'] !== null)
-                                <a href="{{ route('card-details', ['card_id' => $card->card_id]) }}">
-                                    <x-image :src="$card?->all_card?->images['small']" :alt="$card->name" skeltonWidth="180"
-                                        skeltonHeight="250" />
+                    <div class="flex w-full">
+                        <div class="p-6 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
+                            @if ($card?->all_card?->images['small'] !== null)
+                                <a
+                                    href="{{ route('card-details', ['slug' => $card->slug, 'setSlug' => $card->set->slug]) }}" wire:navigate>
+                                    <x-image :src="$card?->all_card?->images['small']" :alt="$card->name" skeltonWidth="180" skeltonHeight="250" />
                                 </a>
                             @else
-                                <a href="{{ route('card-details', ['card_id' => $card->card_id]) }}">
+                                <a
+                                    href="{{ route('card-details', ['slug' => $card->slug, 'setSlug' => $card->set->slug]) }}" wire:navigate>
                                     <div class="flex items-center justify-center bg-gray-300 rounded dark:bg-gray-700 animate-pulse"
                                         style="width: 180px; height: 250px;">
                                         <svg class="w-10 h-10 text-gray-200 dark:text-gray-600" aria-hidden="true"
@@ -71,18 +72,18 @@ new class extends Component {
                                     </div>
                                 </a>
                             @endif
-                    </div>
-                    <div class="relative">
-                        <div class="bg-[#555555e3] p-2 rounded-full w-auto absolute top-[10px] -ml-[50px]">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M19.4626 4.99415C16.7809 3.34923 14.4404 4.01211 13.0344 5.06801C12.4578 5.50096 12.1696 5.71743 12 5.71743C11.8304 5.71743 11.5422 5.50096 10.9656 5.06801C9.55962 4.01211 7.21909 3.34923 4.53744 4.99415C1.01807 7.15294 0.221721 14.2749 8.33953 20.2834C9.88572 21.4278 10.6588 22 12 22C13.3412 22 14.1143 21.4278 15.6605 20.2834C23.7783 14.2749 22.9819 7.15294 19.4626 4.99415Z"
-                                    stroke="white" stroke-width="1.5" stroke-linecap="round" />
-                            </svg>
+                        </div>
+                        <div class="relative">
+                            <div class="bg-[#555555e3] p-2 rounded-full w-auto absolute top-[10px] -ml-[50px]">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M19.4626 4.99415C16.7809 3.34923 14.4404 4.01211 13.0344 5.06801C12.4578 5.50096 12.1696 5.71743 12 5.71743C11.8304 5.71743 11.5422 5.50096 10.9656 5.06801C9.55962 4.01211 7.21909 3.34923 4.53744 4.99415C1.01807 7.15294 0.221721 14.2749 8.33953 20.2834C9.88572 21.4278 10.6588 22 12 22C13.3412 22 14.1143 21.4278 15.6605 20.2834C23.7783 14.2749 22.9819 7.15294 19.4626 4.99415Z"
+                                        stroke="white" stroke-width="1.5" stroke-linecap="round" />
+                                </svg>
+                            </div>
                         </div>
                     </div>
-                </div>
                 @endforeach
             </div>
             {{-- <div class="mt-8">

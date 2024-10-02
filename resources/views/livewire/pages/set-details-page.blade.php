@@ -9,14 +9,16 @@ use App\Actions\Cards\GetCardLatestFairPrice;
 use App\Actions\Cards\CalculateSetMarketCap;
 
 new class extends Component {
-    #[Url]
     public $set_id;
     public $set;
     public $totalSetMarketCap;
     public $setCardsMarketCap = [];
 
-    public function mount()
+    public function mount($slug)
     {
+        // Log::info($slug);
+        $this->set = PokeSet::where('slug', $slug)->first();
+        $this->set_id = $this->set->set_id;
         // Instantiate the CalculateMarketCap class
         $calculateSetMarketCap = new CalculateSetMarketCap();
 

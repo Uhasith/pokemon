@@ -142,14 +142,15 @@ new class extends Component {
                     {{-- This is Grid View --}}
                     <div class="grid gap-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 my-5">
                         @foreach ($sets as $set)
-                            <a href="{{ route('set-details', ['set_id' => $set->set_id]) }}" wire:navigate
+                            <a href="{{ route('set-details', ['slug' => $set->slug]) }}" wire:navigate
                                 wire:key="set-{{ $set->set_id }}">
                                 <div class="w-full">
                                     <div class="flex w-full">
                                         <div class="p-3 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
                                             @if ($set->set_image !== null)
-                                               <x-image :src="'https://www.pokemonprice.com/Content/images/sets/' . $set->set_image" :alt="$set->set_name" skeltonWidth="150"
-                                                skeltonHeight="150" />
+                                                <x-image :src="'https://www.pokemonprice.com/Content/images/sets/' .
+                                                    $set->set_image" :alt="$set->set_name" skeltonWidth="150"
+                                                    skeltonHeight="150" />
                                             @else
                                                 <div class="flex items-center justify-center bg-gray-300 rounded dark:bg-gray-700 animate-pulse"
                                                     style="width: 150px; height: 150px;">
