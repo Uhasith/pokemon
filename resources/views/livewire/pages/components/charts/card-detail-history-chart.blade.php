@@ -49,9 +49,7 @@ new class extends Component {
         if ($filteredData) {
             $timeseries = collect($filteredData['timeseries_data']);
 
-            // Get the latest date in the timeseries (to use as the reference point)
-            // $latestDate = Carbon::parse($timeseries->last()['date']);
-
+            // Initialize availability for each time frame
             $this->timeFrameAvailability = [
                 '6M' => false,
                 '1Y' => false,
@@ -66,14 +64,15 @@ new class extends Component {
                 '5Y' => Carbon::now()->subYears(5),
             ];
 
-            // Check if data exists for each time frame and set availability flags
+            // Check if there are at least 3 records for each time frame and set availability flags
             foreach ($timeFrames as $key => $startDate) {
                 $timeFrameData = $timeseries->filter(function ($item) use ($startDate) {
                     $date = Carbon::parse($item['date']);
                     return $date->greaterThanOrEqualTo($startDate);
                 });
 
-                if ($timeFrameData->isNotEmpty()) {
+                if ($timeFrameData->count() >= 3) {
+                    // Ensure at least 3 records
                     $this->timeFrameAvailability[$key] = true;
                 }
             }
@@ -82,7 +81,6 @@ new class extends Component {
             $startDate = null;
             switch ($this->timeFrame) {
                 case '6M':
-                    // $latestDate->copy()
                     $startDate = $timeFrames['6M'];
                     break;
                 case '1Y':
