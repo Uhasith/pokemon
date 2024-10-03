@@ -139,12 +139,12 @@ new class extends Component {
                             <h5 class="font-manrope font-medium text-white text-base">800</h5>
                         </div>
                     </div> --}}
-                    <div
+                    {{-- <div
                         class="bg-addbg rounded-xl flex flex-col gap-3 justify-center items-center px-8 py-8 w-full mt-10 h-auto">
                         <div>
                             <h3 class="font-manrope font-bold text-white text-xl mb-4">Addvertisements</h3>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
                 {{-- Cards Loading Section With Paginations --}}
                 <livewire:pages.components.set.cards-list :set_id="$set_id" />

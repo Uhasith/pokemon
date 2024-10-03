@@ -612,11 +612,11 @@ new class extends Component {
                     </div> --}}
                 </div>
 
-                <div class="hidden lg:block lg:w-full xl:w-[20%] h-full xl:h-fit ml-2 mb-5 xl:mb-0">
+                {{-- <div class="hidden lg:block lg:w-full xl:w-[20%] h-full xl:h-fit ml-2 mb-5 xl:mb-0">
                     <div class="w-full h-auto xl:h-[100vh] rounded-3xl bg-addbg p-8 flex items-center justify-center">
                         <h1 class="text-white">addvertisements</h1>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
 
@@ -635,11 +635,11 @@ new class extends Component {
                     <livewire:pages.components.card.widgets-section :card="$card" :set="$card->set"
                         :allCardRecord="$card->all_card" />
                 </div>
-                <div class="w-full xl:w-2/12 h-full">
+                {{-- <div class="w-full xl:w-2/12 h-full">
                     <div class="w-full h-full rounded-3xl bg-addbg p-8 flex items-center justify-center">
                         <h1 class="text-white">addvertisements</h1>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
 

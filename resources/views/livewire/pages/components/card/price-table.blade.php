@@ -97,10 +97,10 @@ new class extends Component {
                 {{ $prices->onEachSide(1)->links(data: ['scrollTo' => '#price-table']) }}
             </div>
         </div>
-        <div class="w-full xl:w-2/12 h-full">
+        {{-- <div class="w-full xl:w-2/12 h-full">
             <div class="w-full h-full rounded-3xl bg-darkblackbg p-8 flex items-center justify-center">
                 <h1 class="text-white">addvertisements</h1>
             </div>
-        </div>
+        </div> --}}
     </div>
 </div>

@@ -466,11 +466,11 @@
                     </div> --}}
                 </div>
 
-                <div class="hidden lg:block lg:w-full xl:w-[20%] h-full xl:h-fit ml-2 mb-5 xl:mb-0">
+                {{-- <div class="hidden lg:block lg:w-full xl:w-[20%] h-full xl:h-fit ml-2 mb-5 xl:mb-0">
                     <div class="w-full h-auto xl:h-[100vh] rounded-3xl bg-addbg p-8 flex items-center justify-center">
                         <h1 class="text-white">addvertisements</h1>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
 
@@ -732,11 +732,11 @@
                         </nav>
                     </div>
                 </div>
-                <div class="w-full xl:w-2/12 h-full">
+                {{-- <div class="w-full xl:w-2/12 h-full">
                     <div class="w-full h-full rounded-3xl bg-darkblackbg p-8 flex items-center justify-center">
                         <h1 class="text-white">addvertisements</h1>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
 
@@ -855,11 +855,11 @@
                         <h3 class="font-manrope font-medium text-base text-white">This attack does more damage  for each Leon card in your discard pile.</h3>
                     </div>
                 </div>
-                <div class="w-full xl:w-2/12 h-full">
+                {{-- <div class="w-full xl:w-2/12 h-full">
                     <div class="w-full h-full rounded-3xl bg-addbg p-8 flex items-center justify-center">
                         <h1 class="text-white">addvertisements</h1>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
 
@@ -979,11 +979,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="w-full xl:w-2/12 h-full">
+                {{-- <div class="w-full xl:w-2/12 h-full">
                     <div class="w-full h-full rounded-3xl bg-darkblackbg p-8 flex items-center justify-center">
                         <h1 class="text-white">addvertisements</h1>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
 
@@ -1230,11 +1230,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="w-full xl:w-2/12 h-full">
+                {{-- <div class="w-full xl:w-2/12 h-full">
                     <div class="w-full h-full rounded-3xl bg-addbg p-8 flex items-center justify-center">
                         <h1 class="text-white">addvertisements</h1>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>

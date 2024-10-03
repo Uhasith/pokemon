@@ -149,7 +149,7 @@ new class extends Component {
                                 @endif
                             </div>
                             <div class="relative">
-                                <div class="bg-[#555555e3] p-2 rounded-full w-auto absolute top-[8px] -ml-[45px]">
+                                {{-- <div class="bg-[#555555e3] p-2 rounded-full w-auto absolute top-[8px] -ml-[45px]">
                                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path d="M9.99935 6.66675V13.3334M13.3327 10.0001L6.66602 10.0001"
@@ -159,7 +159,7 @@ new class extends Component {
                                             d="M2.08008 10.0002C2.08008 6.26821 2.08008 4.40223 3.23945 3.24287C4.39882 2.0835 6.26479 2.0835 9.99675 2.0835C13.7287 2.0835 15.5947 2.0835 16.754 3.24287C17.9134 4.40223 17.9134 6.26821 17.9134 10.0002C17.9134 13.7321 17.9134 15.5981 16.754 16.7575C15.5947 17.9168 13.7287 17.9168 9.99675 17.9168C6.26479 17.9168 4.39882 17.9168 3.23945 16.7575C2.08008 15.5981 2.08008 13.7321 2.08008 10.0002Z"
                                             stroke="white" stroke-width="1.27273" />
                                     </svg>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                         <h2 class="font-manrope font-bold text-sm xl:text-base text-white mt-2">

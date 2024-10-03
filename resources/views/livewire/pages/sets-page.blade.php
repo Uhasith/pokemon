@@ -146,9 +146,9 @@ new class extends Component {
                                 wire:key="set-{{ $set->set_id }}">
                                 <div class="w-full">
                                     <div class="flex w-full">
-                                        <div class="p-3 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
+                                        <div class="p-5 rounded-2xl bg-[#2C2C2C] bg-blend-screen w-full h-48 flex items-center justify-center">
                                             @if ($set->set_image !== null)
-                                                <x-image :src="'https://www.pokemonprice.com/Content/images/sets/' .
+                                                <x-image class="sets-icon" :src="'https://www.pokemonprice.com/Content/images/sets/' .
                                                     $set->set_image" :alt="$set->set_name" skeltonWidth="150"
                                                     skeltonHeight="150" />
                                             @else
