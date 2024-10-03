@@ -35,11 +35,11 @@ new class extends Component {
         {{-- Second Main Section --}}
         <div id="section3" class="w-full bg-darkblackbg min-h-screen">
             <div class="max-w-[1440px] relative flex flex-col md:flex-row gap-8 xl:gap-12 mx-auto p-5">
-                <div class="w-full md:w-2/12 xl:w-2/12">
+                {{-- <div class="w-full md:w-2/12 xl:w-2/12">
                     <div class="font-manrope mt-20">
                         <h3 class="text-white font-bold text-xl mb-5">Categories</h3>
                         <p class="text-white font-normal text-md text-muted mb-5">Coming soon...</p>
-                        {{-- <div class="text-white font-semibold text-base flex flex-col gap-2">
+                        <div class="text-white font-semibold text-base flex flex-col gap-2">
                             <h4>Scarlet & Violet</h4>
                             <h4>Sword & Shield</h4>
                             <h4>Sun & Moon</h4>
@@ -50,10 +50,10 @@ new class extends Component {
                             <h4>Diamond & Pearl</h4>
                             <h4>EX Ruby & Sapphire</h4>
                             <h4>Legendary Collection</h4>
-                        </div> --}}
+                        </div>
                     </div>
-                </div>
-                <div class="w-full md:w-10/12 xl:w-10/12">
+                </div> --}}
+                <div class="w-full md:w-12/12 xl:w-12/12">
                     {{-- <div class="flex items-center justify-start gap-4">
                         <div class="flex items-center gap-3 w-auto">
                             <h2 class="font-manrope font-semibold text-sm text-white">Filter Cards: </h2>
@@ -140,7 +140,7 @@ new class extends Component {
                     {{-- <hr class="my-3"> --}}
 
                     {{-- This is Grid View --}}
-                    <div class="grid gap-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 my-5">
+                    <div class="grid gap-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 my-5">
                         @foreach ($sets as $set)
                             <a href="{{ route('set-details', ['slug' => $set->slug]) }}" wire:navigate
                                 wire:key="set-{{ $set->set_id }}">
