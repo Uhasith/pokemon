@@ -15,6 +15,7 @@ new class extends Component {
     public $card;
     public $relatedAllCard;
     public $cardPricesTimeseries = [];
+    public $cardTransactionTimeseries = [];
     public $population;
     public $totalPopulation;
     public $populations = [];
@@ -35,6 +36,7 @@ new class extends Component {
                 },
                 'card_prices',
                 'price_timeseries',
+                'transaction_timeseries',
                 'all_card',
                 'set',
             ])
@@ -52,6 +54,7 @@ new class extends Component {
 
         // Initialize the timeseries data and population from the related data
         $this->cardPricesTimeseries = $this->card->price_timeseries->toArray();
+        $this->cardTransactionTimeseries = $this->card->transaction_timeseries->toArray();
         $this->population = $this->card->populations->first();
 
         // Instantiate action classes
@@ -557,7 +560,7 @@ new class extends Component {
 
                     <div class="py-5">
                         <livewire:pages.components.charts.card-detail-history-chart :card="$card" :populations="$populations"
-                            :cardPricesTimeseries="$cardPricesTimeseries" />
+                            :cardPricesTimeseries="$cardPricesTimeseries" :cardTransactionTimeseries="$cardTransactionTimeseries" />
                     </div>
 
                     {{-- <div class="py-5">
