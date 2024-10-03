@@ -15,8 +15,8 @@ Route::get('/', function () {
 });
 
 Volt::route('/sets', 'pages.sets-page')->name('set-index');
-Volt::route('/sets/cards/{slug}', 'pages.set-details-page')->name('set-details');
-Volt::route('/cards/details/{setSlug}/{slug}', 'pages.card-details-page')->name('card-details');
+Volt::route('/{slug}', 'pages.set-details-page')->name('set-details');
+Volt::route('/{setSlug}/{slug}', 'pages.card-details-page')->name('card-details');
 
 Route::middleware([
     'auth',
