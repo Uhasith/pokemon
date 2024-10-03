@@ -150,11 +150,11 @@ new class extends Component {
                         aria-selected="false">Number of Sales - Bar
                         chart</button>
                 </li>
-                <li class="bg-evengray p-3 rounded-t-xl" role="presentation">
+                {{-- <li class="bg-evengray p-3 rounded-t-xl" role="presentation">
                     <button class="inline-block p-4 rounded-t-lg" id="settings-styled-tab"
                         data-tabs-target="#styled-settings" type="button" role="tab" aria-controls="settings"
                         aria-selected="false">Population</button>
-                </li>
+                </li> --}}
             </ul>
         </div>
         <div id="default-styled-tab-content">

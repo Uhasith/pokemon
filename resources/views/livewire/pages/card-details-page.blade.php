@@ -138,7 +138,7 @@ new class extends Component {
                         </div>
                     </div>
 
-                    <div class="flex gap-3 my-3 flex-col xl:flex-row">
+                    {{-- <div class="flex gap-3 my-3 flex-col xl:flex-row">
                         <button
                             class="w-full xl:w-1/2 bg-yellowish rounded-lg text-center flex gap-3 items-center justify-center marker p-2 xl:p-3">
                             <span><svg width="25" height="24" viewBox="0 0 25 24" fill="none"
@@ -218,7 +218,7 @@ new class extends Component {
                             </span>
                             <span class="text-sm">Buy the card right now on TCG player </span>
                         </button>
-                    </div>
+                    </div> --}}
                 </div>
 
                 {{-- right content section --}}
@@ -261,25 +261,25 @@ new class extends Component {
                                         data-tabs-target="#styled-prices" type="button" role="tab"
                                         aria-controls="prices" aria-selected="false">Prices</button>
                                 </li>
-                                <li class="me-2" role="presentation">
+                                {{-- <li class="me-2" role="presentation">
                                     <button
                                         class="inline-block p-4 border-b border-evengray rounded-t-lg hover:text-yellowish hover:border-yellowish"
                                         id="market-styled-tab" data-tabs-target="#styled-market" type="button"
-                                        role="tab" aria-controls="market" aria-selected="false">Market</button>
+                                        role="tab" aria-controls="market" aria-selected="false" disabled>Market</button>
                                 </li>
                                 <li class="me-2" role="presentation">
                                     <button
                                         class="inline-block p-4 border-b border-evengray rounded-t-lg hover:text-yellowish hover:border-yellowish"
                                         id="auctions-styled-tab" data-tabs-target="#styled-auctions" type="button"
                                         role="tab" aria-controls="auctions"
-                                        aria-selected="false">Auctions</button>
+                                        aria-selected="false" disabled>Auctions</button>
                                 </li>
                                 <li role="presentation">
                                     <button
                                         class="inline-block p-4 border-b border-evengray rounded-t-lg hover:text-yellowish hover:border-yellowish"
                                         id="details-styled-tab" data-tabs-target="#styled-details" type="button"
-                                        role="tab" aria-controls="details" aria-selected="false">Details</button>
-                                </li>
+                                        role="tab" aria-controls="details" aria-selected="false" disabled>Details</button>
+                                </li> --}}
                             </ul>
                         </div>
                         <div id="default-styled-tab-content">
@@ -374,7 +374,7 @@ new class extends Component {
                                     </table> --}}
 
                                     <div class="w-full flex flex-col md:flex-row gap-5 my-3">
-                                        <div class="w-full md:w-9/12 bg-[#27292B] rounded-xl p-4">
+                                        <div class="w-full md:w-12/12 bg-[#27292B] rounded-xl p-4">
                                             <div class="w-full overflow-x-auto relative">
                                                 <div class="flex justify-start w-full mb-3">
                                                     <h2 class="font-manrope font-bold text-base text-white">
@@ -397,7 +397,7 @@ new class extends Component {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="w-full md:w-3/12 bg-[#27292B] rounded-xl p-4">
+                                        {{-- <div class="w-full md:w-3/12 bg-[#27292B] rounded-xl p-4">
                                             <div class="w-full relative overflow-x-auto">
                                                 <div
                                                     class="flex justify-center w-full mb-3 flex-col gap-1 items-start">
@@ -409,7 +409,7 @@ new class extends Component {
                                                     </h2>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
 
                                     @php
@@ -453,7 +453,7 @@ new class extends Component {
 
                                     <div class="w-full flex flex-col md:flex-row gap-5 my-5">
                                         <div
-                                            class="w-full md:w-9/12 bg-[#27292B] rounded-xl p-4 overflow-x-auto relative flex flex-col justify-between">
+                                            class="w-full md:w-12/12 bg-[#27292B] rounded-xl p-4 overflow-x-auto relative flex flex-col justify-between">
                                             <div class="w-full relative overflow-x-auto">
                                                 <div class="flex justify-start w-full mb-3">
                                                     <h2 class="font-manrope font-bold text-base text-white">PSA
@@ -511,7 +511,7 @@ new class extends Component {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div
+                                        {{-- <div
                                             class="w-full md:w-3/12 bg-[#27292B] rounded-xl p-4 relative overflow-x-auto">
                                             <div class="flex justify-center w-full mb-3 flex-col gap-1 items-start">
                                                 <h2 class="font-manrope font-bold text-base text-white">PSA Market Cap
@@ -525,7 +525,7 @@ new class extends Component {
                                                 <h2 class="font-manrope font-bold text-lg text-yellowish">$1,244.014
                                                 </h2>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             </div>
@@ -648,7 +648,7 @@ new class extends Component {
         </div>
 
         {{-- Fifth Section --}}
-        <div class="w-full bg-darkblackbg py-12">
+        {{-- <div class="w-full bg-darkblackbg py-12">
             <div
                 class="max-w-[1440px] 2xl:max-w-[1500px] bg-darkblackbg flex relative mx-auto flex-col xl:flex-row gap-12 items-center justify-center">
                 <div class="w-full xl:w-10/12 px-8 xl:px-0">
@@ -1297,6 +1297,6 @@ new class extends Component {
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 </div>
