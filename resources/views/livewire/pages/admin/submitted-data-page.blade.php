@@ -49,7 +49,6 @@ new #[Layout('layouts.admin')] class extends Component {
     {
         if ($this->file) {
             $headers = (new HeadingRowImport())->toArray($this->file)[0][0];
-            Log::info((new HeadingRowImport())->toArray($this->file));
             // Map the headers to the desired format
             foreach ($headers as $key => $header) {
                 $this->excelColumns[] = [

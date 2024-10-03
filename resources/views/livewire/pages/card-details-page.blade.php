@@ -11,7 +11,6 @@ use App\Actions\Cards\GetCardPopulationPrices;
 use App\Actions\Cards\GetCardPopulationData;
 
 new class extends Component {
-    #[Url]
     public $card_id;
     public $card;
     public $relatedAllCard;
@@ -41,9 +40,9 @@ new class extends Component {
             ])
             ->first();
 
-        $this->card_id = $this->card->id;
+        $this->card_id = $this->card->card_id;
 
-        // Log::info($this->card->toArray()['related_sets']);
+        Log::info($this->card_id);
 
         $this->relatedAllCard = $this->card->all_card;
 

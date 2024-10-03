@@ -30,7 +30,7 @@ new class extends Component {
             // Fetch related cards if card IDs exist
             if (!empty($relatedCardIds)) {
                 $this->relatedCards = PokeCard::with('all_card', 'set')->whereIn('card_id', $relatedCardIds)->get();
-                Log::info($this->relatedCards);
+                // Log::info($this->relatedCards);
             }
 
             // Fetch related sets if set IDs exist

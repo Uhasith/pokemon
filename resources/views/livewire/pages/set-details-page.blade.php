@@ -31,8 +31,8 @@ new class extends Component {
         $this->setCardsMarketCap = $setMarketCapData['setCardsMarketCap'];
 
         // Logging the calculated market cap for debugging purposes
-        Log::info($this->setCardsMarketCap);
-        Log::info($this->totalSetMarketCap);
+        // Log::info($this->setCardsMarketCap);
+        // Log::info($this->totalSetMarketCap);
     }
 }; ?>
 

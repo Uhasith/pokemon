@@ -123,54 +123,58 @@ new class extends Component {
     <div x-show="type == 'grid'" x-transition>
         <div class="grid gap-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 my-5">
             @foreach ($cards as $card)
-                <div class="w-full" wire:key="card-{{ $card->card_id }}">
-                    <div class="flex w-full">
-                        <div class="p-4 rounded-2xl bg-[#2C2C2C] bg-blend-screen relative cursor-pointer">
-                            @if ($card?->all_card?->images['small'] !== null)
-                                <a
-                                    href="{{ route('card-details', ['slug' => $card->slug, 'setSlug' => $card->set->slug]) }}" wire:navigate>
-                                    <x-image :src="$card?->all_card?->images['small']" :alt="$card->name" skeltonWidth="160"
-                                        skeltonHeight="220" />
-                                </a>
-                            @else
-                                <a
-                                    href="{{ route('card-details', ['slug' => $card->slug, 'setSlug' => $card->set->slug]) }}" wire:navigate>
-                                    <div class="flex items-center justify-center bg-gray-300 rounded dark:bg-gray-700 animate-pulse"
-                                        style="width: 160px; height: 220px;">
-                                        <svg class="w-10 h-10 text-gray-200 dark:text-gray-600" aria-hidden="true"
-                                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
-                                            <path
-                                                d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z" />
-                                        </svg>
-                                    </div>
-                                </a>
-                            @endif
-                        </div>
-                        <div class="relative">
-                            <div class="bg-[#555555e3] p-2 rounded-full w-auto absolute top-[8px] -ml-[45px]">
-                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M9.99935 6.66675V13.3334M13.3327 10.0001L6.66602 10.0001" stroke="white"
-                                        stroke-width="1.27273" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path
-                                        d="M2.08008 10.0002C2.08008 6.26821 2.08008 4.40223 3.23945 3.24287C4.39882 2.0835 6.26479 2.0835 9.99675 2.0835C13.7287 2.0835 15.5947 2.0835 16.754 3.24287C17.9134 4.40223 17.9134 6.26821 17.9134 10.0002C17.9134 13.7321 17.9134 15.5981 16.754 16.7575C15.5947 17.9168 13.7287 17.9168 9.99675 17.9168C6.26479 17.9168 4.39882 17.9168 3.23945 16.7575C2.08008 15.5981 2.08008 13.7321 2.08008 10.0002Z"
-                                        stroke="white" stroke-width="1.27273" />
-                                </svg>
+                @if ($card?->all_card?->images['small'] !== null)
+                    <div class="w-full" wire:key="card-{{ $card->card_id }}">
+                        <div class="flex w-full">
+                            <div class="p-4 rounded-2xl bg-[#2C2C2C] bg-blend-screen relative cursor-pointer">
+                                @if ($card?->all_card?->images['small'] !== null)
+                                    <a href="{{ route('card-details', ['slug' => $card->slug, 'setSlug' => $card->set->slug]) }}"
+                                        wire:navigate>
+                                        <x-image :src="$card?->all_card?->images['small']" :alt="$card->name" skeltonWidth="160"
+                                            skeltonHeight="220" />
+                                    </a>
+                                @else
+                                    <a href="{{ route('card-details', ['slug' => $card->slug, 'setSlug' => $card->set->slug]) }}"
+                                        wire:navigate>
+                                        <div class="flex items-center justify-center bg-gray-300 rounded dark:bg-gray-700 animate-pulse"
+                                            style="width: 160px; height: 220px;">
+                                            <svg class="w-10 h-10 text-gray-200 dark:text-gray-600" aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                viewBox="0 0 20 18">
+                                                <path
+                                                    d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z" />
+                                            </svg>
+                                        </div>
+                                    </a>
+                                @endif
+                            </div>
+                            <div class="relative">
+                                <div class="bg-[#555555e3] p-2 rounded-full w-auto absolute top-[8px] -ml-[45px]">
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9.99935 6.66675V13.3334M13.3327 10.0001L6.66602 10.0001"
+                                            stroke="white" stroke-width="1.27273" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path
+                                            d="M2.08008 10.0002C2.08008 6.26821 2.08008 4.40223 3.23945 3.24287C4.39882 2.0835 6.26479 2.0835 9.99675 2.0835C13.7287 2.0835 15.5947 2.0835 16.754 3.24287C17.9134 4.40223 17.9134 6.26821 17.9134 10.0002C17.9134 13.7321 17.9134 15.5981 16.754 16.7575C15.5947 17.9168 13.7287 17.9168 9.99675 17.9168C6.26479 17.9168 4.39882 17.9168 3.23945 16.7575C2.08008 15.5981 2.08008 13.7321 2.08008 10.0002Z"
+                                            stroke="white" stroke-width="1.27273" />
+                                    </svg>
+                                </div>
                             </div>
                         </div>
+                        <h2 class="font-manrope font-bold text-sm xl:text-base text-white mt-2">
+                            {{ $card->name }}{{ $card->variant ? ' - ' . $card->variant : '' }}
+                        </h2>
+                        <div class="flex justify-between items-center mt-2">
+                            <p class="font-manrope text-yellowish text-sm xl:text-base font-semibold">
+                                Price :
+                            </p>
+                            <p class="font-manrope text-white text-sm xl:text-base font-bold">
+                                {{ '$ ' . $card->fair_price ?? 'N/A' }}
+                            </p>
+                        </div>
                     </div>
-                    <h2 class="font-manrope font-bold text-sm xl:text-base text-white mt-2">
-                        {{ $card->name }}{{ $card->variant ? ' - ' . $card->variant : '' }}
-                    </h2>
-                    <div class="flex justify-between items-center mt-2">
-                        <p class="font-manrope text-yellowish text-sm xl:text-base font-semibold">
-                            Price :
-                        </p>
-                        <p class="font-manrope text-white text-sm xl:text-base font-bold">
-                            {{ '$ ' . $card->fair_price ?? 'N/A' }}
-                        </p>
-                    </div>
-                </div>
+                @endif
             @endforeach
         </div>
     </div>
@@ -290,94 +294,96 @@ new class extends Component {
                     </thead>
                     <tbody class="text-sm font-manrope font-bold">
                         @foreach ($cards as $card)
-                            <tr class="odd:bg-oddgray even:bg-evengray">
-                                <td class="w-4 p-4">
-                                    <div class="flex items-center">
-                                        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M10.9987 7.33337V14.6667M14.6654 11L7.33203 11" stroke="white"
-                                                stroke-opacity="0.5" stroke-width="1.4" stroke-linecap="round"
-                                                stroke-linejoin="round" />
-                                            <path
-                                                d="M2.28906 11.0001C2.28906 6.89493 2.28906 4.84236 3.56437 3.56705C4.83967 2.29175 6.89225 2.29175 10.9974 2.29175C15.1025 2.29175 17.1551 2.29175 18.4304 3.56705C19.7057 4.84236 19.7057 6.89493 19.7057 11.0001C19.7057 15.1052 19.7057 17.1578 18.4304 18.4331C17.1551 19.7084 15.1025 19.7084 10.9974 19.7084C6.89225 19.7084 4.83967 19.7084 3.56437 18.4331C2.28906 17.1578 2.28906 15.1052 2.28906 11.0001Z"
-                                                stroke="white" stroke-opacity="0.5" stroke-width="1.4" />
-                                        </svg>
-                                    </div>
-                                </td>
-                                <td class="p-3 text-white">
-                                    <a
-                                        href="{{ route('card-details', ['slug' => $card->slug ?? 'sword-shield/krabby-043', 'setSlug' => $card->set->slug]) }}" wire:navigate>
-                                        {{ $card->id }}
-                                    </a>
-                                </td>
-                                <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">
-                                    <a
-                                        href="{{ route('card-details', ['slug' => $card->slug ?? 'sword-shield/krabby-043', 'setSlug' => $card->set->slug]) }}" wire:navigate>
-                                        <div class="flex items-center gap-3 hyphens-auto cursor-pointer">
-                                            @if ($card?->all_card?->images['small'] !== null)
-                                                <x-image :src="$card?->all_card?->images['small']" class="w-14 md:w-8" :alt="$card->name"
-                                                    skeltonWidth="32" skeltonHeight="45" />
-                                            @else
-                                                <div class="flex items-center justify-center bg-gray-300 rounded dark:bg-gray-700 animate-pulse"
-                                                    style="width: 32px; height: 45px;">
-                                                    <svg class="w-10 h-10 text-gray-200 dark:text-gray-600"
-                                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                                        fill="currentColor" viewBox="0 0 20 18">
-                                                        <path
-                                                            d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z" />
-                                                    </svg>
-                                                </div>
-                                            @endif
-                                            {{ $card->name }} - {{ $card->variant ?? 'N/A' }}
+                            @if ($card?->all_card?->images['small'] !== null)
+                                <tr class="odd:bg-oddgray even:bg-evengray">
+                                    <td class="w-4 p-4">
+                                        <div class="flex items-center">
+                                            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M10.9987 7.33337V14.6667M14.6654 11L7.33203 11" stroke="white"
+                                                    stroke-opacity="0.5" stroke-width="1.4" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                                <path
+                                                    d="M2.28906 11.0001C2.28906 6.89493 2.28906 4.84236 3.56437 3.56705C4.83967 2.29175 6.89225 2.29175 10.9974 2.29175C15.1025 2.29175 17.1551 2.29175 18.4304 3.56705C19.7057 4.84236 19.7057 6.89493 19.7057 11.0001C19.7057 15.1052 19.7057 17.1578 18.4304 18.4331C17.1551 19.7084 15.1025 19.7084 10.9974 19.7084C6.89225 19.7084 4.83967 19.7084 3.56437 18.4331C2.28906 17.1578 2.28906 15.1052 2.28906 11.0001Z"
+                                                    stroke="white" stroke-opacity="0.5" stroke-width="1.4" />
+                                            </svg>
                                         </div>
-                                    </a>
-                                </th>
-                                <td class="px-2 py-4 text-white">
-                                    {{ '$ ' . $card->fair_price ?? 'N/A' }}
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="flex gap-1 items-center text-redprice">
-                                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M13.943 6.14615C14.2764 6.39178 14.3477 6.86128 14.1021 7.19479C13.9113 7.45385 13.7205 7.7001 13.5531 7.9146C13.2189 8.3427 12.759 8.91615 12.2592 9.4917C11.7627 10.0636 11.2121 10.6548 10.6982 11.1089C10.4421 11.3352 10.1773 11.5433 9.91915 11.699C9.68163 11.8421 9.35523 12 8.99815 12C8.64108 12 8.3146 11.8421 8.07708 11.699C7.81893 11.5433 7.55425 11.3352 7.29813 11.1089C6.78416 10.6548 6.23363 10.0636 5.7371 9.4917C5.23734 8.91615 4.77735 8.3427 4.44321 7.9146C4.27583 7.7001 4.08499 7.45385 3.8942 7.1948C3.64857 6.86128 3.71981 6.39178 4.05333 6.14615C4.1874 6.0474 4.34344 5.99987 4.49809 6H8.99815H13.4982C13.6528 5.99987 13.8089 6.0474 13.943 6.14615Z"
-                                                fill="#F4454F" />
-                                        </svg>
-                                        0.45
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="flex gap-1 items-center text-redprice">
-                                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M13.943 6.14615C14.2764 6.39178 14.3477 6.86128 14.1021 7.19479C13.9113 7.45385 13.7205 7.7001 13.5531 7.9146C13.2189 8.3427 12.759 8.91615 12.2592 9.4917C11.7627 10.0636 11.2121 10.6548 10.6982 11.1089C10.4421 11.3352 10.1773 11.5433 9.91915 11.699C9.68163 11.8421 9.35523 12 8.99815 12C8.64108 12 8.3146 11.8421 8.07708 11.699C7.81893 11.5433 7.55425 11.3352 7.29813 11.1089C6.78416 10.6548 6.23363 10.0636 5.7371 9.4917C5.23734 8.91615 4.77735 8.3427 4.44321 7.9146C4.27583 7.7001 4.08499 7.45385 3.8942 7.1948C3.64857 6.86128 3.71981 6.39178 4.05333 6.14615C4.1874 6.0474 4.34344 5.99987 4.49809 6H8.99815H13.4982C13.6528 5.99987 13.8089 6.0474 13.943 6.14615Z"
-                                                fill="#F4454F" />
-                                        </svg>
-                                        1.93
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="flex gap-1 items-center text-redprice">
-                                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M13.943 6.14615C14.2764 6.39178 14.3477 6.86128 14.1021 7.19479C13.9113 7.45385 13.7205 7.7001 13.5531 7.9146C13.2189 8.3427 12.759 8.91615 12.2592 9.4917C11.7627 10.0636 11.2121 10.6548 10.6982 11.1089C10.4421 11.3352 10.1773 11.5433 9.91915 11.699C9.68163 11.8421 9.35523 12 8.99815 12C8.64108 12 8.3146 11.8421 8.07708 11.699C7.81893 11.5433 7.55425 11.3352 7.29813 11.1089C6.78416 10.6548 6.23363 10.0636 5.7371 9.4917C5.23734 8.91615 4.77735 8.3427 4.44321 7.9146C4.27583 7.7001 4.08499 7.45385 3.8942 7.1948C3.64857 6.86128 3.71981 6.39178 4.05333 6.14615C4.1874 6.0474 4.34344 5.99987 4.49809 6H8.99815H13.4982C13.6528 5.99987 13.8089 6.0474 13.943 6.14615Z"
-                                                fill="#F4454F" />
-                                        </svg>
-                                        0.20
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    $1,568
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    $18,568
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    20
-                                </td>
-                            </tr>
+                                    </td>
+                                    <td class="p-3 text-white">
+                                        <a href="{{ route('card-details', ['slug' => $card->slug ?? 'sword-shield/krabby-043', 'setSlug' => $card->set->slug]) }}"
+                                            wire:navigate>
+                                            {{ $card->id }}
+                                        </a>
+                                    </td>
+                                    <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">
+                                        <a href="{{ route('card-details', ['slug' => $card->slug ?? 'sword-shield/krabby-043', 'setSlug' => $card->set->slug]) }}"
+                                            wire:navigate>
+                                            <div class="flex items-center gap-3 hyphens-auto cursor-pointer">
+                                                @if ($card?->all_card?->images['small'] !== null)
+                                                    <x-image :src="$card?->all_card?->images['small']" class="w-14 md:w-8" :alt="$card->name"
+                                                        skeltonWidth="32" skeltonHeight="45" />
+                                                @else
+                                                    <div class="flex items-center justify-center bg-gray-300 rounded dark:bg-gray-700 animate-pulse"
+                                                        style="width: 32px; height: 45px;">
+                                                        <svg class="w-10 h-10 text-gray-200 dark:text-gray-600"
+                                                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                                            fill="currentColor" viewBox="0 0 20 18">
+                                                            <path
+                                                                d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z" />
+                                                        </svg>
+                                                    </div>
+                                                @endif
+                                                {{ $card->name }} - {{ $card->variant ?? 'N/A' }}
+                                            </div>
+                                        </a>
+                                    </th>
+                                    <td class="px-2 py-4 text-white">
+                                        {{ '$ ' . $card->fair_price ?? 'N/A' }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex gap-1 items-center text-redprice">
+                                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M13.943 6.14615C14.2764 6.39178 14.3477 6.86128 14.1021 7.19479C13.9113 7.45385 13.7205 7.7001 13.5531 7.9146C13.2189 8.3427 12.759 8.91615 12.2592 9.4917C11.7627 10.0636 11.2121 10.6548 10.6982 11.1089C10.4421 11.3352 10.1773 11.5433 9.91915 11.699C9.68163 11.8421 9.35523 12 8.99815 12C8.64108 12 8.3146 11.8421 8.07708 11.699C7.81893 11.5433 7.55425 11.3352 7.29813 11.1089C6.78416 10.6548 6.23363 10.0636 5.7371 9.4917C5.23734 8.91615 4.77735 8.3427 4.44321 7.9146C4.27583 7.7001 4.08499 7.45385 3.8942 7.1948C3.64857 6.86128 3.71981 6.39178 4.05333 6.14615C4.1874 6.0474 4.34344 5.99987 4.49809 6H8.99815H13.4982C13.6528 5.99987 13.8089 6.0474 13.943 6.14615Z"
+                                                    fill="#F4454F" />
+                                            </svg>
+                                            0.45
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex gap-1 items-center text-redprice">
+                                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M13.943 6.14615C14.2764 6.39178 14.3477 6.86128 14.1021 7.19479C13.9113 7.45385 13.7205 7.7001 13.5531 7.9146C13.2189 8.3427 12.759 8.91615 12.2592 9.4917C11.7627 10.0636 11.2121 10.6548 10.6982 11.1089C10.4421 11.3352 10.1773 11.5433 9.91915 11.699C9.68163 11.8421 9.35523 12 8.99815 12C8.64108 12 8.3146 11.8421 8.07708 11.699C7.81893 11.5433 7.55425 11.3352 7.29813 11.1089C6.78416 10.6548 6.23363 10.0636 5.7371 9.4917C5.23734 8.91615 4.77735 8.3427 4.44321 7.9146C4.27583 7.7001 4.08499 7.45385 3.8942 7.1948C3.64857 6.86128 3.71981 6.39178 4.05333 6.14615C4.1874 6.0474 4.34344 5.99987 4.49809 6H8.99815H13.4982C13.6528 5.99987 13.8089 6.0474 13.943 6.14615Z"
+                                                    fill="#F4454F" />
+                                            </svg>
+                                            1.93
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex gap-1 items-center text-redprice">
+                                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M13.943 6.14615C14.2764 6.39178 14.3477 6.86128 14.1021 7.19479C13.9113 7.45385 13.7205 7.7001 13.5531 7.9146C13.2189 8.3427 12.759 8.91615 12.2592 9.4917C11.7627 10.0636 11.2121 10.6548 10.6982 11.1089C10.4421 11.3352 10.1773 11.5433 9.91915 11.699C9.68163 11.8421 9.35523 12 8.99815 12C8.64108 12 8.3146 11.8421 8.07708 11.699C7.81893 11.5433 7.55425 11.3352 7.29813 11.1089C6.78416 10.6548 6.23363 10.0636 5.7371 9.4917C5.23734 8.91615 4.77735 8.3427 4.44321 7.9146C4.27583 7.7001 4.08499 7.45385 3.8942 7.1948C3.64857 6.86128 3.71981 6.39178 4.05333 6.14615C4.1874 6.0474 4.34344 5.99987 4.49809 6H8.99815H13.4982C13.6528 5.99987 13.8089 6.0474 13.943 6.14615Z"
+                                                    fill="#F4454F" />
+                                            </svg>
+                                            0.20
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-white">
+                                        $1,568
+                                    </td>
+                                    <td class="px-6 py-4 text-white">
+                                        $18,568
+                                    </td>
+                                    <td class="px-6 py-4 text-white">
+                                        20
+                                    </td>
+                                </tr>
+                            @endif
                         @endforeach
                     </tbody>
                 </table>
