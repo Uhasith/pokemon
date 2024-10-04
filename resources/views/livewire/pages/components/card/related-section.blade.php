@@ -35,7 +35,9 @@ new class extends Component {
 
             // Fetch related sets if set IDs exist
             if (!empty($relatedSetIds)) {
-                $this->relatedSets = PokeSet::whereIn('set_id', $relatedSetIds)->get();
+                Log::info($relatedSetIds);
+                $this->relatedSets = PokeSet::with('all_set')->whereIn('set_id', $relatedSetIds)->get();
+                Log::info($this->relatedSets);
             }
         }
     }

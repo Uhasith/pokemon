@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class PokeSet extends Model
 {
@@ -31,10 +32,10 @@ class PokeSet extends Model
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
-        ->generateSlugsFrom('set_name')
-        ->saveSlugsTo('slug')
-        ->doNotGenerateSlugsOnCreate()
-        ->doNotGenerateSlugsOnUpdate();
+            ->generateSlugsFrom('set_name')
+            ->saveSlugsTo('slug')
+            ->doNotGenerateSlugsOnCreate()
+            ->doNotGenerateSlugsOnUpdate();
     }
 
     /**
@@ -47,9 +48,21 @@ class PokeSet extends Model
         return 'slug';
     }
 
-    public function all_set(): HasOne
+    // public function all_set(): HasOne
+    // {
+    //     return $this->hasOne(PokeSet::class, 'set_id', 'set_id');
+    // }
+
+    public function all_set(): HasOneThrough
     {
-        return $this->hasOne(PokeSet::class, 'set_id', 'set_id');
+        return $this->hasOneThrough(
+            PokeAllSet::class, // Final model to retrieve (PokeAllSet)
+            PokeSetSetIdRelation::class, // Intermediate model (PokeSetSetIdRelation)
+            'set_id', // Foreign key on PokeSetSetIdRelation (linking to PokeSet)
+            'set_id', // Foreign key on PokeAllSet (linking to PokeSetSetIdRelation)
+            'set_id', // Local key on PokeSet (linking to PokeSetSetIdRelation)
+            'related_set_id'  // Local key on PokeSetSetIdRelation (linking to PokeAllSet)
+        );
     }
 
     public function cards(): HasMany
