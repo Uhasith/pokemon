@@ -48,7 +48,7 @@ new class extends Component {
                             </th>
                             <th scope="col"
                                 class="px-6 py-3 text-yellowish font-manrope font-semibold text-sm normal-case">
-                                Listing ID
+                                eBay ID
                             </th>
                             <th scope="col"
                                 class="px-6 py-3 text-yellowish font-manrope font-semibold text-sm normal-case w-auto xl:w-[30%]">
@@ -76,7 +76,7 @@ new class extends Component {
                                     {{ $price->sale_date }}
                                 </td>
                                 <td class="px-6 py-4">
-                                    {{ $price->lot_id }}
+                                    {{ $price->seller }}
                                 </td>
                                 <td class="px-6 py-4">
                                     {{-- {{ $this->card->name }} - {{ $this->card->psa_name }} --}}

@@ -385,13 +385,13 @@ new class extends Component {
                                                 </div>
                                                 <div class="grid grid-cols-10 gap-4 w-full">
                                                     @foreach ($prices as $key => $value)
-                                                        <div class="w-full flex flex-col gap-2 justify-center">
+                                                        <div class="w-28 md:w-full flex flex-col gap-2 justify-center">
                                                             <h4
                                                                 class="font-manrope font-semibold text-sm text-[#BEBFBF]">
                                                                 {{ $key }}
                                                             </h4>
                                                             <h4
-                                                                class="font-manrope font-semibold text-sm text-white text-center">
+                                                                class="font-manrope font-semibold text-sm text-white text-start">
                                                                 {{ $value }}
                                                             </h4>
                                                         </div>
@@ -462,36 +462,36 @@ new class extends Component {
                                                         Population price</h2>
                                                 </div>
                                                 <div class="flex gap-4 w-full">
-                                                    <div class="w-1/4 flex flex-col gap-2 justify-between">
+                                                    <div class="w-[800px] md:w-1/4 flex flex-col gap-2 justify-between">
                                                         <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">
                                                             PSA total population</h4>
                                                         <h4
-                                                            class="font-manrope font-semibold text-sm text-white text-center">
+                                                            class="font-manrope font-semibold text-sm text-white text-start">
                                                             {{ $totalPopulation }}
                                                         </h4>
                                                     </div>
-                                                    <div class="w-1/5 flex flex-col gap-2 justify-between">
+                                                    <div class="w-[800px] md:w-1/5 flex flex-col gap-2 justify-between">
                                                         <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">
                                                             PSA 10 chance</h4>
                                                         <h4
-                                                            class="font-manrope font-semibold text-sm text-center {{ $color }}">
+                                                            class="font-manrope font-semibold text-sm text-start {{ $color }}">
                                                             {{ number_format($percentage, 2) }} %
                                                         </h4>
                                                     </div>
-                                                    <div class="w-1/5 flex flex-col gap-2 justify-between">
+                                                    <div class="w-[800px] md:w-1/5 flex flex-col gap-2 justify-between">
                                                         <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">
                                                             PSA 9/10 Ratio
                                                         </h4>
                                                         <h4
-                                                            class="font-manrope font-semibold text-sm text-center {{ $color }}">
+                                                            class="font-manrope font-semibold text-sm text-start {{ $color }}">
                                                             {{ number_format($ratio, 2) }} : 1
                                                         </h4>
                                                     </div>
-                                                    <div class="w-1/4 flex flex-col gap-2 justify-between">
+                                                    <div class="w-[800px] md:w-1/4 flex flex-col gap-2 justify-between">
                                                         <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">
                                                             PSA Grade Difficulty</h4>
                                                         <h4
-                                                            class="font-manrope font-semibold text-sm text-center {{ $color }}">
+                                                            class="font-manrope font-semibold text-sm text-start {{ $color }}">
                                                             {{ $difficulty }}
                                                         </h4>
                                                     </div>
@@ -505,7 +505,7 @@ new class extends Component {
                                                                 {{ $key }}
                                                             </h4>
                                                             <h4
-                                                                class="font-manrope font-semibold text-sm text-white text-center">
+                                                                class="font-manrope font-semibold text-sm text-white text-start">
                                                                 {{ $value }}
                                                             </h4>
                                                         </div>
