@@ -15,13 +15,13 @@ Route::get('/', function () {
 });
 
 Volt::route('/sets', 'pages.sets-page')->name('set-index');
-Volt::route('/{slug}', 'pages.set-details-page')->name('set-details');
-Volt::route('/{setSlug}/{slug}', 'pages.card-details-page')->name('card-details');
+Volt::route('/sets/{slug}', 'pages.set-details-page')->name('set-details');
+Volt::route('/sets/{setSlug}/{slug}', 'pages.card-details-page')->name('card-details');
 
 Route::middleware([
     'auth',
     'admin',
-])->group(function () {
+])->prefix('admin')->group(function () {
 
     // Full Page Components Routes
     Volt::route('/set-page', 'pages.admin.set-page')->name('set-page');
