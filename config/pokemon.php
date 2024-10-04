@@ -285,4 +285,14 @@ return [
             'value' => 'related_cards',
         ],
     ],
+    'setSetIdTableColumns' => [
+        [
+            'name' => 'Set Id (UUID)',
+            'value' => 'set_id',
+        ],
+        [
+            'name' => 'Related Set Id (String)',
+            'value' => 'related_set_id',
+        ],
+    ],
 ];

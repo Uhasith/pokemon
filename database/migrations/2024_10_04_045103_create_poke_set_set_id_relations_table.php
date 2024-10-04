@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('poke_set_set_id_relations', function (Blueprint $table) {
             $table->id();
+            $table->uuid('set_id')->index();
+            $table->uuid('related_set_id')->index();
             $table->timestamps();
         });
     }
