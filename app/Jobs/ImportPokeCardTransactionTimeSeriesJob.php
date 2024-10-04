@@ -29,7 +29,7 @@ class ImportPokeCardTransactionTimeSeriesJob implements ShouldQueue
     {
         foreach ($this->chunk as $row) {
             // Insert the data into the database
-            PokeCardTransactionTimeSeries::updateOrCreate(['card_id' => $row['CardId'], 'psa_grade' => $row['Grade']],[
+            PokeCardTransactionTimeSeries::updateOrCreate(['card_id' => $row['CardId'], 'psa_grade' => $row['Grade']], [
                 'card_id' => $row['CardId'],
                 'psa_grade' => $row['Grade'],
                 'timeseries_data' => $row['timeseries_prices'],

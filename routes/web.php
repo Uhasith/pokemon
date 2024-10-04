@@ -4,7 +4,7 @@ use App\Livewire\ShopPage;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])
