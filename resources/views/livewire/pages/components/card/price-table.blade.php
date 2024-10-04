@@ -21,6 +21,11 @@ new class extends Component {
     <div
         class="max-w-[1440px] 2xl:max-w-[1500px] bg-blackish flex relative mx-auto flex-col xl:flex-row gap-12 items-center justify-center px-8 xl:px-0">
         <div class="w-full xl:w-10/12">
+            <div class="mb-9">
+                <h2 class="font-manrope font-bold text-center text-2xl lg:text-3xl text-white">
+                    {{ $card->name }} Transaction History
+                </h2>
+            </div>
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table class="w-full text-sm text-left rtl:text-right text-gray-500 xl:table-fixed">
                     <thead class="text-xs text-white uppercase bg-evengray">

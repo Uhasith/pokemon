@@ -76,7 +76,7 @@ new class extends Component {
                                     </a>
                                 @endif
                             </div>
-                            <div class="relative">
+                            {{-- <div class="relative">
                                 <div class="bg-[#555555e3] p-2 rounded-full w-auto absolute top-[10px] -ml-[50px]">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -85,7 +85,7 @@ new class extends Component {
                                             stroke="white" stroke-width="1.5" stroke-linecap="round" />
                                     </svg>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     @endif
                 @endforeach
