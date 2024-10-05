@@ -7,8 +7,13 @@ new class extends Component {
     public $card, $populations, $cardPricesTimeseries, $cardTransactionTimeseries;
     public $chartGrade = 'PSA10';
     public $showableCharts = ['PSA9', 'PSA10'];
-    public $timeFrame = 'ALL';
-    public $timeFrameAvailability = [];
+    public $timeFrame = 'ALL'; // Default to 'ALL'
+    public $timeFrameAvailability = [
+        '6M' => true,
+        '1Y' => true,
+        '5Y' => true,
+        'All' => true, // Default is 'All'
+    ];
 
     public $saleChartData = [
         'labels' => [],
@@ -19,6 +24,7 @@ new class extends Component {
 
     public function mount()
     {
+        // When mounting, load all data (default view)
         $this->getChartData();
     }
 
@@ -34,6 +40,7 @@ new class extends Component {
 
     public function updatedTimeFrame()
     {
+        // Refresh chart data when the time frame is changed
         $this->refreshChartData();
     }
 
@@ -45,17 +52,23 @@ new class extends Component {
 
     private function getChartData()
     {
+        // Filter the price data and transactions based on allowed grades
         $filteredPriceData = $this->filterPriceData([9, 10]);
         $grade9PriceData = $this->extractGradePriceData($filteredPriceData, 9);
         $grade10PriceData = $this->extractGradePriceData($filteredPriceData, 10);
         $filteredTransactionData = $this->filterTransactionData();
 
+        // Generate labels for the chart based on the selected time frame
         $commonLabels = $this->generateCommonLabels($filteredPriceData, $filteredTransactionData);
+        // Log::info($commonLabels);
         $this->saleChartData['labels'] = $this->formatLabels($commonLabels);
 
+        // Populate the data for chart series
         $this->saleChartData['grade9Prices'] = $this->fillData($grade9PriceData, 'fair_price');
         $this->saleChartData['grade10Prices'] = $this->fillData($grade10PriceData, 'fair_price');
         $this->saleChartData['transactions'] = $this->fillData($filteredTransactionData, 'transaction_count');
+
+        Log::info($this->saleChartData);
     }
 
     private function filterPriceData(array $allowedGrades)
@@ -84,16 +97,25 @@ new class extends Component {
             $labels = array_merge($labels, $this->extractLabelsFromTimeseries([$filteredTransactionData], 'timeseries_data'));
         }
 
-        return collect(array_unique($labels))->map(fn($date) => Carbon::parse($date)->format('Y-m-d'))->sort()->toArray();
+        // If timeFrame is 'ALL', we show all labels
+        if ($this->timeFrame === 'ALL') {
+            return collect(array_unique($labels))->map(fn($date) => Carbon::parse($date)->format('Y-m-d'))->sort()->toArray();
+        }
+
+        // Otherwise, limit labels based on the selected time frame
+        $lastDate = collect($labels)->max(); // Find the last available date
+        $startDate = $this->getStartDate($lastDate); // Calculate start date based on time frame
+
+        return collect($labels)->filter(fn($date) => Carbon::parse($date)->greaterThanOrEqualTo($startDate))->unique()->map(fn($date) => Carbon::parse($date)->format('Y-m-d'))->sort()->toArray();
     }
 
     private function extractLabelsFromTimeseries($data, $key)
     {
         return collect($data)
             ->flatMap(function ($item) use ($key) {
-                $timeseries = collect($item[$key])->sortBy('date');
-                $startDate = $this->getStartDate($timeseries->first()['date']);
-                return $this->filterTimeseriesByDate($timeseries, $startDate)->pluck('date')->toArray();
+                return collect($item[$key])
+                    ->pluck('date')
+                    ->toArray();
             })
             ->toArray();
     }
@@ -103,7 +125,7 @@ new class extends Component {
         return array_values(
             collect($commonLabels)
                 ->map(function ($date) {
-                    $format = in_array($this->timeFrame, ['6M', '1Y', '5Y']) ? 'M Y' : 'M d, Y';
+                    $format = 'M d, Y';
                     return Carbon::parse($date)->format($format);
                 })
                 ->toArray(),
@@ -117,42 +139,47 @@ new class extends Component {
         }
 
         $timeseries = collect($data['timeseries_data'])->sortBy('date');
+
         $dataByDate = $timeseries->pluck($field, 'date')->mapWithKeys(function ($value, $date) {
             return [Carbon::parse($date)->format('Y-m-d') => $value];
         });
 
+        // Ensure that the date formats used in the labels match the ones in dataByDate
         return collect($this->saleChartData['labels'])
             ->map(function ($label) use ($dataByDate) {
-                $originalDate = Carbon::createFromFormat('M d, Y', $label)->format('Y-m-d');
-                return $dataByDate[$originalDate] ?? 0;
+                try {
+                    // Use the proper date format based on time frame and label format
+                    $originalDate = Carbon::createFromFormat('M d, Y', $label)->format('Y-m-d');
+
+                    // Match the data based on the parsed date and return the value or 0
+                    return $dataByDate[$originalDate] ?? 0;
+                } catch (\Exception $e) {
+                    // Handle any parsing exceptions and return 0 if dates don't match
+                    return 0;
+                }
             })
             ->toArray();
     }
 
-    private function getStartDate($oldestDate)
+    private function getStartDate($lastAvailableDate)
     {
         switch ($this->timeFrame) {
             case '6M':
-                return Carbon::now()->subMonths(6);
+                return Carbon::parse($lastAvailableDate)->subMonths(6); // 6 months from the last available date
             case '1Y':
-                return Carbon::now()->subYear();
+                return Carbon::parse($lastAvailableDate)->subYear(); // 1 year from the last available date
             case '5Y':
-                return Carbon::now()->subYears(5);
+                return Carbon::parse($lastAvailableDate)->subYears(5); // 5 years from the last available date
             default:
-                return Carbon::parse($oldestDate);
+                return Carbon::parse($lastAvailableDate); // For 'ALL', just return the last available date
         }
-    }
-
-    private function filterTimeseriesByDate($timeseries, $startDate)
-    {
-        return $timeseries->filter(fn($item) => Carbon::parse($item['date'])->greaterThanOrEqualTo($startDate))->sortBy('date');
     }
 };
 ?>
 
 <div wire:ignore>
-    <div class="flex justify-end items-center mb-5" x-data="{ timeFrame: $wire.entangle('timeFrame').live, timeFrameAvailability: $wire.entangle('timeFrameAvailability').live }">
-        {{-- <div class="flex rounded-lg bg-evengray p-1 w-auto gap-3">
+    <div class="flex justify-between items-center mb-5" x-data="{ timeFrame: $wire.entangle('timeFrame').live, timeFrameAvailability: $wire.entangle('timeFrameAvailability').live }">
+        <div class="flex rounded-lg bg-evengray p-1 w-auto gap-3">
             <!-- 6M Button -->
             <div>
                 <div @click="timeFrameAvailability['6M'] && (timeFrame = '6M')" :disabled="!timeFrameAvailability['6M']"
@@ -202,7 +229,7 @@ new class extends Component {
                     <p class="font-manrope font-bold text-sm text-center">All</p>
                 </div>
             </div>
-        </div> --}}
+        </div>
 
         <!-- Grade Selector -->
         <div class="flex items-center gap-5">
