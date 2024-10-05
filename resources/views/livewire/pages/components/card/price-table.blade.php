@@ -46,10 +46,10 @@ new class extends Component {
                                 class="px-6 py-3 text-yellowish font-manrope font-semibold text-sm normal-case w-auto xl:w-[12%]">
                                 Date Sold
                             </th>
-                            <th scope="col"
+                            {{-- <th scope="col"
                                 class="px-6 py-3 text-yellowish font-manrope font-semibold text-sm normal-case">
                                 eBay ID
-                            </th>
+                            </th> --}}
                             <th scope="col"
                                 class="px-6 py-3 text-yellowish font-manrope font-semibold text-sm normal-case w-auto xl:w-[30%]">
                                 Title
@@ -75,11 +75,11 @@ new class extends Component {
                                 <td class="px-6 py-4">
                                     {{ $price->sale_date }}
                                 </td>
-                                <td class="px-6 py-4">
+                                {{-- <td class="px-6 py-4">
                                     {{ $price->seller }}
-                                </td>
+                                </td> --}}
                                 <td class="px-6 py-4">
-                                    {{-- {{ $this->card->name }} - {{ $this->card->psa_name }} --}}
+                                    {{ $price->seller }} - {{ $price->lot_id }}
                                 </td>
                                 <td class="px-6 py-4">
                                     <svg width="42" height="42" viewBox="0 0 42 42" fill="none"

@@ -14,211 +14,180 @@ new class extends Component {
 
     public $saleChartData = [
         'labels' => [],
-        'prices' => [],
         'grade9Prices' => [],
         'grade10Prices' => [],
+        'transactions' => [],
     ];
 
     public function updatedChartGrade()
     {
-        $this->getTransactionData();
+        $this->getInitialChartData();
         $this->dispatch('saleChartDataUpdated');
     }
 
     public function updatedTimeFrame()
     {
-        $this->getTransactionData();
+        $this->getInitialChartData();
         $this->dispatch('saleChartDataUpdated');
     }
 
     public function mount()
     {
         $this->getInitialChartData();
-        $this->getTransactionData();
     }
 
-    public function getTransactionData()
+    // Generate the common labels from all datasets (Grade 9, Grade 10, and transactions)
+    private function generateCommonLabels($filteredPriceData, $filteredTransactionData)
     {
-        // Remove 'PSA' from the string and convert the remaining part to an integer
-        $numericGrade = (int) preg_replace('/[^0-9]/', '', $this->chartGrade);
+        $labels = [];
 
-        // Now use $numericGrade to filter the transaction data
-        $filteredData = collect($this->cardTransactionTimeseries)
-            ->filter(function ($item) use ($numericGrade) {
-                return $item['psa_grade'] == $numericGrade;
-            })
-            ->first(); // Assuming you want the first matching PSA grade
-
-        // If there is data for the selected grade
-        if ($filteredData) {
-            $timeseries = collect($filteredData['timeseries_data']);
-
-            // Initialize availability for each time frame
-            $this->timeFrameAvailability = [
-                '6M' => false,
-                '1Y' => false,
-                '5Y' => false,
-                'All' => true, // Default is 'All'
-            ];
-
-            // Define time frames to check
-            $timeFrames = [
-                '6M' => Carbon::now()->subMonths(6),
-                '1Y' => Carbon::now()->subYear(),
-                '5Y' => Carbon::now()->subYears(5),
-            ];
-
-            // Check if there are at least 3 records for each time frame and set availability flags
-            foreach ($timeFrames as $key => $startDate) {
-                $timeFrameData = $timeseries->filter(function ($item) use ($startDate) {
-                    $date = Carbon::parse($item['date']);
-                    return $date->greaterThanOrEqualTo($startDate);
-                });
-
-                if ($timeFrameData->count() >= 3) {
-                    // Ensure at least 3 records
-                    $this->timeFrameAvailability[$key] = true;
-                }
-            }
-
-            // Determine the start date based on the selected time frame
-            $startDate = null;
-            switch ($this->timeFrame) {
-                case '6M':
-                    $startDate = $timeFrames['6M'];
-                    break;
-                case '1Y':
-                    $startDate = $timeFrames['1Y'];
-                    break;
-                case '5Y':
-                    $startDate = $timeFrames['5Y'];
-                    break;
-                default:
-                    // 'All' or any other case: no filtering based on time
-                    $startDate = Carbon::parse($timeseries->first()['date']); // Oldest date in timeseries
-                    break;
-            }
-
-            // Filter the timeseries data to include only entries within the start date and the latest date
-            $filteredTimeseries = $timeseries->filter(function ($item) use ($startDate) {
-                $date = Carbon::parse($item['date']);
-                return $date->greaterThanOrEqualTo($startDate);
-            });
-
-            // Sort the filtered data by date (in case it's not already sorted)
-            $filteredTimeseries = $filteredTimeseries->sortBy('date');
-
-            // Extract the dates and transaction counts based on the time frame
-            $dates = $filteredTimeseries
-                ->pluck('date')
-                ->map(function ($date) {
-                    // Format the date depending on the time frame
-                    if ($this->timeFrame === '6M') {
-                        return Carbon::parse($date)->format('M Y'); // Show only month for 6M
-                    } elseif (in_array($this->timeFrame, ['1Y', '5Y'])) {
-                        return Carbon::parse($date)->format('M Y'); // Month and year for 1Y and 5Y
-                    } else {
-                        return Carbon::parse($date)->format('M d, Y'); // Full date for All
-                    }
-                })
-                ->toArray();
-
-            $transactionCounts = $filteredTimeseries->pluck('transaction_count')->toArray();
-
-            // Set the transaction chart data
-            $this->saleChartData['transactionLabels'] = $dates;
-            $this->saleChartData['transactions'] = $transactionCounts;
-        } else {
-            Log::info('No data found for the selected grade.');
+        // Get dates from Grade 9 and 10 price data
+        foreach ($filteredPriceData as $data) {
+            $timeseries = collect($data['timeseries_data'])->sortBy('date'); // Sort by date (old to newest)
+            $startDate = $this->getStartDate($timeseries->first()['date']);
+            $filteredTimeseries = $this->filterTimeseriesByDate($timeseries, $startDate);
+            $labels = array_merge($labels, $filteredTimeseries->pluck('date')->toArray());
         }
+
+        // Get dates from transaction data
+        if (!empty($filteredTransactionData)) {
+            $timeseries = collect($filteredTransactionData['timeseries_data'])->sortBy('date'); // Sort by date (old to newest)
+            $filteredTimeseries = $this->filterTimeseriesByDate($timeseries, $this->getStartDate($timeseries->first()['date']));
+            $labels = array_merge($labels, $filteredTimeseries->pluck('date')->toArray());
+        }
+
+        // Remove duplicates and sort dates (in 'Y-m-d' format)
+        $uniqueSortedLabels = collect(array_unique($labels))
+            ->map(function ($date) {
+                return Carbon::parse($date)->format('Y-m-d'); // Keep in 'Y-m-d' format for sorting
+            })
+            ->sort() // Sort the dates from oldest to newest in 'Y-m-d' format
+            ->toArray();
+
+        return $uniqueSortedLabels; // Return the sorted labels in 'Y-m-d' format
     }
 
     public function getInitialChartData()
     {
-        // Define the grades to filter (9 and 10)
         $allowedGrades = [9, 10];
-
-        // Filter the data for the numeric grades 9 or 10
-        $filteredData = collect($this->cardPricesTimeseries)->filter(function ($item) use ($allowedGrades) {
+        $filteredPriceData = collect($this->cardPricesTimeseries)->filter(function ($item) use ($allowedGrades) {
             return in_array((int) preg_replace('/[^0-9]/', '', $item['psa_grade']), $allowedGrades);
         });
 
-        // Initialize arrays for storing data of each grade
-        $grade9Data = [];
-        $grade10Data = [];
-        $mergedLabels = [];
+        $grade9PriceData = collect($filteredPriceData)
+            ->filter(function ($item) {
+                return $item['psa_grade'] == 9;
+            })
+            ->first(); // Get first matching grade 9 data
 
-        // If there is data for the selected grades
-        if ($filteredData->isNotEmpty()) {
-            // Loop through each dataset (one for grade 9 and one for grade 10)
-            foreach ($filteredData as $data) {
-                $numericGrade = (int) preg_replace('/[^0-9]/', '', $data['psa_grade']);
-                $timeseries = collect($data['timeseries_data']);
+        $grade10PriceData = collect($filteredPriceData)
+            ->filter(function ($item) {
+                return $item['psa_grade'] == 10;
+            })
+            ->first(); // Get first matching grade 10 data
 
-                // Determine the start date based on the selected time frame
-                $startDate = null;
-                switch ($this->timeFrame) {
-                    case '6M':
-                        $startDate = Carbon::now()->subMonths(6);
-                        break;
-                    case '1Y':
-                        $startDate = Carbon::now()->subYear();
-                        break;
-                    case '5Y':
-                        $startDate = Carbon::now()->subYears(5);
-                        break;
-                    default:
-                        $startDate = Carbon::parse($timeseries->first()['date']); // Oldest date in timeseries
-                        break;
-                }
+        $numericGrade = (int) preg_replace('/[^0-9]/', '', $this->chartGrade);
+        $filteredTransactionData = collect($this->cardTransactionTimeseries)
+            ->filter(function ($item) use ($numericGrade) {
+                return $item['psa_grade'] == $numericGrade;
+            })
+            ->first();
 
-                // Filter the timeseries data to include only entries within the start date and the latest date
-                $filteredTimeseries = $timeseries->filter(function ($item) use ($startDate) {
-                    $date = Carbon::parse($item['date']);
-                    return $date->greaterThanOrEqualTo($startDate);
-                });
+        // Generate the common labels from both price and transaction data
+        $commonLabels = $this->generateCommonLabels($filteredPriceData, $filteredTransactionData);
 
-                // Sort the filtered data by date (in case it's not already sorted)
-                $filteredTimeseries = $filteredTimeseries->sortBy('date');
-
-                // Extract the dates and fair prices based on the time frame
-                $dates = $filteredTimeseries->pluck('date')->toArray();
-                $fairPrices = $filteredTimeseries->pluck('fair_price')->toArray();
-
-                // Add dates to merged labels (avoid duplicates)
-                $mergedLabels = array_unique(array_merge($mergedLabels, $dates));
-
-                // Store prices for each grade separately
-                if ($numericGrade === 9) {
-                    $grade9Data = $filteredTimeseries->pluck('fair_price')->toArray();
-                } elseif ($numericGrade === 10) {
-                    $grade10Data = $filteredTimeseries->pluck('fair_price')->toArray();
-                }
-            }
-
-            // Format the merged labels based on the time frame (removing duplicates)
-            $mergedLabels = collect($mergedLabels)
-                ->sort()
+        // Now format labels for display, but keep the internal 'Y-m-d' format for sorting
+        $this->saleChartData['labels'] = array_values(
+            collect($commonLabels)
                 ->map(function ($date) {
+                    // Format labels depending on the time frame
                     if ($this->timeFrame === '6M') {
-                        return Carbon::parse($date)->format('M Y'); // Show only month for 6M
+                        return Carbon::parse($date)->format('M Y');
                     } elseif (in_array($this->timeFrame, ['1Y', '5Y'])) {
-                        return Carbon::parse($date)->format('M Y'); // Month and year for 1Y and 5Y
+                        return Carbon::parse($date)->format('M Y');
                     } else {
-                        return Carbon::parse($date)->format('M d, Y'); // Full date for All
+                        return Carbon::parse($date)->format('M d, Y');
                     }
                 })
-                ->toArray();
+                ->toArray(), // Ensures that the output is an array
+        );
 
-            // Set the chart data with merged labels and separate price arrays
-            $this->saleChartData['labels'] = $mergedLabels;
-            $this->saleChartData['grade9Prices'] = $grade9Data;
-            $this->saleChartData['grade10Prices'] = $grade10Data;
-        } else {
-            Log::info('No data found for the selected grades.');
+        $grade9Data = [];
+        $grade10Data = [];
+        $transactionData = [];
+
+        // Populate Price Data for Grade 9 (extract the timeseries_data first)
+        if (!empty($grade9PriceData)) {
+            $grade9Timeseries = collect($grade9PriceData['timeseries_data'])->sortBy('date');
+            $grade9Data = $this->fillDataByCommonDates($grade9Timeseries, 'fair_price');
+        }
+
+        // Populate Price Data for Grade 10 (extract the timeseries_data first)
+        if (!empty($grade10PriceData)) {
+            $grade10Timeseries = collect($grade10PriceData['timeseries_data'])->sortBy('date');
+            $grade10Data = $this->fillDataByCommonDates($grade10Timeseries, 'fair_price');
+        }
+
+        // Populate Transaction Data
+        if (!empty($filteredTransactionData)) {
+            $transactionTimeseries = collect($filteredTransactionData['timeseries_data'])->sortBy('date'); // Sort by date (old to newest)
+            $transactionData = $this->fillDataByCommonDates($transactionTimeseries, 'transaction_count');
+        }
+
+        // Assign the generated datasets
+        $this->saleChartData['grade9Prices'] = $grade9Data;
+        $this->saleChartData['grade10Prices'] = $grade10Data;
+        $this->saleChartData['transactions'] = $transactionData;
+    }
+
+    private function getStartDate($oldestDate)
+    {
+        switch ($this->timeFrame) {
+            case '6M':
+                return Carbon::now()->subMonths(6);
+            case '1Y':
+                return Carbon::now()->subYear();
+            case '5Y':
+                return Carbon::now()->subYears(5);
+            default:
+                return Carbon::parse($oldestDate);
         }
     }
-}; ?>
+
+    private function filterTimeseriesByDate($timeseries, $startDate)
+    {
+        return $timeseries
+            ->filter(function ($item) use ($startDate) {
+                $date = Carbon::parse($item['date']);
+                return $date->greaterThanOrEqualTo($startDate);
+            })
+            ->sortBy('date');
+    }
+
+    // This method will align the data to the common labels, filling gaps with 0
+    private function fillDataByCommonDates($timeseries, $field)
+    {
+        // Create a dictionary where the keys are the original dates in 'Y-m-d' format
+        $dataByDate = $timeseries
+            ->mapWithKeys(function ($item) use ($field) {
+                $date = Carbon::parse($item['date'])->format('Y-m-d');
+                return [$date => $item[$field]];
+            })
+            ->toArray();
+
+        $filledData = [];
+
+        foreach ($this->saleChartData['labels'] as $label) {
+            // Parse the label back to 'Y-m-d' for accurate comparison
+            $originalDate = Carbon::createFromFormat('M d, Y', $label)->format('Y-m-d');
+            // Add the data in the correct order based on the sorted labels
+            $filledData[] = $dataByDate[$originalDate] ?? 0; // If no value exists, default to 0
+        }
+
+        return $filledData;
+    }
+};
+?>
 
 <div wire:ignore>
     <div class="flex justify-between items-center mb-5" x-data="{ timeFrame: $wire.entangle('timeFrame').live, timeFrameAvailability: $wire.entangle('timeFrameAvailability').live }">
@@ -287,15 +256,14 @@ new class extends Component {
 @script
     <script>
         const ctx = document.getElementById('myChart2');
+        
+        // Initial data setup from Livewire
+        let labelsArray = $wire.saleChartData.labels;
+        let grade9Data = $wire.saleChartData.grade9Prices;
+        let grade10Data = $wire.saleChartData.grade10Prices;
+        let transactionData = $wire.saleChartData.transactions;
 
-        // Convert the labels to an array
-        const labelsArray = Array.isArray($wire.saleChartData.labels) ? $wire.saleChartData.labels : Object.values($wire
-            .saleChartData.labels);
-        const grade9Data = $wire.saleChartData.grade9Prices;
-        const grade10Data = $wire.saleChartData.grade10Prices;
-        const transactionData = $wire.saleChartData.transactions;
-
-        // Initialize the chart with empty data arrays first
+        // Define the chart data
         const data = {
             labels: labelsArray,
             datasets: [{
@@ -305,7 +273,7 @@ new class extends Component {
                     backgroundColor: 'rgba(255, 99, 132, 0.5)',
                     stack: 'combined',
                     type: 'line',
-                    yAxisID: 'y', // Link this dataset to the primary Y axis (left)
+                    yAxisID: 'y', // Link to primary Y axis (left)
                 },
                 {
                     label: 'PSA 10',
@@ -314,20 +282,21 @@ new class extends Component {
                     backgroundColor: 'rgba(75, 192, 192, 0.5)',
                     stack: 'combined',
                     type: 'line',
-                    yAxisID: 'y', // Link this dataset to the primary Y axis (left)
+                    yAxisID: 'y', // Link to primary Y axis (left)
                 },
                 {
                     label: 'Volume',
                     data: transactionData,
                     borderColor: 'rgba(75, 192, 75, 1)', // Green border color
-                    backgroundColor: 'rgba(75, 192, 75, 0.5)', // Green with 50% transparency for background
+                    backgroundColor: 'rgba(75, 192, 75, 0.5)', // Green with 50% transparency
                     stack: 'combined',
                     type: 'bar',
-                    yAxisID: 'y1' // Link this dataset to the secondary Y axis (right)
+                    yAxisID: 'y1' // Link to secondary Y axis (right)
                 }
             ]
         };
 
+        // Create the chart
         const myChart2 = new Chart(ctx, {
             type: 'bar',
             data: data,
@@ -336,16 +305,16 @@ new class extends Component {
                     y: {
                         type: 'linear',
                         position: 'left',
-                        stacked: true, // Stack the line charts on the left axis
-                        beginAtZero: true // Ensure the y-axis starts at zero for line charts
+                        stacked: true, // Stack line charts
+                        beginAtZero: true, // Ensure the y-axis starts at zero
                     },
                     y1: {
                         type: 'linear',
-                        position: 'right', // Position this Y axis on the right side
-                        stacked: false, // No need to stack the bar data
+                        position: 'right', // Position secondary Y axis on the right
+                        stacked: false, // No stacking for bar chart
                         beginAtZero: true, // Start at zero for the bar chart
                         grid: {
-                            drawOnChartArea: false // Avoid grid lines overlapping with the left Y-axis
+                            drawOnChartArea: false // Prevent grid lines from overlapping with the left Y-axis
                         }
                     }
                 }
@@ -354,9 +323,12 @@ new class extends Component {
 
         // Listen for Livewire event to update chart with new data
         Livewire.on('saleChartDataUpdated', () => {
-            // Update chart data with new values
-            myChart2.data.datasets[2].data = $wire.saleChartData.transactions;
-            myChart2.update();
+            // Update chart data with new values from Livewire
+            myChart2.data.labels = $wire.saleChartData.labels;
+            myChart2.data.datasets[0].data = $wire.saleChartData.grade9Prices; // Update PSA 9 data
+            myChart2.data.datasets[1].data = $wire.saleChartData.grade10Prices; // Update PSA 10 data
+            myChart2.data.datasets[2].data = $wire.saleChartData.transactions; // Update Volume data
+            myChart2.update(); // Refresh the chart
         });
     </script>
 @endscript

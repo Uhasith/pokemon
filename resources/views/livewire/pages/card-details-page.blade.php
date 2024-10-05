@@ -24,8 +24,8 @@ new class extends Component {
 
     public function mount($slug, $setSlug)
     {
-        // Log::info($slug);
-        // Log::info($setSlug);
+        Log::info($slug);
+        Log::info($setSlug);
         // Load the card with necessary relationships and sort populations by date_checked
         $this->card = PokeCard::where('slug', $slug)
             ->where('set_slug', $setSlug)
@@ -41,6 +41,10 @@ new class extends Component {
                 'set',
             ])
             ->first();
+
+        if (!$this->card) {
+           $this->redirectRoute('set-index');
+        }
 
         $this->card_id = $this->card->card_id;
 
