@@ -12,7 +12,7 @@ new class extends Component {
         '6M' => true,
         '1Y' => true,
         '5Y' => true,
-        'All' => true, // Default is 'All'
+        'ALL' => true, // Default is 'ALL'
     ];
 
     public $saleChartData = [
@@ -24,8 +24,8 @@ new class extends Component {
 
     public function mount()
     {
-        // When mounting, load all data (default view)
-        $this->getChartData();
+        $this->loadChartData();
+        $this->checkTimeFrameAvailability();
     }
 
     public function updatedChartGrade()
@@ -40,142 +40,157 @@ new class extends Component {
 
     public function updatedTimeFrame()
     {
-        // Refresh chart data when the time frame is changed
         $this->refreshChartData();
     }
 
     private function refreshChartData()
     {
-        $this->getChartData();
+        $this->loadChartData();
         $this->dispatch('saleChartDataUpdated');
     }
 
-    private function getChartData()
+    // Loads and prepares chart data based on the selected time frame
+    private function loadChartData()
     {
-        // Filter the price data and transactions based on allowed grades
         $filteredPriceData = $this->filterPriceData([9, 10]);
-        $grade9PriceData = $this->extractGradePriceData($filteredPriceData, 9);
-        $grade10PriceData = $this->extractGradePriceData($filteredPriceData, 10);
         $filteredTransactionData = $this->filterTransactionData();
 
-        // Generate labels for the chart based on the selected time frame
-        $commonLabels = $this->generateCommonLabels($filteredPriceData, $filteredTransactionData);
-        // Log::info($commonLabels);
-        $this->saleChartData['labels'] = $this->formatLabels($commonLabels);
-
-        // Populate the data for chart series
-        $this->saleChartData['grade9Prices'] = $this->fillData($grade9PriceData, 'fair_price');
-        $this->saleChartData['grade10Prices'] = $this->fillData($grade10PriceData, 'fair_price');
-        $this->saleChartData['transactions'] = $this->fillData($filteredTransactionData, 'transaction_count');
-
-        Log::info($this->saleChartData);
+        $this->saleChartData['labels'] = $this->getFormattedLabels($filteredPriceData, $filteredTransactionData);
+        $this->saleChartData['grade9Prices'] = $this->mapDataToLabels($filteredPriceData, 'fair_price', 9);
+        $this->saleChartData['grade10Prices'] = $this->mapDataToLabels($filteredPriceData, 'fair_price', 10);
+        $this->saleChartData['transactions'] = $this->mapDataToLabels($filteredTransactionData, 'transaction_count');
     }
 
+    // Filters price data based on allowed grades
     private function filterPriceData(array $allowedGrades)
     {
-        return collect($this->cardPricesTimeseries)->filter(function ($item) use ($allowedGrades) {
-            return in_array((int) preg_replace('/[^0-9]/', '', $item['psa_grade']), $allowedGrades);
-        });
+        return collect($this->cardPricesTimeseries)->filter(fn($item) => in_array((int) preg_replace('/[^0-9]/', '', $item['psa_grade']), $allowedGrades));
     }
 
-    private function extractGradePriceData($filteredPriceData, $grade)
-    {
-        return $filteredPriceData->firstWhere('psa_grade', $grade);
-    }
-
+    // Filters transaction data based on the selected chart grade
     private function filterTransactionData()
     {
         $numericGrade = (int) preg_replace('/[^0-9]/', '', $this->chartGrade);
         return collect($this->cardTransactionTimeseries)->firstWhere('psa_grade', $numericGrade);
     }
 
-    private function generateCommonLabels($filteredPriceData, $filteredTransactionData)
+    // Formats the labels based on the selected time frame and price/transaction data
+    private function getFormattedLabels($filteredPriceData, $filteredTransactionData)
     {
-        $labels = $this->extractLabelsFromTimeseries($filteredPriceData, 'timeseries_data');
+        $labels = $this->extractLabelsFromTimeseries($filteredPriceData);
 
         if ($filteredTransactionData) {
-            $labels = array_merge($labels, $this->extractLabelsFromTimeseries([$filteredTransactionData], 'timeseries_data'));
+            $labels = array_merge($labels, $this->extractLabelsFromTimeseries([$filteredTransactionData]));
         }
 
-        // If timeFrame is 'ALL', we show all labels
-        if ($this->timeFrame === 'ALL') {
-            return collect(array_unique($labels))->map(fn($date) => Carbon::parse($date)->format('Y-m-d'))->sort()->toArray();
-        }
-
-        // Otherwise, limit labels based on the selected time frame
-        $lastDate = collect($labels)->max(); // Find the last available date
-        $startDate = $this->getStartDate($lastDate); // Calculate start date based on time frame
-
-        return collect($labels)->filter(fn($date) => Carbon::parse($date)->greaterThanOrEqualTo($startDate))->unique()->map(fn($date) => Carbon::parse($date)->format('Y-m-d'))->sort()->toArray();
+        return $this->filterAndFormatLabels($labels);
     }
 
-    private function extractLabelsFromTimeseries($data, $key)
+    // Filters and formats labels based on the time frame
+    private function filterAndFormatLabels(array $labels)
+    {
+        if ($this->timeFrame === 'ALL') {
+            return $this->formatLabels($labels);
+        }
+
+        $lastDate = collect($labels)->max(); // Find the latest date
+        $startDate = $this->calculateStartDate($lastDate); // Calculate the start date for the selected time frame
+
+        $filteredLabels = collect($labels)->filter(fn($date) => Carbon::parse($date)->greaterThanOrEqualTo($startDate))->unique()->sort()->toArray();
+
+        return $this->formatLabels($filteredLabels);
+    }
+
+    // Extracts labels from the timeseries data
+    private function extractLabelsFromTimeseries($data)
     {
         return collect($data)
-            ->flatMap(function ($item) use ($key) {
-                return collect($item[$key])
+            ->flatMap(
+                fn($item) => collect($item['timeseries_data'])
                     ->pluck('date')
-                    ->toArray();
-            })
+                    ->toArray(),
+            )
             ->toArray();
     }
 
-    private function formatLabels($commonLabels)
+    // Formats labels into the required format ('M d, Y')
+    private function formatLabels(array $labels)
     {
-        return array_values(
-            collect($commonLabels)
-                ->map(function ($date) {
-                    $format = 'M d, Y';
-                    return Carbon::parse($date)->format($format);
-                })
-                ->toArray(),
-        );
+        return array_values(collect($labels)->map(fn($date) => Carbon::parse($date)->format('M d, Y'))->toArray());
     }
 
-    private function fillData($data, $field)
+    // Maps data to the corresponding labels for the chart
+    private function mapDataToLabels($data, $field, $grade = null)
     {
         if (!$data) {
-            return [];
+            return array_fill(0, count($this->saleChartData['labels']), 0); // Return 0-filled array if no data
         }
 
-        $timeseries = collect($data['timeseries_data'])->sortBy('date');
+        $filteredData = $grade ? $this->extractGradePriceData($data, $grade) : $data;
+        $timeseries = collect($filteredData['timeseries_data'])->sortBy('date');
 
         $dataByDate = $timeseries->pluck($field, 'date')->mapWithKeys(function ($value, $date) {
             return [Carbon::parse($date)->format('Y-m-d') => $value];
         });
 
-        // Ensure that the date formats used in the labels match the ones in dataByDate
+        return $this->matchDataToLabels($dataByDate);
+    }
+
+    // Matches data values with the labels for the chart
+    private function matchDataToLabels($dataByDate)
+    {
         return collect($this->saleChartData['labels'])
             ->map(function ($label) use ($dataByDate) {
                 try {
-                    // Use the proper date format based on time frame and label format
-                    $originalDate = Carbon::createFromFormat('M d, Y', $label)->format('Y-m-d');
-
-                    // Match the data based on the parsed date and return the value or 0
-                    return $dataByDate[$originalDate] ?? 0;
+                    $parsedDate = Carbon::createFromFormat('M d, Y', $label)->format('Y-m-d');
+                    return $dataByDate[$parsedDate] ?? 0;
                 } catch (\Exception $e) {
-                    // Handle any parsing exceptions and return 0 if dates don't match
                     return 0;
                 }
             })
             ->toArray();
     }
 
-    private function getStartDate($lastAvailableDate)
+    // Calculates the start date for a given time frame
+    private function calculateStartDate($lastAvailableDate)
     {
         switch ($this->timeFrame) {
             case '6M':
-                return Carbon::parse($lastAvailableDate)->subMonths(6); // 6 months from the last available date
+                return Carbon::parse($lastAvailableDate)->subMonths(6);
             case '1Y':
-                return Carbon::parse($lastAvailableDate)->subYear(); // 1 year from the last available date
+                return Carbon::parse($lastAvailableDate)->subYear();
             case '5Y':
-                return Carbon::parse($lastAvailableDate)->subYears(5); // 5 years from the last available date
+                return Carbon::parse($lastAvailableDate)->subYears(5);
             default:
-                return Carbon::parse($lastAvailableDate); // For 'ALL', just return the last available date
+                return Carbon::parse($lastAvailableDate);
         }
     }
-};
-?>
+
+    // Checks if each time frame has enough data (at least 5 labels) and updates availability
+    private function checkTimeFrameAvailability()
+    {
+        $this->timeFrameAvailability['6M'] = $this->hasSufficientDataForTimeFrame('6M');
+        $this->timeFrameAvailability['1Y'] = $this->hasSufficientDataForTimeFrame('1Y');
+        $this->timeFrameAvailability['5Y'] = $this->hasSufficientDataForTimeFrame('5Y');
+        $this->timeFrameAvailability['ALL'] = count($this->getFormattedLabels($this->filterPriceData([9, 10]), $this->filterTransactionData())) > 0;
+    }
+
+    // Helper function to check if a given time frame has at least 5 labels
+    private function hasSufficientDataForTimeFrame($timeFrame)
+    {
+        $originalTimeFrame = $this->timeFrame;
+        $this->timeFrame = $timeFrame;
+        $labels = $this->getFormattedLabels($this->filterPriceData([9, 10]), $this->filterTransactionData());
+        $this->timeFrame = $originalTimeFrame;
+        return count($labels) >= 10;
+    }
+
+    // Extracts grade-specific price data from the filtered data
+    private function extractGradePriceData($filteredPriceData, $grade)
+    {
+        return $filteredPriceData->firstWhere('psa_grade', $grade);
+    }
+}; ?>
 
 <div wire:ignore>
     <div class="flex justify-between items-center mb-5" x-data="{ timeFrame: $wire.entangle('timeFrame').live, timeFrameAvailability: $wire.entangle('timeFrameAvailability').live }">
