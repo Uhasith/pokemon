@@ -21,19 +21,19 @@ new class extends Component {
 
     public function updatedChartGrade()
     {
-        $this->getInitialChartData();
+        $this->getChartData();
         $this->dispatch('saleChartDataUpdated');
     }
 
     public function updatedTimeFrame()
     {
-        $this->getInitialChartData();
+        $this->getChartData();
         $this->dispatch('saleChartDataUpdated');
     }
 
     public function mount()
     {
-        $this->getInitialChartData();
+        $this->getChartData();
     }
 
     // Generate the common labels from all datasets (Grade 9, Grade 10, and transactions)
@@ -67,7 +67,7 @@ new class extends Component {
         return $uniqueSortedLabels; // Return the sorted labels in 'Y-m-d' format
     }
 
-    public function getInitialChartData()
+    public function getChartData()
     {
         $allowedGrades = [9, 10];
         $filteredPriceData = collect($this->cardPricesTimeseries)->filter(function ($item) use ($allowedGrades) {
@@ -256,7 +256,7 @@ new class extends Component {
 @script
     <script>
         const ctx = document.getElementById('myChart2');
-        
+
         // Initial data setup from Livewire
         let labelsArray = $wire.saleChartData.labels;
         let grade9Data = $wire.saleChartData.grade9Prices;
