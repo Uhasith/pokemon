@@ -8,7 +8,7 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <link rel="icon" type="image/png" href="{{ asset('assets/card-images/logo.png') }}">
+    <link rel="icon" style="width: 100%; height: 100%; object-fit: contain;" type="image/png" href="{{ asset('assets/card-images/logo.png') }}">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -83,7 +83,7 @@
 </body>
 
 <footer>
-    <div class="w-full bg-blackish py-8">
+    <div class="w-full !bg-[#1C1C1C] py-8">
         <div class="max-w-[1440px] relative flex justify-center items-center flex-col gap-4 mx-auto p-5">
             <h3 class="text-center font-manrope text-white text-xl font-semibold">Got a Question? Email <a href="">website@pokemonprice.com</a></h3>
             <h4 class="text-center font-manrope leading-8 text-white text-sm font-medium">When you click on links to various merchants on this site and make a purchase, this can result in this site earning a commission. Affiliate programs and <br> affiliations include, but are not limited to, the eBay partner network.</a></h4>

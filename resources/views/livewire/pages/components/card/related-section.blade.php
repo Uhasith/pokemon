@@ -68,7 +68,7 @@ new class extends Component {
                 </h2>
             </div>
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 my-12">
-                @foreach ($relatedCards as $card)
+                @foreach ($relatedCards->take(11) as $card)
                     @if ($card?->all_card?->images['small'] !== null)
                         <div class="flex w-full">
                             <div class="p-6 rounded-2xl bg-[#2C2C2C] bg-blend-screen">

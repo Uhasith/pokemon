@@ -72,14 +72,14 @@ new class extends Component {
 }; ?>
 
 <div class="w-full md:w-9/12 xl:w-4/5" x-data="{ type: 'grid' }">
-    <div class="flex items-center justify-end gap-4">
-        <div class="grid grid-col grid-cols-[auto_1fr] items-center gap-3 w-1/4">
+    <div class="flex items-center justify-end gap-4 flex-wrap">
+        <div class="grid grid-col lg:grid-cols-[auto_1fr] items-center gap-3 w-[50%] lg:w-1/4">
             <h2 class="font-manrope font-semibold text-sm text-white w-full">Sort By: </h2>
             <div class="flex items-center w-full">
                 <x-wui-select placeholder="Sort By" wire:model.live='sortBy' :clearable="false" :options="['Value High to Low', 'Value Low to High', 'Alphabetical', 'Reversed Alphabetical']" />
             </div>
         </div>
-        <div class="grid grid-col grid-cols-[auto_1fr] items-center gap-3 w-[15%]">
+        <div class="grid grid-col lg:grid-cols-[auto_1fr] items-center gap-3 w-[45%] lg:w-[15%]">
             <h2 class="font-manrope font-semibold text-sm text-white w-full">Price: </h2>
             <div class="flex items-center w-full">
                 <x-wui-select placeholder="Price" wire:model.live='price' :clearable="false" :options="['PSA 10', 'PSA 9', 'PSA 8', 'PSA 7', 'PSA 6', 'PSA 5', 'PSA 4', 'PSA 3', 'PSA 2', 'PSA 1']" />
@@ -170,7 +170,7 @@ new class extends Component {
                                 Price :
                             </p>
                             <p class="font-manrope text-white text-sm xl:text-base font-bold">
-                                {{ '$ ' . $card->fair_price ?? 'N/A' }}
+                                {{ isset($card->fair_price) ? '$ ' . number_format($card->fair_price, 2, '.', ',') : 'N/A' }}
                             </p>
                         </div>
                     </div>
