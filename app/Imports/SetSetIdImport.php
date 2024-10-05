@@ -73,7 +73,7 @@ class SetSetIdImport implements ShouldQueue, ToModel, WithBatchInserts, WithChun
         return [
             ImportFailed::class => function (ImportFailed $event) {
                 $exceptionMessage = $event->getException()->getMessage();
-                Log::error('Failed to import row: ' . $exceptionMessage);
+                Log::error('Failed to import row: '.$exceptionMessage);
             },
         ];
     }
