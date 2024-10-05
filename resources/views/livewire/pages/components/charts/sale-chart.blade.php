@@ -29,7 +29,7 @@ new class extends Component {
 
     public function updatedShowableCharts()
     {
-        $this->refreshChartData();
+        $this->dispatch('saleChartDataUpdated');
     }
 
     public function updatedTimeFrame()
@@ -289,9 +289,12 @@ new class extends Component {
         // Listen for Livewire event to update chart with new data
         Livewire.on('saleChartDataUpdated', () => {
             myChart2.data.labels = $wire.saleChartData.labels;
-            myChart2.data.datasets[0].data = $wire.showableCharts.includes('PSA9') ? $wire.saleChartData.grade9Prices : [];
-            myChart2.data.datasets[1].data = $wire.showableCharts.includes('PSA10') ? $wire.saleChartData.grade10Prices : [];
-            myChart2.data.datasets[2].data = $wire.showableCharts.includes('VOLUME') ? $wire.saleChartData.transactions : [];
+            myChart2.data.datasets[0].data = $wire.showableCharts.includes('PSA9') ? $wire.saleChartData
+                .grade9Prices : [];
+            myChart2.data.datasets[1].data = $wire.showableCharts.includes('PSA10') ? $wire.saleChartData
+                .grade10Prices : [];
+            myChart2.data.datasets[2].data = $wire.showableCharts.includes('VOLUME') ? $wire.saleChartData
+                .transactions : [];
 
             myChart2.update(); // Refresh the chart
         });
