@@ -6,6 +6,7 @@ use Carbon\Carbon;
 new class extends Component {
     public $card, $populations, $cardPricesTimeseries, $cardTransactionTimeseries;
     public $chartGrade = 'PSA10';
+    public $showableCharts = ['PSA9', 'PSA10'];
     public $timeFrame = 'ALL';
     public $timeFrameAvailability = [];
 
@@ -22,6 +23,11 @@ new class extends Component {
     }
 
     public function updatedChartGrade()
+    {
+        $this->refreshChartData();
+    }
+
+    public function updatedShowableCharts()
     {
         $this->refreshChartData();
     }
@@ -145,8 +151,8 @@ new class extends Component {
 ?>
 
 <div wire:ignore>
-    <div class="flex justify-between items-center mb-5" x-data="{ timeFrame: $wire.entangle('timeFrame').live, timeFrameAvailability: $wire.entangle('timeFrameAvailability').live }">
-        <div class="flex rounded-lg bg-evengray p-1 w-auto gap-3">
+    <div class="flex justify-end items-center mb-5" x-data="{ timeFrame: $wire.entangle('timeFrame').live, timeFrameAvailability: $wire.entangle('timeFrameAvailability').live }">
+        {{-- <div class="flex rounded-lg bg-evengray p-1 w-auto gap-3">
             <!-- 6M Button -->
             <div>
                 <div @click="timeFrameAvailability['6M'] && (timeFrame = '6M')" :disabled="!timeFrameAvailability['6M']"
@@ -196,11 +202,15 @@ new class extends Component {
                     <p class="font-manrope font-bold text-sm text-center">All</p>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <!-- Grade Selector -->
-        <div>
-            <x-wui-select placeholder="Select Grades" wire:model.live='chartGrade' :options="array_keys($this->populations)" />
+        <div class="flex items-center gap-5">
+            {{-- <x-wui-select placeholder="Select Grades" wire:model.live='chartGrade' :options="array_keys($this->populations)" /> --}}
+            <x-wui-checkbox id="label" label="Volume" wire:model.live="showableCharts" value="VOLUME" />
+            <x-wui-checkbox id="label" label="PSA 9" wire:model.live="showableCharts" value="PSA9" />
+            <x-wui-checkbox id="label" label="PSA 10" wire:model.live="showableCharts" value="PSA10" />
+
         </div>
     </div>
     <div id="chart-container" style="width: 100%; height: auto; margin: auto;">
@@ -214,9 +224,9 @@ new class extends Component {
 
         // Initial data setup from Livewire
         let labelsArray = $wire.saleChartData.labels;
-        let grade9Data = $wire.saleChartData.grade9Prices;
-        let grade10Data = $wire.saleChartData.grade10Prices;
-        let transactionData = $wire.saleChartData.transactions;
+        let grade9Data = $wire.showableCharts.includes('PSA9') ? $wire.saleChartData.grade9Prices : [];
+        let grade10Data = $wire.showableCharts.includes('PSA10') ? $wire.saleChartData.grade10Prices : [];
+        let transactionData = $wire.showableCharts.includes('VOLUME') ? $wire.saleChartData.transactionVolumes : [];
 
         // Define the chart data
         const data = {
@@ -278,11 +288,11 @@ new class extends Component {
 
         // Listen for Livewire event to update chart with new data
         Livewire.on('saleChartDataUpdated', () => {
-            // Update chart data with new values from Livewire
             myChart2.data.labels = $wire.saleChartData.labels;
-            myChart2.data.datasets[0].data = $wire.saleChartData.grade9Prices; // Update PSA 9 data
-            myChart2.data.datasets[1].data = $wire.saleChartData.grade10Prices; // Update PSA 10 data
-            myChart2.data.datasets[2].data = $wire.saleChartData.transactions; // Update Volume data
+            myChart2.data.datasets[0].data = $wire.showableCharts.includes('PSA9') ? $wire.saleChartData.grade9Prices : [];
+            myChart2.data.datasets[1].data = $wire.showableCharts.includes('PSA10') ? $wire.saleChartData.grade10Prices : [];
+            myChart2.data.datasets[2].data = $wire.showableCharts.includes('VOLUME') ? $wire.saleChartData.transactions : [];
+
             myChart2.update(); // Refresh the chart
         });
     </script>
