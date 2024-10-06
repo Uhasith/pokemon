@@ -220,7 +220,7 @@ new class extends Component {
                 </div>
                 <div>
                     <h5 class="font-manrope font-medium text-sm text-white">Release Date</h5>
-                    <h3 class="font-manrope font-semibold text-base text-white">{{ $set?->release_date }}</h3>
+                   <h3 class="font-manrope font-semibold text-base text-white">{{ optional($set)->release_date?->format('Y-m-d') }}</h3>
                 </div>
             </div>
         @endif
