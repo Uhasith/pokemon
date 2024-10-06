@@ -358,7 +358,10 @@ new class extends Component {
                 <div class="flex items-center gap-2 mb-2">
                     @if (isset($attack['name']) && isset($attack['damage']))
                         <h2 class="font-manrope font-bold text-xl text-white">
-                            {{ $attack['name'] }} ({{ $attack['damage'] }})
+                            {{ $attack['name'] }}
+                            @if (!is_null($attack['damage']) && $attack['damage'] !== '')
+                                ({{ $attack['damage'] }})
+                            @endif
                         </h2>
                     @endif
 
