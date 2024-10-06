@@ -24,8 +24,8 @@ new class extends Component {
 
     public function mount($slug, $setSlug)
     {
-        Log::info($slug);
-        Log::info($setSlug);
+        // Log::info($slug);
+        // Log::info($setSlug);
         // Load the card with necessary relationships and sort populations by date_checked
         $this->card = PokeCard::where('slug', $slug)
             ->where('set_slug', $setSlug)
@@ -41,6 +41,8 @@ new class extends Component {
                 'set',
             ])
             ->first();
+
+        // Log::info($this->card->set->set_name);
 
         if (!$this->card) {
             $this->redirectRoute('set-index');
@@ -231,7 +233,7 @@ new class extends Component {
                 <div class="w-4/5 mx-auto lg:w-8/12 xl:w-[60%] xl:px-3 lg:ml-8 xl:ml-5">
                     <div>
                         <h1 class="font-manrope text-3xl lg:text-4xl font-bold text-white">
-                            {{ $card?->name }} - ({{ $relatedAllCard?->number }} /
+                            {{ $card?->name }} - ({{ $card?->card_number }} /
                             {{ $relatedAllCard?->set['printedTotal'] ?? 0 }})
                         </h1>
                         <h2 class="font-manrope font-medium text-3xl text-white mt-2">
@@ -654,7 +656,7 @@ new class extends Component {
         {{-- Fourth Section --}}
         <div class="w-full bg-blackish py-12">
             {{-- Related Section --}}
-            <livewire:pages.components.card.related-section :card="$card" />
+            <livewire:pages.components.card.related-section :card="$card" :set="$card->set" />
         </div>
 
         {{-- Fifth Section --}}

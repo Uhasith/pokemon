@@ -5,12 +5,14 @@ use Livewire\WithPagination;
 use App\Models\PokeCard;
 use Livewire\Attributes\On;
 use Laravel\Scout\Builder;
+use Illuminate\Support\Facades\Log;
 
 new class extends Component {
     use WithPagination;
 
     public $sortBy = 'Value High to Low';
     public $price = 'PSA 10';
+    public $set;
     public $set_id,
         $searchKw = '';
 
@@ -128,13 +130,13 @@ new class extends Component {
                         <div class="flex w-full">
                             <div class="p-4 rounded-2xl bg-[#2C2C2C] bg-blend-screen relative cursor-pointer">
                                 @if ($card?->all_card?->images['small'] !== null)
-                                    <a href="{{ route('card-details', ['slug' => $card->slug, 'setSlug' => $card->set->slug]) }}"
+                                    <a href="{{ route('card-details', ['slug' => $card->slug, 'setSlug' => $set->slug]) }}"
                                         wire:navigate>
                                         <x-image :src="$card?->all_card?->images['small']" :alt="$card->name" skeltonWidth="160"
                                             skeltonHeight="220" />
                                     </a>
                                 @else
-                                    <a href="{{ route('card-details', ['slug' => $card->slug, 'setSlug' => $card->set->slug]) }}"
+                                    <a href="{{ route('card-details', ['slug' => $card->slug, 'setSlug' => $set->slug]) }}"
                                         wire:navigate>
                                         <div class="flex items-center justify-center bg-gray-300 rounded dark:bg-gray-700 animate-pulse"
                                             style="width: 160px; height: 220px;">
@@ -310,13 +312,13 @@ new class extends Component {
                                         </div>
                                     </td>
                                     <td class="p-3 text-white">
-                                        <a href="{{ route('card-details', ['slug' => $card->slug ?? 'sword-shield/krabby-043', 'setSlug' => $card->set->slug]) }}"
+                                        <a href="{{ route('card-details', ['slug' => $card->slug ?? 'sword-shield/krabby-043', 'setSlug' => $set->slug]) }}"
                                             wire:navigate>
                                             {{ $card->id }}
                                         </a>
                                     </td>
                                     <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">
-                                        <a href="{{ route('card-details', ['slug' => $card->slug ?? 'sword-shield/krabby-043', 'setSlug' => $card->set->slug]) }}"
+                                        <a href="{{ route('card-details', ['slug' => $card->slug ?? 'sword-shield/krabby-043', 'setSlug' => $set->slug]) }}"
                                             wire:navigate>
                                             <div class="flex items-center gap-3 hyphens-auto cursor-pointer">
                                                 @if ($card?->all_card?->images['small'] !== null)

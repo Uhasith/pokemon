@@ -16,23 +16,20 @@ new class extends Component {
 
     public function mount($slug)
     {
-        // Log::info($slug);
         $this->set = PokeSet::where('slug', $slug)->first();
         $this->set_id = $this->set->set_id;
+
         // Instantiate the CalculateMarketCap class
-        $calculateSetMarketCap = new CalculateSetMarketCap();
+        // $calculateSetMarketCap = new CalculateSetMarketCap();
 
         // Call the action and get the results
-        $setMarketCapData = $calculateSetMarketCap->handle($this->set_id);
+        // $setMarketCapData = $calculateSetMarketCap->handle($this->set_id);
 
         // Set the calculated values
-        $this->set = $setMarketCapData['set'];
-        $this->totalSetMarketCap = $setMarketCapData['totalSetMarketCap'];
-        $this->setCardsMarketCap = $setMarketCapData['setCardsMarketCap'];
+        // $this->set = $setMarketCapData['set'];
+        // $this->totalSetMarketCap = $setMarketCapData['totalSetMarketCap'];
+        // $this->setCardsMarketCap = $setMarketCapData['setCardsMarketCap'];
 
-        // Logging the calculated market cap for debugging purposes
-        // Log::info($this->setCardsMarketCap);
-        // Log::info($this->totalSetMarketCap);
     }
 }; ?>
 
@@ -147,7 +144,7 @@ new class extends Component {
                     </div> --}}
                 </div>
                 {{-- Cards Loading Section With Paginations --}}
-                <livewire:pages.components.set.cards-list :set_id="$set_id" />
+                <livewire:pages.components.set.cards-list :set_id="$set_id" :set="$set" />
 
             </div>
         </div>
