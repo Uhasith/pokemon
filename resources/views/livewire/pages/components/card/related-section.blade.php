@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 
 new class extends Component {
     public $card;
+    public $set;
     public $relatedResults = [];
     public $relatedCards = [];
     public $relatedSets = [];
@@ -109,7 +110,7 @@ new class extends Component {
             </div>
             <div class="mt-8">
                 <h2 class="font-manrope font-bold text-center text-2xl lg:text-3xl text-white">
-                    Other {{ $card->set->set_name }} Cards
+                    Other {{ $set->set_name }} Cards
                 </h2>
             </div>
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 my-12">
