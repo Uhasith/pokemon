@@ -8,7 +8,7 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <link rel="icon" style="width: 100%; height: 100%; object-fit: contain;" type="image/png" href="{{ asset('assets/card-images/logo.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('assets/card-images/logoo.png') }}">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
