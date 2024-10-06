@@ -229,7 +229,7 @@ new class extends Component {
                                     </a>
                                 </div>
                             </th>
-                            <th scope="col" class="px-6 py-3">
+                            {{-- <th scope="col" class="px-6 py-3">
                                 <div class="flex items-center">
                                     7d
                                     <a href="#">
@@ -282,8 +282,8 @@ new class extends Component {
                                         </svg>
                                     </a>
                                 </div>
-                            </th>
-                            <th scope="col" class="px-6 py-3">
+                            </th> --}}
+                            {{-- <th scope="col" class="px-6 py-3">
                                 Market cap
                             </th>
                             <th scope="col" class="px-6 py-3">
@@ -291,7 +291,7 @@ new class extends Component {
                             </th>
                             <th scope="col" class="px-6 py-3">
                                 Population number
-                            </th>
+                            </th> --}}
                         </tr>
                     </thead>
                     <tbody class="text-sm font-manrope font-bold">
@@ -342,7 +342,7 @@ new class extends Component {
                                     <td class="px-2 py-4 text-white">
                                         {{ '$ ' . $card->fair_price ?? 'N/A' }}
                                     </td>
-                                    <td class="px-6 py-4">
+                                    {{-- <td class="px-6 py-4">
                                         <div class="flex gap-1 items-center text-redprice">
                                             <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
@@ -352,8 +352,8 @@ new class extends Component {
                                             </svg>
                                             0.45
                                         </div>
-                                    </td>
-                                    <td class="px-6 py-4">
+                                    </td> --}}
+                                    {{-- <td class="px-6 py-4">
                                         <div class="flex gap-1 items-center text-redprice">
                                             <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
@@ -363,8 +363,8 @@ new class extends Component {
                                             </svg>
                                             1.93
                                         </div>
-                                    </td>
-                                    <td class="px-6 py-4">
+                                    </td> --}}
+                                    {{-- <td class="px-6 py-4">
                                         <div class="flex gap-1 items-center text-redprice">
                                             <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
@@ -374,8 +374,8 @@ new class extends Component {
                                             </svg>
                                             0.20
                                         </div>
-                                    </td>
-                                    <td class="px-6 py-4 text-white">
+                                    </td> --}}
+                                    {{-- <td class="px-6 py-4 text-white">
                                         $1,568
                                     </td>
                                     <td class="px-6 py-4 text-white">
@@ -383,7 +383,7 @@ new class extends Component {
                                     </td>
                                     <td class="px-6 py-4 text-white">
                                         20
-                                    </td>
+                                    </td> --}}
                                 </tr>
                             @endif
                         @endforeach
