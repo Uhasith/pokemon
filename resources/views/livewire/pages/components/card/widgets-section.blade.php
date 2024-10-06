@@ -11,10 +11,10 @@ new class extends Component {
     public $set;
     public $allCardRecord;
 
-    public function mount() {
-        Log::info($this->allCardRecord);
+    public function mount()
+    {
+        Log::info($this->allCardRecord->attacks);
     }
-
 }; ?>
 
 <div>
@@ -23,42 +23,43 @@ new class extends Component {
         @if (is_array($allCardRecord?->types) && count($allCardRecord?->types) > 0)
             <div class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
                 @foreach ($allCardRecord->types as $type)
-                <div class="bg-[#383838] rounded-[100px] p-[18px]">
-                    @if (strtolower($type) === 'water')
-                        <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Water.webp') }}" alt="Water">
-
-                    @elseif (strtolower($type) === 'fire')
-                        <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Fire.webp') }}" alt="Fire">
-
-                    @elseif (strtolower($type) === 'grass')
-                        <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/grass.webp') }}" alt="Grass">
-
-                    @elseif (strtolower($type) === 'darkness')
-                        <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Darkness.webp') }}" alt="Darkness">
-
-                    @elseif (strtolower($type) === 'fairy')
-                        <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Fairy.webp') }}" alt="Fairy">
-
-                    @elseif (strtolower($type) === 'fighting')
-                        <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Fighting.webp') }}" alt="Fighting">
-
-                    @elseif (strtolower($type) === 'lightning')
-                        <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Lightning.webp') }}" alt="Lightning">
-
-                    @elseif (strtolower($type) === 'metal')
-                        <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Metal.webp') }}" alt="Metal">
-
-                    @elseif (strtolower($type) === 'psychic')
-                        <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Psychic.webp') }}" alt="Psychic">
-
-                    @else
-                        <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Colorless.webp') }}" alt="Default">
-                    @endif
-                </div>
-                <div>
-                    <h5 class="font-manrope font-medium text-sm text-white">Types</h5>
-                    <h3 class="font-manrope font-semibold text-base text-white">{{ $type }}</h3>
-                </div>
+                    <div class="bg-[#383838] rounded-[100px] p-[18px]">
+                        @if (strtolower($type) === 'water')
+                            <img class="w-[30px] height-auto object-contain"
+                                src="{{ asset('assets/card-images/Water.webp') }}" alt="Water">
+                        @elseif (strtolower($type) === 'fire')
+                            <img class="w-[30px] height-auto object-contain"
+                                src="{{ asset('assets/card-images/Fire.webp') }}" alt="Fire">
+                        @elseif (strtolower($type) === 'grass')
+                            <img class="w-[30px] height-auto object-contain"
+                                src="{{ asset('assets/card-images/grass.webp') }}" alt="Grass">
+                        @elseif (strtolower($type) === 'darkness')
+                            <img class="w-[30px] height-auto object-contain"
+                                src="{{ asset('assets/card-images/Darkness.webp') }}" alt="Darkness">
+                        @elseif (strtolower($type) === 'fairy')
+                            <img class="w-[30px] height-auto object-contain"
+                                src="{{ asset('assets/card-images/Fairy.webp') }}" alt="Fairy">
+                        @elseif (strtolower($type) === 'fighting')
+                            <img class="w-[30px] height-auto object-contain"
+                                src="{{ asset('assets/card-images/Fighting.webp') }}" alt="Fighting">
+                        @elseif (strtolower($type) === 'lightning')
+                            <img class="w-[30px] height-auto object-contain"
+                                src="{{ asset('assets/card-images/Lightning.webp') }}" alt="Lightning">
+                        @elseif (strtolower($type) === 'metal')
+                            <img class="w-[30px] height-auto object-contain"
+                                src="{{ asset('assets/card-images/Metal.webp') }}" alt="Metal">
+                        @elseif (strtolower($type) === 'psychic')
+                            <img class="w-[30px] height-auto object-contain"
+                                src="{{ asset('assets/card-images/Psychic.webp') }}" alt="Psychic">
+                        @else
+                            <img class="w-[30px] height-auto object-contain"
+                                src="{{ asset('assets/card-images/Colorless.webp') }}" alt="Default">
+                        @endif
+                    </div>
+                    <div>
+                        <h5 class="font-manrope font-medium text-sm text-white">Types</h5>
+                        <h3 class="font-manrope font-semibold text-base text-white">{{ $type }}</h3>
+                    </div>
                 @endforeach
             </div>
         @endif
@@ -109,7 +110,21 @@ new class extends Component {
         @if ($allCardRecord?->supertype)
             <div class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
                 <div>
-                    <svg width="66" height="66" viewBox="0 0 66 66" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="66" height="66" rx="33" fill="white" fill-opacity="0.08" /><path d="M27.1358 23.1397C29.4503 20.8252 30.6075 19.668 32.0455 19.668C33.4836 19.668 34.6408 20.8252 36.9553 23.1397L42.847 29.0314C45.1615 31.3459 46.3187 32.5031 46.3187 33.9411C46.3187 35.3792 45.1615 36.5364 42.847 38.8509C40.5325 41.1654 39.3753 42.3226 37.9372 42.3226C36.4992 42.3226 35.342 41.1654 33.0275 38.8509L27.1358 32.9592C24.8213 30.6447 23.6641 29.4875 23.6641 28.0494C23.6641 26.6114 24.8213 25.4542 27.1358 23.1397Z" fill="#FFC107" /><path d="M26.7094 35.3602L20.7651 41.3045C20.3086 41.7611 20.0803 41.9894 19.9431 42.2269C19.571 42.8714 19.571 43.6654 19.9431 44.3099C20.0803 44.5474 20.3085 44.7757 20.7651 45.2323C21.2217 45.6888 21.45 45.9172 21.6875 46.0543C22.332 46.4264 23.1261 46.4264 23.7706 46.0543C24.0081 45.9172 24.2363 45.6889 24.6929 45.2323L30.6372 39.288L26.7094 35.3602Z" fill="#FFC107" /><path d="M28.1236 33.946L28.1295 33.9402L32.0573 37.868L32.0514 37.8738L28.1236 33.946Z" fill="#FFC107" /><path d="M43.2221 26.5771C43.5618 25.9434 43.5511 25.1772 43.19 24.5518C43.0529 24.3143 42.8246 24.086 42.368 23.6294C41.9114 23.1728 41.6831 22.9445 41.4457 22.8074C40.8203 22.4463 40.054 22.4356 39.4203 22.7753L43.2221 26.5771Z" fill="#FFC107" /></svg>
+                    <svg width="66" height="66" viewBox="0 0 66 66" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <rect width="66" height="66" rx="33" fill="white" fill-opacity="0.08" />
+                        <path
+                            d="M27.1358 23.1397C29.4503 20.8252 30.6075 19.668 32.0455 19.668C33.4836 19.668 34.6408 20.8252 36.9553 23.1397L42.847 29.0314C45.1615 31.3459 46.3187 32.5031 46.3187 33.9411C46.3187 35.3792 45.1615 36.5364 42.847 38.8509C40.5325 41.1654 39.3753 42.3226 37.9372 42.3226C36.4992 42.3226 35.342 41.1654 33.0275 38.8509L27.1358 32.9592C24.8213 30.6447 23.6641 29.4875 23.6641 28.0494C23.6641 26.6114 24.8213 25.4542 27.1358 23.1397Z"
+                            fill="#FFC107" />
+                        <path
+                            d="M26.7094 35.3602L20.7651 41.3045C20.3086 41.7611 20.0803 41.9894 19.9431 42.2269C19.571 42.8714 19.571 43.6654 19.9431 44.3099C20.0803 44.5474 20.3085 44.7757 20.7651 45.2323C21.2217 45.6888 21.45 45.9172 21.6875 46.0543C22.332 46.4264 23.1261 46.4264 23.7706 46.0543C24.0081 45.9172 24.2363 45.6889 24.6929 45.2323L30.6372 39.288L26.7094 35.3602Z"
+                            fill="#FFC107" />
+                        <path d="M28.1236 33.946L28.1295 33.9402L32.0573 37.868L32.0514 37.8738L28.1236 33.946Z"
+                            fill="#FFC107" />
+                        <path
+                            d="M43.2221 26.5771C43.5618 25.9434 43.5511 25.1772 43.19 24.5518C43.0529 24.3143 42.8246 24.086 42.368 23.6294C41.9114 23.1728 41.6831 22.9445 41.4457 22.8074C40.8203 22.4463 40.054 22.4356 39.4203 22.7753L43.2221 26.5771Z"
+                            fill="#FFC107" />
+                    </svg>
                 </div>
                 <div>
                     <h5 class="font-manrope font-medium text-sm text-white">Typings</h5>
@@ -122,8 +137,12 @@ new class extends Component {
         @if ($allCardRecord?->hp)
             <div class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
                 <div>
-                    <svg width="66" height="66" viewBox="0 0 66 66" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect width="66" height="66" rx="33" fill="white" fill-opacity="0.08" /><path fill-rule="evenodd" clip-rule="evenodd" d="M36.8938 20.2382C34.6879 18.1433 31.3069 18.1433 29.1009 20.2382C27.3943 21.859 25.3031 24.0931 23.6324 26.6557C21.9693 29.2069 20.6641 32.1733 20.6641 35.2377C20.6641 41.1949 25.3406 47.3337 32.9974 47.3337C40.6542 47.3337 45.3307 41.1949 45.3307 35.2377C45.3307 32.1733 44.0255 29.2069 42.3623 26.6557C40.6917 24.0931 38.6005 21.859 36.8938 20.2382ZM36.9974 35.6669C36.9974 37.8761 35.2066 39.6669 32.9974 39.6669C32.261 39.6669 31.6641 40.2639 31.6641 41.0002C31.6641 41.7366 32.261 42.3335 32.9974 42.3335C36.6793 42.3335 39.6641 39.3489 39.6641 35.6669C39.6641 34.9306 39.0671 34.3335 38.3307 34.3335C37.5943 34.3335 36.9974 34.9306 36.9974 35.6669Z" fill="#FFC107" />
+                    <svg width="66" height="66" viewBox="0 0 66 66" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <rect width="66" height="66" rx="33" fill="white" fill-opacity="0.08" />
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M36.8938 20.2382C34.6879 18.1433 31.3069 18.1433 29.1009 20.2382C27.3943 21.859 25.3031 24.0931 23.6324 26.6557C21.9693 29.2069 20.6641 32.1733 20.6641 35.2377C20.6641 41.1949 25.3406 47.3337 32.9974 47.3337C40.6542 47.3337 45.3307 41.1949 45.3307 35.2377C45.3307 32.1733 44.0255 29.2069 42.3623 26.6557C40.6917 24.0931 38.6005 21.859 36.8938 20.2382ZM36.9974 35.6669C36.9974 37.8761 35.2066 39.6669 32.9974 39.6669C32.261 39.6669 31.6641 40.2639 31.6641 41.0002C31.6641 41.7366 32.261 42.3335 32.9974 42.3335C36.6793 42.3335 39.6641 39.3489 39.6641 35.6669C39.6641 34.9306 39.0671 34.3335 38.3307 34.3335C37.5943 34.3335 36.9974 34.9306 36.9974 35.6669Z"
+                            fill="#FFC107" />
                     </svg>
                 </div>
                 <div>
@@ -158,34 +177,35 @@ new class extends Component {
                         <div class="flex items-center gap-5">
                             <div class="bg-[#383838] rounded-[100px] p-[18px]">
                                 @if (strtolower($weakness['type']) === 'water')
-                                    <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Water.webp') }}" alt="Water">
-
+                                    <img class="w-[30px] height-auto object-contain"
+                                        src="{{ asset('assets/card-images/Water.webp') }}" alt="Water">
                                 @elseif (strtolower($weakness['type']) === 'fire')
-                                    <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Fire.webp') }}" alt="Fire">
-
+                                    <img class="w-[30px] height-auto object-contain"
+                                        src="{{ asset('assets/card-images/Fire.webp') }}" alt="Fire">
                                 @elseif (strtolower($weakness['type']) === 'grass')
-                                    <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/grass.webp') }}" alt="Grass">
-
+                                    <img class="w-[30px] height-auto object-contain"
+                                        src="{{ asset('assets/card-images/grass.webp') }}" alt="Grass">
                                 @elseif (strtolower($weakness['type']) === 'darkness')
-                                    <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Darkness.webp') }}" alt="Darkness">
-
+                                    <img class="w-[30px] height-auto object-contain"
+                                        src="{{ asset('assets/card-images/Darkness.webp') }}" alt="Darkness">
                                 @elseif (strtolower($weakness['type']) === 'fairy')
-                                    <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Fairy.webp') }}" alt="Fairy">
-
+                                    <img class="w-[30px] height-auto object-contain"
+                                        src="{{ asset('assets/card-images/Fairy.webp') }}" alt="Fairy">
                                 @elseif (strtolower($weakness['type']) === 'fighting')
-                                    <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Fighting.webp') }}" alt="Fighting">
-
+                                    <img class="w-[30px] height-auto object-contain"
+                                        src="{{ asset('assets/card-images/Fighting.webp') }}" alt="Fighting">
                                 @elseif (strtolower($weakness['type']) === 'lightning')
-                                    <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Lightning.webp') }}" alt="Lightning">
-
+                                    <img class="w-[30px] height-auto object-contain"
+                                        src="{{ asset('assets/card-images/Lightning.webp') }}" alt="Lightning">
                                 @elseif (strtolower($weakness['type']) === 'metal')
-                                    <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Metal.webp') }}" alt="Metal">
-
+                                    <img class="w-[30px] height-auto object-contain"
+                                        src="{{ asset('assets/card-images/Metal.webp') }}" alt="Metal">
                                 @elseif (strtolower($weakness['type']) === 'psychic')
-                                    <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Psychic.webp') }}" alt="Psychic">
-
+                                    <img class="w-[30px] height-auto object-contain"
+                                        src="{{ asset('assets/card-images/Psychic.webp') }}" alt="Psychic">
                                 @else
-                                    <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Colorless.webp') }}" alt="Default">
+                                    <img class="w-[30px] height-auto object-contain"
+                                        src="{{ asset('assets/card-images/Colorless.webp') }}" alt="Default">
                                 @endif
                             </div>
 
@@ -193,8 +213,10 @@ new class extends Component {
                             <div>
                                 <h5 class="font-manrope font-medium text-sm text-white">Weakness</h5>
                                 <div class="flex gap-1">
-                                    <h3 class="font-manrope font-semibold text-base text-white">{{ $weakness['type'] }}</h3>
-                                    <h3 class="font-manrope font-semibold text-base text-white">{{ $weakness['value'] }}</h3>
+                                    <h3 class="font-manrope font-semibold text-base text-white">
+                                        {{ $weakness['type'] }}</h3>
+                                    <h3 class="font-manrope font-semibold text-base text-white">
+                                        {{ $weakness['value'] }}</h3>
                                 </div>
                             </div>
                         </div>
@@ -220,7 +242,8 @@ new class extends Component {
                 </div>
                 <div>
                     <h5 class="font-manrope font-medium text-sm text-white">Release Date</h5>
-                   <h3 class="font-manrope font-semibold text-base text-white">{{ optional($set)->release_date?->format('Y-m-d') }}</h3>
+                    <h3 class="font-manrope font-semibold text-base text-white">
+                        {{ optional($set)->release_date?->format('Y-m-d') }}</h3>
                 </div>
             </div>
         @endif
@@ -276,34 +299,35 @@ new class extends Component {
                 @foreach ($allCardRecord->resistances as $resistance)
                     <div class="bg-[#383838] rounded-[100px] p-[18px]">
                         @if (strtolower($resistance['type']) === 'water')
-                            <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Water.webp') }}" alt="Water">
-
+                            <img class="w-[30px] height-auto object-contain"
+                                src="{{ asset('assets/card-images/Water.webp') }}" alt="Water">
                         @elseif (strtolower($resistance['type']) === 'fire')
-                            <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Fire.webp') }}" alt="Fire">
-
+                            <img class="w-[30px] height-auto object-contain"
+                                src="{{ asset('assets/card-images/Fire.webp') }}" alt="Fire">
                         @elseif (strtolower($resistance['type']) === 'grass')
-                            <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/grass.webp') }}" alt="Grass">
-
+                            <img class="w-[30px] height-auto object-contain"
+                                src="{{ asset('assets/card-images/grass.webp') }}" alt="Grass">
                         @elseif (strtolower($resistance['type']) === 'darkness')
-                            <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Darkness.webp') }}" alt="Darkness">
-
+                            <img class="w-[30px] height-auto object-contain"
+                                src="{{ asset('assets/card-images/Darkness.webp') }}" alt="Darkness">
                         @elseif (strtolower($resistance['type']) === 'fairy')
-                            <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Fairy.webp') }}" alt="Fairy">
-
+                            <img class="w-[30px] height-auto object-contain"
+                                src="{{ asset('assets/card-images/Fairy.webp') }}" alt="Fairy">
                         @elseif (strtolower($resistance['type']) === 'fighting')
-                            <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Fighting.webp') }}" alt="Fighting">
-
+                            <img class="w-[30px] height-auto object-contain"
+                                src="{{ asset('assets/card-images/Fighting.webp') }}" alt="Fighting">
                         @elseif (strtolower($resistance['type']) === 'lightning')
-                            <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Lightning.webp') }}" alt="Lightning">
-
+                            <img class="w-[30px] height-auto object-contain"
+                                src="{{ asset('assets/card-images/Lightning.webp') }}" alt="Lightning">
                         @elseif (strtolower($resistance['type']) === 'metal')
-                            <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Metal.webp') }}" alt="Metal">
-
+                            <img class="w-[30px] height-auto object-contain"
+                                src="{{ asset('assets/card-images/Metal.webp') }}" alt="Metal">
                         @elseif (strtolower($resistance['type']) === 'psychic')
-                            <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Psychic.webp') }}" alt="Psychic">
-
+                            <img class="w-[30px] height-auto object-contain"
+                                src="{{ asset('assets/card-images/Psychic.webp') }}" alt="Psychic">
                         @else
-                            <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Colorless.webp') }}" alt="Default">
+                            <img class="w-[30px] height-auto object-contain"
+                                src="{{ asset('assets/card-images/Colorless.webp') }}" alt="Default">
                         @endif
                     </div>
                     <div>
@@ -319,7 +343,8 @@ new class extends Component {
         <div class="my-12">
             @foreach ($allCardRecord->abilities as $ability)
                 <h2 class="font-manrope font-bold text-xl text-white mb-2">{{ $ability['name'] }}
-                    ({{ $ability['type'] }})</h2>
+                    ({{ $ability['type'] }})
+                </h2>
                 <h3 class="font-manrope font-medium text-base text-white">
                     {{ $ability['text'] }}
                 </h3>
@@ -327,28 +352,38 @@ new class extends Component {
         </div>
     @endif
 
-    @if (is_array($allCardRecord?->attacks) && count($allCardRecord?->attacks) > 0)
-    <div class="my-12">
-        @foreach ($allCardRecord->attacks as $attack)
-            <div class="flex items-center gap-2 mb-2">
-                <h2 class="font-manrope font-bold text-xl text-white">{{ $attack['name'] }} ({{ $attack['damage'] }})</h2>
+    @if (is_array($allCardRecord?->attacks) && count($allCardRecord->attacks) > 0)
+        <div class="my-12">
+            @foreach ($allCardRecord->attacks as $attack)
+                <div class="flex items-center gap-2 mb-2">
+                    @if (isset($attack['name']) && isset($attack['damage']))
+                        <h2 class="font-manrope font-bold text-xl text-white">
+                            {{ $attack['name'] }} ({{ $attack['damage'] }})
+                        </h2>
+                    @endif
 
-                @if (is_array($attack['cost']) && count($attack['cost']) > 0)
-                    @foreach ($attack['cost'] as $energyType)
-                        @if (strtolower($energyType) === 'Metal')
-                            <img src="{{ asset('assets/card-images/Metal.webp') }}" alt="Metal Energy">
-                        @elseif (strtolower($energyType) === 'Colorless')
-                            <img src="{{ asset('assets/card-images/Colorless.webp') }}" alt="Colorless Energy">
-                        @endif
-                    @endforeach
+                    @if (isset($attack['cost']) && is_array($attack['cost']) && count($attack['cost']) > 0)
+                        @foreach ($attack['cost'] as $energyType)
+                            @if (strtolower($energyType) === 'metal')
+                                <img src="{{ asset('assets/card-images/Metal.webp') }}" alt="Metal Energy">
+                            @elseif (strtolower($energyType) === 'colorless')
+                                <img src="{{ asset('assets/card-images/Colorless.webp') }}" alt="Colorless Energy">
+                            @else
+                                <img src="{{ asset('assets/card-images/' . ucfirst(strtolower($energyType)) . '.webp') }}"
+                                    alt="{{ ucfirst($energyType) }} Energy">
+                            @endif
+                        @endforeach
+                    @endif
+                </div>
+
+                @if (!empty($attack['text']))
+                    <h2 class="font-manrope font-bold text-xl text-white mb-8">{{ $attack['text'] }}</h2>
+                @else
+                    <h2 class="font-manrope font-bold text-xl text-white mb-8">Not available</h2>
                 @endif
-            </div>
-
-            <h2 class="font-manrope font-bold text-xl text-white mb-8">{{ $attack['text'] }}</h2>
-
-        @endforeach
-    </div>
-@endif
+            @endforeach
+        </div>
+    @endif
 
 
 </div>
