@@ -8,7 +8,7 @@ new class extends Component {
         $populations = [],
         $cardPricesTimeseries,
         $cardTransactionTimeseries;
-    public $chartGrade = 'PSA10';
+    public $chartGrade;
     public $numericGrade = 10;
     public $showableCharts = ['PSA9', 'PSA10'];
     public $timeFrame = 'ALL'; // Default to 'ALL'
@@ -29,6 +29,7 @@ new class extends Component {
     public function mount()
     {
         $this->populations = $this->getAvailableGrades();
+        $this->chartGrade = $this->populations[0];
         $this->loadChartData();
         $this->checkTimeFrameAvailability();
     }
