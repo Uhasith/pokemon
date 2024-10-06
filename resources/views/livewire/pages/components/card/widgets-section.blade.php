@@ -10,6 +10,11 @@ new class extends Component {
     public $card;
     public $set;
     public $allCardRecord;
+
+    public function mount() {
+        Log::info($this->allCardRecord);
+    }
+
 }; ?>
 
 <div>
@@ -86,9 +91,9 @@ new class extends Component {
 
         {{-- Item - 04 --}}
         <div class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
-            <div>
+            <div class="bg-[#383838] rounded-[100px] p-[18px]">
                 {{-- <svg width="66" height="66" viewBox="0 0 66 66" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="66" height="66" rx="33" fill="white" fill-opacity="0.08" /><path d="M24.562 30.2195L28.6448 24.6954C31.284 21.1247 32.6035 19.3393 33.8347 19.7166C35.0658 20.0939 35.0658 22.2836 35.0658 26.6631V27.0761C35.0658 28.6557 35.0658 29.4455 35.5706 29.9409L35.5973 29.9665C36.1129 30.4515 36.9349 30.4515 38.5789 30.4515C41.5374 30.4515 43.0167 30.4515 43.5166 31.3487C43.5249 31.3636 43.5329 31.3786 43.5408 31.3937C44.0127 32.3048 43.1562 33.4636 41.4432 35.7812L37.3603 41.3052C34.7211 44.876 33.4015 46.6613 32.1704 46.284C30.9392 45.9067 30.9393 43.717 30.9393 39.3374L30.9393 38.9247C30.9394 37.345 30.9394 36.5552 30.4347 36.0598L30.408 36.0342C29.8923 35.5492 29.0703 35.5492 27.4263 35.5492C24.4678 35.5492 22.9885 35.5492 22.4886 34.652C22.4803 34.6371 22.4723 34.6221 22.4645 34.607C21.9925 33.6959 22.849 32.5371 24.562 30.2195Z" fill="#FFC107" /></svg> --}}
-                <img src="{{ asset('assets/card-images/Fire.webp') }}" alt="">
+                <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Fire.webp') }}" alt="">
             </div>
             <div>
                 <h5 class="font-manrope font-medium text-sm text-white">Typings</h5>
@@ -100,12 +105,8 @@ new class extends Component {
         @if ($allCardRecord?->hp)
             <div class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
                 <div>
-                    <svg width="66" height="66" viewBox="0 0 66 66" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <rect width="66" height="66" rx="33" fill="white" fill-opacity="0.08" />
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                            d="M36.8938 20.2382C34.6879 18.1433 31.3069 18.1433 29.1009 20.2382C27.3943 21.859 25.3031 24.0931 23.6324 26.6557C21.9693 29.2069 20.6641 32.1733 20.6641 35.2377C20.6641 41.1949 25.3406 47.3337 32.9974 47.3337C40.6542 47.3337 45.3307 41.1949 45.3307 35.2377C45.3307 32.1733 44.0255 29.2069 42.3623 26.6557C40.6917 24.0931 38.6005 21.859 36.8938 20.2382ZM36.9974 35.6669C36.9974 37.8761 35.2066 39.6669 32.9974 39.6669C32.261 39.6669 31.6641 40.2639 31.6641 41.0002C31.6641 41.7366 32.261 42.3335 32.9974 42.3335C36.6793 42.3335 39.6641 39.3489 39.6641 35.6669C39.6641 34.9306 39.0671 34.3335 38.3307 34.3335C37.5943 34.3335 36.9974 34.9306 36.9974 35.6669Z"
-                            fill="#FFC107" />
+                    <svg width="66" height="66" viewBox="0 0 66 66" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="66" height="66" rx="33" fill="white" fill-opacity="0.08" /><path fill-rule="evenodd" clip-rule="evenodd" d="M36.8938 20.2382C34.6879 18.1433 31.3069 18.1433 29.1009 20.2382C27.3943 21.859 25.3031 24.0931 23.6324 26.6557C21.9693 29.2069 20.6641 32.1733 20.6641 35.2377C20.6641 41.1949 25.3406 47.3337 32.9974 47.3337C40.6542 47.3337 45.3307 41.1949 45.3307 35.2377C45.3307 32.1733 44.0255 29.2069 42.3623 26.6557C40.6917 24.0931 38.6005 21.859 36.8938 20.2382ZM36.9974 35.6669C36.9974 37.8761 35.2066 39.6669 32.9974 39.6669C32.261 39.6669 31.6641 40.2639 31.6641 41.0002C31.6641 41.7366 32.261 42.3335 32.9974 42.3335C36.6793 42.3335 39.6641 39.3489 39.6641 35.6669C39.6641 34.9306 39.0671 34.3335 38.3307 34.3335C37.5943 34.3335 36.9974 34.9306 36.9974 35.6669Z" fill="#FFC107" />
                     </svg>
                 </div>
                 <div>
@@ -116,28 +117,10 @@ new class extends Component {
         @endif
 
         {{-- Item - 06 --}}
-        @if (is_array($allCardRecord?->weaknesses) && count($allCardRecord?->weaknesses) > 0)
+        {{-- @if (is_array($allCardRecord?->weaknesses) && count($allCardRecord?->weaknesses) > 0)
             <div class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
-                <div>
-                    <svg width="66" height="66" viewBox="0 0 66 66" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <rect width="66" height="66" rx="33" fill="white" fill-opacity="0.08" />
-                        <path
-                            d="M33.5344 27.7731V19.6878C33.5344 19.0163 33.1008 18.4371 32.4554 18.2472C31.6272 18.0078 30.6442 18.0067 29.8106 18.2483C29.168 18.4371 28.7344 19.0163 28.7344 19.6878V26.0665H29.801C30.9776 26.0665 31.9344 27.0232 31.9344 28.1998C31.9344 28.9752 31.6938 29.7107 31.2629 30.3283C32.5168 30.2627 33.5344 29.1177 33.5344 27.7731Z"
-                            fill="#FFC107" />
-                        <path
-                            d="M27.6672 20.733C27.6672 20.0615 27.2336 19.4823 26.5883 19.2924C25.7915 19.0519 24.7397 19.053 23.9493 19.2914C23.3008 19.4823 22.8672 20.0615 22.8672 20.733V26.0663H27.6672V20.733Z"
-                            fill="#FFC107" />
-                        <path
-                            d="M37.1274 30.3302C38.3813 30.2672 39.4016 29.12 39.4016 27.7744V20.7334C39.4016 20.0608 38.9685 19.4816 38.3242 19.2923C37.9125 19.1707 37.4677 19.1094 37.0016 19.1094C36.5354 19.1094 36.0906 19.1707 35.6794 19.2923C35.0346 19.4816 34.6016 20.0608 34.6016 20.7334V27.935C34.6016 28.5995 34.8661 29.2171 35.3461 29.6736C35.8266 30.1302 36.4528 30.3622 37.1274 30.3302Z"
-                            fill="#FFC107" />
-                        <path
-                            d="M42.9907 30.3302C44.2446 30.2673 45.2648 29.1201 45.2648 27.7745V22.3574C45.2648 21.6849 44.8318 21.1051 44.1875 20.9158C43.7752 20.7947 43.3304 20.7334 42.8648 20.7334C42.3992 20.7334 41.9544 20.7947 41.5416 20.9163C40.8979 21.1051 40.4648 21.6849 40.4648 22.3574V27.935C40.4648 28.5995 40.7294 29.2171 41.2094 29.6737C41.6899 30.1302 42.3176 30.3622 42.9907 30.3302Z"
-                            fill="#FFC107" />
-                        <path
-                            d="M20.7344 35.6666C20.7344 42.4309 26.2373 47.9333 33.001 47.9333C39.7648 47.9333 45.2677 42.4309 45.2677 35.6666V30.3685C44.6821 30.9642 43.904 31.3525 43.0474 31.3957C42.9866 31.3989 42.9258 31.3999 42.8656 31.3999C41.9696 31.3999 41.1274 31.065 40.4768 30.4463C40.2512 30.2319 40.0624 29.9909 39.9056 29.7333C39.3141 30.6826 38.3136 31.3386 37.1808 31.3957C37.12 31.3989 37.0592 31.3999 36.9989 31.3999C36.1029 31.3999 35.2608 31.065 34.6101 30.4463C34.3845 30.2319 34.1957 29.9909 34.0384 29.7327C33.4474 30.6815 32.4474 31.337 31.3157 31.3941C31.2533 31.3973 31.1909 31.3994 31.129 31.3994C30.8448 31.3994 30.5637 31.3519 30.2858 31.281C29.6714 31.6959 28.9456 31.9333 28.2005 31.9333H26.2336C26.5008 33.0527 26.8565 35.2794 26.0106 36.9717C25.9173 37.1589 25.729 37.2666 25.5328 37.2666C25.4528 37.2666 25.3712 37.2485 25.2949 37.2106C25.0314 37.0789 24.9248 36.7583 25.0565 36.4949C26.0133 34.5813 25.0373 31.5983 25.0277 31.569C24.9733 31.4063 25.001 31.2271 25.1013 31.0885C25.2016 30.9493 25.3626 30.8671 25.5338 30.8671H28.2005C28.808 30.8671 29.3802 30.6682 29.8554 30.2917C29.8554 30.2917 29.8565 30.2917 29.857 30.2911C30.4992 29.7807 30.8677 29.0191 30.8677 28.2005C30.8677 27.6122 30.3893 27.1338 29.801 27.1338H22.8677C21.6912 27.1338 20.7344 28.0906 20.7344 29.2671V35.6666Z"
-                            fill="#FFC107" />
-                    </svg>
+                <div class="bg-[#383838] rounded-[100px] p-[18px]">
+                    <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Fire.webp') }}" alt="">
                 </div>
                 <div>
                     <h5 class="font-manrope font-medium text-sm text-white">Weakness</h5>
@@ -149,7 +132,62 @@ new class extends Component {
                     @endforeach
                 </div>
             </div>
+        @endif --}}
+
+        @if (is_array($allCardRecord?->weaknesses) && count($allCardRecord?->weaknesses) > 0)
+            <div class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
+                <div>
+                    @foreach ($allCardRecord->weaknesses as $weakness)
+                        <div class="flex items-center gap-5">
+                            <div class="bg-[#383838] rounded-[100px] p-[18px]">
+                                @if (strtolower($weakness['type']) === 'water')
+                                    <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Water.webp') }}" alt="Water">
+
+                                @elseif (strtolower($weakness['type']) === 'fire')
+                                    <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Fire.webp') }}" alt="Fire">
+
+                                @elseif (strtolower($weakness['type']) === 'grass')
+                                    <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/grass.webp') }}" alt="Grass">
+
+                                @elseif (strtolower($weakness['type']) === 'darkness')
+                                    <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Darkness.webp') }}" alt="Darkness">
+
+                                @elseif (strtolower($weakness['type']) === 'fairy')
+                                    <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Fairy.webp') }}" alt="Fairy">
+
+                                @elseif (strtolower($weakness['type']) === 'fighting')
+                                    <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Fighting.webp') }}" alt="Fighting">
+
+                                @elseif (strtolower($weakness['type']) === 'lightning')
+                                    <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Lightning.webp') }}" alt="Lightning">
+
+                                @elseif (strtolower($weakness['type']) === 'metal')
+                                    <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Metal.webp') }}" alt="Metal">
+
+                                @elseif (strtolower($weakness['type']) === 'psychic')
+                                    <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Psychic.webp') }}" alt="Psychic">
+
+                                @else
+                                    <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Colorless.webp') }}" alt="Default">
+                                @endif
+                            </div>
+
+                            <!-- Display the weakness type and value -->
+                            <div>
+                                <h5 class="font-manrope font-medium text-sm text-white">Weakness</h5>
+                                <div class="flex gap-1">
+                                    <h3 class="font-manrope font-semibold text-base text-white">{{ $weakness['type'] }}</h3>
+                                    <h3 class="font-manrope font-semibold text-base text-white">{{ $weakness['value'] }}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
         @endif
+
+
+
 
         {{-- Item - 07 --}}
         @if ($set?->release_date)
@@ -218,21 +256,25 @@ new class extends Component {
             </div>
         @endif
 
-        <div class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
-            <div>
-                <svg width="66" height="66" viewBox="0 0 66 66" fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <rect width="66" height="66" rx="33" fill="white" fill-opacity="0.08" />
-                    <path
-                        d="M24.562 30.2195L28.6448 24.6954C31.284 21.1247 32.6035 19.3393 33.8347 19.7166C35.0658 20.0939 35.0658 22.2836 35.0658 26.6631V27.0761C35.0658 28.6557 35.0658 29.4455 35.5706 29.9409L35.5973 29.9665C36.1129 30.4515 36.9349 30.4515 38.5789 30.4515C41.5374 30.4515 43.0167 30.4515 43.5166 31.3487C43.5249 31.3636 43.5329 31.3786 43.5408 31.3937C44.0127 32.3048 43.1562 33.4636 41.4432 35.7812L37.3603 41.3052C34.7211 44.876 33.4015 46.6613 32.1704 46.284C30.9392 45.9067 30.9393 43.717 30.9393 39.3374L30.9393 38.9247C30.9394 37.345 30.9394 36.5552 30.4347 36.0598L30.408 36.0342C29.8923 35.5492 29.0703 35.5492 27.4263 35.5492C24.4678 35.5492 22.9885 35.5492 22.4886 34.652C22.4803 34.6371 22.4723 34.6221 22.4645 34.607C21.9925 33.6959 22.849 32.5371 24.562 30.2195Z"
-                        fill="#FFC107" />
-                </svg>
+
+        {{-- Item - 10 --}}
+        @if ($allCardRecord?->resistances)
+            <div class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
+                <div>
+                    <svg width="66" height="66" viewBox="0 0 66 66" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <rect width="66" height="66" rx="33" fill="white" fill-opacity="0.08" />
+                        <path
+                            d="M24.562 30.2195L28.6448 24.6954C31.284 21.1247 32.6035 19.3393 33.8347 19.7166C35.0658 20.0939 35.0658 22.2836 35.0658 26.6631V27.0761C35.0658 28.6557 35.0658 29.4455 35.5706 29.9409L35.5973 29.9665C36.1129 30.4515 36.9349 30.4515 38.5789 30.4515C41.5374 30.4515 43.0167 30.4515 43.5166 31.3487C43.5249 31.3636 43.5329 31.3786 43.5408 31.3937C44.0127 32.3048 43.1562 33.4636 41.4432 35.7812L37.3603 41.3052C34.7211 44.876 33.4015 46.6613 32.1704 46.284C30.9392 45.9067 30.9393 43.717 30.9393 39.3374L30.9393 38.9247C30.9394 37.345 30.9394 36.5552 30.4347 36.0598L30.408 36.0342C29.8923 35.5492 29.0703 35.5492 27.4263 35.5492C24.4678 35.5492 22.9885 35.5492 22.4886 34.652C22.4803 34.6371 22.4723 34.6221 22.4645 34.607C21.9925 33.6959 22.849 32.5371 24.562 30.2195Z"
+                            fill="#FFC107" />
+                    </svg>
+                </div>
+                <div>
+                    <h5 class="font-manrope font-medium text-sm text-white">Resistence</h5>
+                    <h3 class="font-manrope font-semibold text-base text-white">Fire</h3>
+                </div>
             </div>
-            <div>
-                <h5 class="font-manrope font-medium text-sm text-white">Attacks</h5>
-                <h3 class="font-manrope font-semibold text-base text-white">Fire</h3>
-            </div>
-        </div>
+        @endif
     </div>
 
     @if (is_array($allCardRecord?->abilities) && count($allCardRecord?->abilities) > 0)
