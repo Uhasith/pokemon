@@ -58,26 +58,25 @@ new class extends Component {
     private function getAvailableGrades()
     {
         $gradesWithPriceData = collect($this->cardPricesTimeseries)
-            ->pluck('psa_grade')
-            ->unique()
+            ->groupBy('psa_grade') // Group by 'psa_grade'
+            ->filter(function ($items) {
+                // Check if 'timeseries_data' exists in each item and count the valid entries inside it
+                return $items
+                    ->filter(function ($item) {
+                        return isset($item['timeseries_data']) && count($item['timeseries_data']) > 5; // Only include if timeseries_data has more than 5 values
+                    })
+                    ->isNotEmpty();
+            })
+            ->keys() // Extract only the keys (psa_grade values)
             ->map(fn($grade) => 'PSA' . (int) preg_replace('/[^0-9]/', '', $grade)) // Format as 'PSA9', 'PSA10'
             ->toArray();
 
-        $gradesWithTransactionData = collect($this->cardTransactionTimeseries)
-            ->pluck('psa_grade')
-            ->unique()
-            ->map(fn($grade) => 'PSA' . (int) preg_replace('/[^0-9]/', '', $grade))
-            ->toArray();
-
-        // Get grades that exist in both datasets
-        $availableGrades = array_intersect($gradesWithPriceData, $gradesWithTransactionData);
-
         // Sort the grades in descending order
-        usort($availableGrades, function ($a, $b) {
+        usort($gradesWithPriceData, function ($a, $b) {
             return (int) preg_replace('/[^0-9]/', '', $b) - (int) preg_replace('/[^0-9]/', '', $a);
         });
 
-        return $availableGrades;
+        return $gradesWithPriceData;
     }
 
     // Loads and prepares chart data based on the selected time frame
