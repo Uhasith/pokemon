@@ -45,7 +45,7 @@ new class extends Component {
         // Log::info($this->card->set->set_name);
 
         if (!$this->card) {
-            $this->redirectRoute('set-index');
+            return $this->redirectRoute('set-index');
         }
 
         $this->card_id = $this->card->card_id;
