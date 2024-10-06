@@ -194,9 +194,9 @@ new class extends Component {
                                 #
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                <div class="flex items-center">
+                                <div class="flex items-center justify-center">
                                     Name
-                                    <a href="#">
+                                    {{-- <a href="#">
                                         <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -208,13 +208,13 @@ new class extends Component {
                                                 stroke="#FFC107" stroke-width="1.2" stroke-linecap="round"
                                                 stroke-linejoin="round" />
                                         </svg>
-                                    </a>
+                                    </a> --}}
                                 </div>
                             </th>
-                            <th scope="col" class="px-6 py-3">
-                                <div class="flex items-center">
+                            <th scope="col" class="px-6 py-3 text-center">
+                                <div class="flex items-center justify-center">
                                     Price
-                                    <a href="#">
+                                    {{-- <a href="#">
                                         <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -226,7 +226,7 @@ new class extends Component {
                                                 stroke="#FFC107" stroke-width="1.2" stroke-linecap="round"
                                                 stroke-linejoin="round" />
                                         </svg>
-                                    </a>
+                                    </a> --}}
                                 </div>
                             </th>
                             {{-- <th scope="col" class="px-6 py-3">
@@ -283,13 +283,13 @@ new class extends Component {
                                     </a>
                                 </div>
                             </th> --}}
+                            <th scope="col" class="px-6 py-3 text-center">
+                                Varient
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-center">
+                                Card Number
+                            </th>
                             {{-- <th scope="col" class="px-6 py-3">
-                                Market cap
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Volume
-                            </th>
-                            <th scope="col" class="px-6 py-3">
                                 Population number
                             </th> --}}
                         </tr>
@@ -339,7 +339,7 @@ new class extends Component {
                                             </div>
                                         </a>
                                     </th>
-                                    <td class="px-2 py-4 text-white">
+                                    <td class="px-2 py-4 text-white text-center">
                                         {{ '$ ' . $card->fair_price ?? 'N/A' }}
                                     </td>
                                     {{-- <td class="px-6 py-4">
@@ -375,13 +375,13 @@ new class extends Component {
                                             0.20
                                         </div>
                                     </td> --}}
+                                    <td class="px-6 py-4 text-white text-center">
+                                        {{ $card?->variant ?? '-' }}
+                                    </td>
+                                    <td class="px-6 py-4 text-white text-center">
+                                          {{ $card?->card_number ?? '-' }}
+                                    </td>
                                     {{-- <td class="px-6 py-4 text-white">
-                                        $1,568
-                                    </td>
-                                    <td class="px-6 py-4 text-white">
-                                        $18,568
-                                    </td>
-                                    <td class="px-6 py-4 text-white">
                                         20
                                     </td> --}}
                                 </tr>
