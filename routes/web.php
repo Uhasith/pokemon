@@ -4,7 +4,7 @@ use App\Livewire\ShopPage;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])
@@ -13,10 +13,6 @@ Route::view('profile', 'profile')
 Route::get('/', function () {
     return redirect()->route('set-index');
 });
-
-Volt::route('/sets', 'pages.sets-page')->name('set-index');
-Volt::route('/sets/{slug}', 'pages.set-details-page')->name('set-details');
-Volt::route('/sets/{setSlug}/{slug}', 'pages.card-details-page')->name('card-details');
 
 Route::middleware([
     'auth',
@@ -35,4 +31,6 @@ Route::middleware([
     Volt::route('/content-page', 'pages.admin.content-page')->name('content-page');
 });
 
-Route::get('/shop', ShopPage::class);
+Volt::route('/sets', 'pages.sets-page')->name('set-index');
+Volt::route('{setSlug}/{slug}', 'pages.card-details-page')->name('card-details');
+Volt::route('{slug}', 'pages.set-details-page')->name('set-details');

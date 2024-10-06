@@ -10,9 +10,22 @@ new class extends Component {
     public $cardTransactionTimeseries;
 }; ?>
 
-<div>
-    <h2 class="font-manrope font-bold text-white text-xl mb-5">Market Price History</h2>
+<div class="max-w-5xl mx-auto">
+    <div class="my-8">
+        <h2 class="font-manrope font-bold text-center text-2xl lg:text-3xl text-white">
+            Market Price History
+        </h2>
+    </div>
     <div>
+        <div class="border-gray-200 dark:border-gray-700">
+            <div class="p-4 rounded-xl bg-grayish">
+                <livewire:pages.components.charts.sale-chart :card="$card" :populations="$populations" :cardPricesTimeseries="$cardPricesTimeseries"
+                    :cardTransactionTimeseries="$cardTransactionTimeseries">
+            </div>
+
+        </div>
+    </div>
+    {{-- <div>
         <div class="border-b border-gray-200 dark:border-gray-700">
             <ul class="flex -mb-px text-sm font-medium text-center bg-evengray rounded-t-xl relative overflow-x-auto"
                 id="default-styled-tab" data-tabs-toggle="#default-styled-tab-content"
@@ -30,11 +43,6 @@ new class extends Component {
                         aria-selected="false">Number of Sales - Bar
                         chart</button>
                 </li>
-                {{-- <li class="bg-evengray p-3 rounded-t-xl" role="presentation">
-                    <button class="inline-block p-4 rounded-t-lg" id="settings-styled-tab"
-                        data-tabs-target="#styled-settings" type="button" role="tab" aria-controls="settings"
-                        aria-selected="false">Population</button>
-                </li> --}}
             </ul>
         </div>
         <div id="default-styled-tab-content">
@@ -57,7 +65,7 @@ new class extends Component {
                     the content visibility and styling.</p>
             </div>
         </div>
-    </div>
+    </div> --}}
 </div>
 
 @assets

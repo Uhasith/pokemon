@@ -4,219 +4,191 @@ use Livewire\Volt\Component;
 use Carbon\Carbon;
 
 new class extends Component {
-    public $card;
-    public $populations;
-    public $cardPricesTimeseries;
-    public $cardTransactionTimeseries;
+    public $card, $populations, $cardPricesTimeseries, $cardTransactionTimeseries;
     public $chartGrade = 'PSA10';
-    public $timeFrame = 'ALL';
-    public $timeFrameAvailability = [];
+    public $showableCharts = ['PSA9', 'PSA10'];
+    public $timeFrame = 'ALL'; // Default to 'ALL'
+    public $timeFrameAvailability = [
+        '6M' => true,
+        '1Y' => true,
+        '5Y' => true,
+        'ALL' => true, // Default is 'ALL'
+    ];
 
     public $saleChartData = [
         'labels' => [],
-        'prices' => [],
         'grade9Prices' => [],
         'grade10Prices' => [],
+        'transactions' => [],
     ];
+
+    public function mount()
+    {
+        $this->loadChartData();
+        $this->checkTimeFrameAvailability();
+    }
 
     public function updatedChartGrade()
     {
-        $this->getTransactionData();
+        $this->refreshChartData();
+    }
+
+    public function updatedShowableCharts()
+    {
         $this->dispatch('saleChartDataUpdated');
     }
 
     public function updatedTimeFrame()
     {
-        $this->getTransactionData();
+        $this->refreshChartData();
+    }
+
+    private function refreshChartData()
+    {
+        $this->loadChartData();
         $this->dispatch('saleChartDataUpdated');
     }
 
-    public function mount()
+    // Loads and prepares chart data based on the selected time frame
+    private function loadChartData()
     {
-        $this->getInitialChartData();
-        $this->getTransactionData();
+        $filteredPriceData = $this->filterPriceData([9, 10]);
+        $filteredTransactionData = $this->filterTransactionData();
+
+        $this->saleChartData['labels'] = $this->getFormattedLabels($filteredPriceData, $filteredTransactionData);
+        $this->saleChartData['grade9Prices'] = $this->mapDataToLabels($filteredPriceData, 'fair_price', 9);
+        $this->saleChartData['grade10Prices'] = $this->mapDataToLabels($filteredPriceData, 'fair_price', 10);
+        $this->saleChartData['transactions'] = $this->mapDataToLabels($filteredTransactionData, 'transaction_count');
     }
 
-    public function getTransactionData()
+    // Filters price data based on allowed grades
+    private function filterPriceData(array $allowedGrades)
     {
-        // Remove 'PSA' from the string and convert the remaining part to an integer
+        return collect($this->cardPricesTimeseries)->filter(fn($item) => in_array((int) preg_replace('/[^0-9]/', '', $item['psa_grade']), $allowedGrades));
+    }
+
+    // Filters transaction data based on the selected chart grade
+    private function filterTransactionData()
+    {
         $numericGrade = (int) preg_replace('/[^0-9]/', '', $this->chartGrade);
-
-        // Now use $numericGrade to filter the transaction data
-        $filteredData = collect($this->cardTransactionTimeseries)
-            ->filter(function ($item) use ($numericGrade) {
-                return $item['psa_grade'] == $numericGrade;
-            })
-            ->first(); // Assuming you want the first matching PSA grade
-
-        // If there is data for the selected grade
-        if ($filteredData) {
-            $timeseries = collect($filteredData['timeseries_data']);
-
-            // Initialize availability for each time frame
-            $this->timeFrameAvailability = [
-                '6M' => false,
-                '1Y' => false,
-                '5Y' => false,
-                'All' => true, // Default is 'All'
-            ];
-
-            // Define time frames to check
-            $timeFrames = [
-                '6M' => Carbon::now()->subMonths(6),
-                '1Y' => Carbon::now()->subYear(),
-                '5Y' => Carbon::now()->subYears(5),
-            ];
-
-            // Check if there are at least 3 records for each time frame and set availability flags
-            foreach ($timeFrames as $key => $startDate) {
-                $timeFrameData = $timeseries->filter(function ($item) use ($startDate) {
-                    $date = Carbon::parse($item['date']);
-                    return $date->greaterThanOrEqualTo($startDate);
-                });
-
-                if ($timeFrameData->count() >= 3) {
-                    // Ensure at least 3 records
-                    $this->timeFrameAvailability[$key] = true;
-                }
-            }
-
-            // Determine the start date based on the selected time frame
-            $startDate = null;
-            switch ($this->timeFrame) {
-                case '6M':
-                    $startDate = $timeFrames['6M'];
-                    break;
-                case '1Y':
-                    $startDate = $timeFrames['1Y'];
-                    break;
-                case '5Y':
-                    $startDate = $timeFrames['5Y'];
-                    break;
-                default:
-                    // 'All' or any other case: no filtering based on time
-                    $startDate = Carbon::parse($timeseries->first()['date']); // Oldest date in timeseries
-                    break;
-            }
-
-            // Filter the timeseries data to include only entries within the start date and the latest date
-            $filteredTimeseries = $timeseries->filter(function ($item) use ($startDate) {
-                $date = Carbon::parse($item['date']);
-                return $date->greaterThanOrEqualTo($startDate);
-            });
-
-            // Sort the filtered data by date (in case it's not already sorted)
-            $filteredTimeseries = $filteredTimeseries->sortBy('date');
-
-            // Extract the dates and transaction counts based on the time frame
-            $dates = $filteredTimeseries
-                ->pluck('date')
-                ->map(function ($date) {
-                    // Format the date depending on the time frame
-                    if ($this->timeFrame === '6M') {
-                        return Carbon::parse($date)->format('M Y'); // Show only month for 6M
-                    } elseif (in_array($this->timeFrame, ['1Y', '5Y'])) {
-                        return Carbon::parse($date)->format('M Y'); // Month and year for 1Y and 5Y
-                    } else {
-                        return Carbon::parse($date)->format('M d, Y'); // Full date for All
-                    }
-                })
-                ->toArray();
-
-            $transactionCounts = $filteredTimeseries->pluck('transaction_count')->toArray();
-
-            // Set the transaction chart data
-            $this->saleChartData['transactionLabels'] = $dates;
-            $this->saleChartData['transactions'] = $transactionCounts;
-        } else {
-            Log::info('No data found for the selected grade.');
-        }
+        return collect($this->cardTransactionTimeseries)->firstWhere('psa_grade', $numericGrade);
     }
 
-    public function getInitialChartData()
+    // Formats the labels based on the selected time frame and price/transaction data
+    private function getFormattedLabels($filteredPriceData, $filteredTransactionData)
     {
-        // Define the grades to filter (9 and 10)
-        $allowedGrades = [9, 10];
+        $labels = $this->extractLabelsFromTimeseries($filteredPriceData);
 
-        // Filter the data for the numeric grades 9 or 10
-        $filteredData = collect($this->cardPricesTimeseries)->filter(function ($item) use ($allowedGrades) {
-            return in_array((int) preg_replace('/[^0-9]/', '', $item['psa_grade']), $allowedGrades);
+        if ($filteredTransactionData) {
+            $labels = array_merge($labels, $this->extractLabelsFromTimeseries([$filteredTransactionData]));
+        }
+
+        return $this->filterAndFormatLabels($labels);
+    }
+
+    // Filters and formats labels based on the time frame
+    private function filterAndFormatLabels(array $labels)
+    {
+        if ($this->timeFrame === 'ALL') {
+            return $this->formatLabels($labels);
+        }
+
+        $lastDate = collect($labels)->max(); // Find the latest date
+        $startDate = $this->calculateStartDate($lastDate); // Calculate the start date for the selected time frame
+
+        $filteredLabels = collect($labels)->filter(fn($date) => Carbon::parse($date)->greaterThanOrEqualTo($startDate))->unique()->sort()->toArray();
+
+        return $this->formatLabels($filteredLabels);
+    }
+
+    // Extracts labels from the timeseries data
+    private function extractLabelsFromTimeseries($data)
+    {
+        return collect($data)
+            ->flatMap(
+                fn($item) => collect($item['timeseries_data'])
+                    ->pluck('date')
+                    ->toArray(),
+            )
+            ->toArray();
+    }
+
+    // Formats labels into the required format ('M d, Y')
+    private function formatLabels(array $labels)
+    {
+        return array_values(collect($labels)->map(fn($date) => Carbon::parse($date)->format('M d, Y'))->toArray());
+    }
+
+    // Maps data to the corresponding labels for the chart
+    private function mapDataToLabels($data, $field, $grade = null)
+    {
+        if (!$data) {
+            return array_fill(0, count($this->saleChartData['labels']), 0); // Return 0-filled array if no data
+        }
+
+        $filteredData = $grade ? $this->extractGradePriceData($data, $grade) : $data;
+        $timeseries = collect($filteredData['timeseries_data'])->sortBy('date');
+
+        $dataByDate = $timeseries->pluck($field, 'date')->mapWithKeys(function ($value, $date) {
+            return [Carbon::parse($date)->format('Y-m-d') => $value];
         });
 
-        // Initialize arrays for storing data of each grade
-        $grade9Data = [];
-        $grade10Data = [];
-        $mergedLabels = [];
+        return $this->matchDataToLabels($dataByDate);
+    }
 
-        // If there is data for the selected grades
-        if ($filteredData->isNotEmpty()) {
-            // Loop through each dataset (one for grade 9 and one for grade 10)
-            foreach ($filteredData as $data) {
-                $numericGrade = (int) preg_replace('/[^0-9]/', '', $data['psa_grade']);
-                $timeseries = collect($data['timeseries_data']);
-
-                // Determine the start date based on the selected time frame
-                $startDate = null;
-                switch ($this->timeFrame) {
-                    case '6M':
-                        $startDate = Carbon::now()->subMonths(6);
-                        break;
-                    case '1Y':
-                        $startDate = Carbon::now()->subYear();
-                        break;
-                    case '5Y':
-                        $startDate = Carbon::now()->subYears(5);
-                        break;
-                    default:
-                        $startDate = Carbon::parse($timeseries->first()['date']); // Oldest date in timeseries
-                        break;
+    // Matches data values with the labels for the chart
+    private function matchDataToLabels($dataByDate)
+    {
+        return collect($this->saleChartData['labels'])
+            ->map(function ($label) use ($dataByDate) {
+                try {
+                    $parsedDate = Carbon::createFromFormat('M d, Y', $label)->format('Y-m-d');
+                    return $dataByDate[$parsedDate] ?? 0;
+                } catch (\Exception $e) {
+                    return 0;
                 }
+            })
+            ->toArray();
+    }
 
-                // Filter the timeseries data to include only entries within the start date and the latest date
-                $filteredTimeseries = $timeseries->filter(function ($item) use ($startDate) {
-                    $date = Carbon::parse($item['date']);
-                    return $date->greaterThanOrEqualTo($startDate);
-                });
-
-                // Sort the filtered data by date (in case it's not already sorted)
-                $filteredTimeseries = $filteredTimeseries->sortBy('date');
-
-                // Extract the dates and fair prices based on the time frame
-                $dates = $filteredTimeseries->pluck('date')->toArray();
-                $fairPrices = $filteredTimeseries->pluck('fair_price')->toArray();
-
-                // Add dates to merged labels (avoid duplicates)
-                $mergedLabels = array_unique(array_merge($mergedLabels, $dates));
-
-                // Store prices for each grade separately
-                if ($numericGrade === 9) {
-                    $grade9Data = $filteredTimeseries->pluck('fair_price')->toArray();
-                } elseif ($numericGrade === 10) {
-                    $grade10Data = $filteredTimeseries->pluck('fair_price')->toArray();
-                }
-            }
-
-            // Format the merged labels based on the time frame (removing duplicates)
-            $mergedLabels = collect($mergedLabels)
-                ->sort()
-                ->map(function ($date) {
-                    if ($this->timeFrame === '6M') {
-                        return Carbon::parse($date)->format('M Y'); // Show only month for 6M
-                    } elseif (in_array($this->timeFrame, ['1Y', '5Y'])) {
-                        return Carbon::parse($date)->format('M Y'); // Month and year for 1Y and 5Y
-                    } else {
-                        return Carbon::parse($date)->format('M d, Y'); // Full date for All
-                    }
-                })
-                ->toArray();
-
-            // Set the chart data with merged labels and separate price arrays
-            $this->saleChartData['labels'] = $mergedLabels;
-            $this->saleChartData['grade9Prices'] = $grade9Data;
-            $this->saleChartData['grade10Prices'] = $grade10Data;
-        } else {
-            Log::info('No data found for the selected grades.');
+    // Calculates the start date for a given time frame
+    private function calculateStartDate($lastAvailableDate)
+    {
+        switch ($this->timeFrame) {
+            case '6M':
+                return Carbon::parse($lastAvailableDate)->subMonths(6);
+            case '1Y':
+                return Carbon::parse($lastAvailableDate)->subYear();
+            case '5Y':
+                return Carbon::parse($lastAvailableDate)->subYears(5);
+            default:
+                return Carbon::parse($lastAvailableDate);
         }
+    }
+
+    // Checks if each time frame has enough data (at least 5 labels) and updates availability
+    private function checkTimeFrameAvailability()
+    {
+        $this->timeFrameAvailability['6M'] = $this->hasSufficientDataForTimeFrame('6M');
+        $this->timeFrameAvailability['1Y'] = $this->hasSufficientDataForTimeFrame('1Y');
+        $this->timeFrameAvailability['5Y'] = $this->hasSufficientDataForTimeFrame('5Y');
+        $this->timeFrameAvailability['ALL'] = count($this->getFormattedLabels($this->filterPriceData([9, 10]), $this->filterTransactionData())) > 0;
+    }
+
+    // Helper function to check if a given time frame has at least 5 labels
+    private function hasSufficientDataForTimeFrame($timeFrame)
+    {
+        $originalTimeFrame = $this->timeFrame;
+        $this->timeFrame = $timeFrame;
+        $labels = $this->getFormattedLabels($this->filterPriceData([9, 10]), $this->filterTransactionData());
+        $this->timeFrame = $originalTimeFrame;
+        return count($labels) >= 10;
+    }
+
+    // Extracts grade-specific price data from the filtered data
+    private function extractGradePriceData($filteredPriceData, $grade)
+    {
+        return $filteredPriceData->firstWhere('psa_grade', $grade);
     }
 }; ?>
 
@@ -275,11 +247,15 @@ new class extends Component {
         </div>
 
         <!-- Grade Selector -->
-        <div>
-            <x-wui-select placeholder="Select Grades" wire:model.live='chartGrade' :options="array_keys($this->populations)" />
+        <div class="flex items-center gap-5">
+            {{-- <x-wui-select placeholder="Select Grades" wire:model.live='chartGrade' :options="array_keys($this->populations)" /> --}}
+            <x-wui-checkbox id="label" label="Volume" wire:model.live="showableCharts" value="VOLUME" />
+            <x-wui-checkbox id="label" label="PSA 9" wire:model.live="showableCharts" value="PSA9" />
+            <x-wui-checkbox id="label" label="PSA 10" wire:model.live="showableCharts" value="PSA10" />
+
         </div>
     </div>
-    <div id="chart-container" style="width: 90%; height: 300px; margin: auto;">
+    <div id="chart-container" style="width: 100%; height: auto; margin: auto;">
         <canvas id="myChart2"></canvas>
     </div>
 </div>
@@ -288,14 +264,13 @@ new class extends Component {
     <script>
         const ctx = document.getElementById('myChart2');
 
-        // Convert the labels to an array
-        const labelsArray = Array.isArray($wire.saleChartData.labels) ? $wire.saleChartData.labels : Object.values($wire
-            .saleChartData.labels);
-        const grade9Data = $wire.saleChartData.grade9Prices;
-        const grade10Data = $wire.saleChartData.grade10Prices;
-        const transactionData = $wire.saleChartData.transactions;
+        // Initial data setup from Livewire
+        let labelsArray = $wire.saleChartData.labels;
+        let grade9Data = $wire.showableCharts.includes('PSA9') ? $wire.saleChartData.grade9Prices : [];
+        let grade10Data = $wire.showableCharts.includes('PSA10') ? $wire.saleChartData.grade10Prices : [];
+        let transactionData = $wire.showableCharts.includes('VOLUME') ? $wire.saleChartData.transactionVolumes : [];
 
-        // Initialize the chart with empty data arrays first
+        // Define the chart data
         const data = {
             labels: labelsArray,
             datasets: [{
@@ -305,47 +280,82 @@ new class extends Component {
                     backgroundColor: 'rgba(255, 99, 132, 0.5)',
                     stack: 'combined',
                     type: 'line',
-                    yAxisID: 'y', // Link this dataset to the primary Y axis (left)
+                    yAxisID: 'y',
+                    tension: 0.5,
+                    pointRadius: 4,
+                    pointRadius: 3,
+                    pointBackgroundColor: 'rgba(255, 99, 132, 1)',
+                    pointBorderColor: 'rgba(255, 99, 132, 1)',
                 },
                 {
                     label: 'PSA 10',
                     data: grade10Data,
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                    backgroundColor: 'rgba(255, 165, 0, 0.2)',
+                    borderColor: 'rgba(255, 165, 0, 1)',
                     stack: 'combined',
                     type: 'line',
-                    yAxisID: 'y', // Link this dataset to the primary Y axis (left)
+                    yAxisID: 'y',
+                    tension: 0.5,
+                    pointRadius: 4,
+                    pointRadius: 3,
+                    pointBackgroundColor: 'rgba(255, 165, 0, 1)',
+                    pointBorderColor: 'rgba(255, 165, 0, 1)',
                 },
                 {
                     label: 'Volume',
                     data: transactionData,
-                    borderColor: 'rgba(75, 192, 75, 1)', // Green border color
-                    backgroundColor: 'rgba(75, 192, 75, 0.5)', // Green with 50% transparency for background
+                    borderColor: 'rgba(75, 192, 75, 1)',
+                    backgroundColor: 'rgba(75, 192, 75, 0.5)',
                     stack: 'combined',
                     type: 'bar',
-                    yAxisID: 'y1' // Link this dataset to the secondary Y axis (right)
+                    yAxisID: 'y1',
                 }
             ]
         };
 
+        // Create the chart
         const myChart2 = new Chart(ctx, {
             type: 'bar',
             data: data,
             options: {
+                responsive: true,
                 scales: {
                     y: {
                         type: 'linear',
                         position: 'left',
-                        stacked: true, // Stack the line charts on the left axis
-                        beginAtZero: true // Ensure the y-axis starts at zero for line charts
+                        stacked: true, // Stack line charts
+                        beginAtZero: true, // Ensure the y-axis starts at zero
                     },
                     y1: {
                         type: 'linear',
-                        position: 'right', // Position this Y axis on the right side
-                        stacked: false, // No need to stack the bar data
+                        position: 'right', // Position secondary Y axis on the right
+                        stacked: false, // No stacking for bar chart
                         beginAtZero: true, // Start at zero for the bar chart
                         grid: {
-                            drawOnChartArea: false // Avoid grid lines overlapping with the left Y-axis
+                            drawOnChartArea: false // Prevent grid lines from overlapping with the left Y-axis
+                        }
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: true, // Show legend
+                    labels: {
+                        color: '#fff' // Legend label color
+                    }
+                },
+                tooltip: {
+                    enabled: true,
+                    backgroundColor: '#fff',
+                    titleColor: '#000',
+                    bodyColor: '#000',
+                    borderColor: '#ddd',
+                    borderWidth: 1,
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            // Format tooltip with $ and two decimals
+                            let price = tooltipItem.raw;
+                            return ' Price: $ ' + Number(price).toFixed(2);
                         }
                     }
                 }
@@ -354,9 +364,11 @@ new class extends Component {
 
         // Listen for Livewire event to update chart with new data
         Livewire.on('saleChartDataUpdated', () => {
-            // Update chart data with new values
-            myChart2.data.datasets[2].data = $wire.saleChartData.transactions;
-            myChart2.update();
+            myChart2.data.labels = $wire.saleChartData.labels;
+            myChart2.data.datasets[0].data = $wire.showableCharts.includes('PSA9') ? $wire.saleChartData.grade9Prices : [];
+            myChart2.data.datasets[1].data = $wire.showableCharts.includes('PSA10') ? $wire.saleChartData.grade10Prices : [];
+            myChart2.data.datasets[2].data = $wire.showableCharts.includes('VOLUME') ? $wire.saleChartData.transactions : [];
+            myChart2.update(); // Refresh the chart
         });
     </script>
 @endscript
