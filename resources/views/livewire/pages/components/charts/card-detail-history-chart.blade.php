@@ -19,7 +19,7 @@ new class extends Component {
     <div>
         <div class="border-gray-200 dark:border-gray-700">
             <div class="p-4 rounded-xl bg-grayish">
-                <livewire:pages.components.charts.sale-chart :card="$card" :populations="$populations" :cardPricesTimeseries="$cardPricesTimeseries"
+                <livewire:pages.components.charts.sale-chart :card="$card" :cardPricesTimeseries="$cardPricesTimeseries"
                     :cardTransactionTimeseries="$cardTransactionTimeseries">
             </div>
 

@@ -4,8 +4,12 @@ use Livewire\Volt\Component;
 use Carbon\Carbon;
 
 new class extends Component {
-    public $card, $populations, $cardPricesTimeseries, $cardTransactionTimeseries;
+    public $card,
+        $populations = [],
+        $cardPricesTimeseries,
+        $cardTransactionTimeseries;
     public $chartGrade = 'PSA10';
+    public $numericGrade = 10;
     public $showableCharts = ['PSA9', 'PSA10'];
     public $timeFrame = 'ALL'; // Default to 'ALL'
     public $timeFrameAvailability = [
@@ -24,6 +28,7 @@ new class extends Component {
 
     public function mount()
     {
+        $this->populations = $this->getAvailableGrades();
         $this->loadChartData();
         $this->checkTimeFrameAvailability();
     }
@@ -49,15 +54,43 @@ new class extends Component {
         $this->dispatch('saleChartDataUpdated');
     }
 
+    // Dynamically retrieve the grades that have price and transaction data
+    private function getAvailableGrades()
+    {
+        $gradesWithPriceData = collect($this->cardPricesTimeseries)
+            ->pluck('psa_grade')
+            ->unique()
+            ->map(fn($grade) => 'PSA' . (int) preg_replace('/[^0-9]/', '', $grade)) // Format as 'PSA9', 'PSA10'
+            ->toArray();
+
+        $gradesWithTransactionData = collect($this->cardTransactionTimeseries)
+            ->pluck('psa_grade')
+            ->unique()
+            ->map(fn($grade) => 'PSA' . (int) preg_replace('/[^0-9]/', '', $grade))
+            ->toArray();
+
+        // Get grades that exist in both datasets
+        $availableGrades = array_intersect($gradesWithPriceData, $gradesWithTransactionData);
+
+        // Sort the grades in descending order
+        usort($availableGrades, function ($a, $b) {
+            return (int) preg_replace('/[^0-9]/', '', $b) - (int) preg_replace('/[^0-9]/', '', $a);
+        });
+
+        return $availableGrades;
+    }
+
     // Loads and prepares chart data based on the selected time frame
     private function loadChartData()
     {
-        $filteredPriceData = $this->filterPriceData([9, 10]);
+        $this->numericGrade = (int) preg_replace('/[^0-9]/', '', $this->chartGrade);
+        $filteredPriceData = $this->filterPriceData([$this->numericGrade]);
         $filteredTransactionData = $this->filterTransactionData();
 
         $this->saleChartData['labels'] = $this->getFormattedLabels($filteredPriceData, $filteredTransactionData);
-        $this->saleChartData['grade9Prices'] = $this->mapDataToLabels($filteredPriceData, 'fair_price', 9);
-        $this->saleChartData['grade10Prices'] = $this->mapDataToLabels($filteredPriceData, 'fair_price', 10);
+        $this->saleChartData['gradePrices'] = $this->mapDataToLabels($filteredPriceData, 'fair_price', $this->numericGrade);
+        // $this->saleChartData['grade9Prices'] = $this->mapDataToLabels($filteredPriceData, 'fair_price', 9);
+        // $this->saleChartData['grade10Prices'] = $this->mapDataToLabels($filteredPriceData, 'fair_price', 10);
         $this->saleChartData['transactions'] = $this->mapDataToLabels($filteredTransactionData, 'transaction_count');
     }
 
@@ -70,8 +103,7 @@ new class extends Component {
     // Filters transaction data based on the selected chart grade
     private function filterTransactionData()
     {
-        $numericGrade = (int) preg_replace('/[^0-9]/', '', $this->chartGrade);
-        return collect($this->cardTransactionTimeseries)->firstWhere('psa_grade', $numericGrade);
+        return collect($this->cardTransactionTimeseries)->firstWhere('psa_grade', $this->numericGrade);
     }
 
     // Formats the labels based on the selected time frame and price/transaction data
@@ -105,11 +137,14 @@ new class extends Component {
     private function extractLabelsFromTimeseries($data)
     {
         return collect($data)
-            ->flatMap(
-                fn($item) => collect($item['timeseries_data'])
-                    ->pluck('date')
-                    ->toArray(),
-            )
+            ->flatMap(function ($item) {
+                // Ensure timeseries_data exists before accessing it
+                return isset($item['timeseries_data'])
+                    ? collect($item['timeseries_data'])
+                        ->pluck('date')
+                        ->toArray()
+                    : [];
+            })
             ->toArray();
     }
 
@@ -127,6 +162,12 @@ new class extends Component {
         }
 
         $filteredData = $grade ? $this->extractGradePriceData($data, $grade) : $data;
+
+        // Check if 'timeseries_data' exists before processing
+        if (!isset($filteredData['timeseries_data'])) {
+            return array_fill(0, count($this->saleChartData['labels']), 0); // Return 0-filled array
+        }
+
         $timeseries = collect($filteredData['timeseries_data'])->sortBy('date');
 
         $dataByDate = $timeseries->pluck($field, 'date')->mapWithKeys(function ($value, $date) {
@@ -172,7 +213,7 @@ new class extends Component {
         $this->timeFrameAvailability['6M'] = $this->hasSufficientDataForTimeFrame('6M');
         $this->timeFrameAvailability['1Y'] = $this->hasSufficientDataForTimeFrame('1Y');
         $this->timeFrameAvailability['5Y'] = $this->hasSufficientDataForTimeFrame('5Y');
-        $this->timeFrameAvailability['ALL'] = count($this->getFormattedLabels($this->filterPriceData([9, 10]), $this->filterTransactionData())) > 0;
+        $this->timeFrameAvailability['ALL'] = count($this->getFormattedLabels($this->filterPriceData([$this->numericGrade]), $this->filterTransactionData())) > 0;
     }
 
     // Helper function to check if a given time frame has at least 5 labels
@@ -180,7 +221,7 @@ new class extends Component {
     {
         $originalTimeFrame = $this->timeFrame;
         $this->timeFrame = $timeFrame;
-        $labels = $this->getFormattedLabels($this->filterPriceData([9, 10]), $this->filterTransactionData());
+        $labels = $this->getFormattedLabels($this->filterPriceData([$this->numericGrade]), $this->filterTransactionData());
         $this->timeFrame = $originalTimeFrame;
         return count($labels) >= 10;
     }
@@ -248,11 +289,10 @@ new class extends Component {
 
         <!-- Grade Selector -->
         <div class="flex items-center gap-5">
-            {{-- <x-wui-select placeholder="Select Grades" wire:model.live='chartGrade' :options="array_keys($this->populations)" /> --}}
             <x-wui-checkbox id="label" label="Volume" wire:model.live="showableCharts" value="VOLUME" />
-            <x-wui-checkbox id="label" label="PSA 9" wire:model.live="showableCharts" value="PSA9" />
-            <x-wui-checkbox id="label" label="PSA 10" wire:model.live="showableCharts" value="PSA10" />
-
+            {{-- <x-wui-checkbox id="label" label="PSA 9" wire:model.live="showableCharts" value="PSA9" />
+            <x-wui-checkbox id="label" label="PSA 10" wire:model.live="showableCharts" value="PSA10" /> --}}
+            <x-wui-select placeholder="Select Grades" wire:model.live='chartGrade' :options="$populations" />
         </div>
     </div>
     <div id="chart-container" style="width: 100%; height: auto; margin: auto;">
@@ -266,41 +306,56 @@ new class extends Component {
 
         // Initial data setup from Livewire
         let labelsArray = $wire.saleChartData.labels;
-        let grade9Data = $wire.showableCharts.includes('PSA9') ? $wire.saleChartData.grade9Prices : [];
-        let grade10Data = $wire.showableCharts.includes('PSA10') ? $wire.saleChartData.grade10Prices : [];
+        let gradeData = $wire.saleChartData.gradePrices ?? [];
+        // let grade9Data = $wire.showableCharts.includes('PSA9') ? $wire.saleChartData.grade9Prices : [];
+        // let grade10Data = $wire.showableCharts.includes('PSA10') ? $wire.saleChartData.grade10Prices : [];
         let transactionData = $wire.showableCharts.includes('VOLUME') ? $wire.saleChartData.transactionVolumes : [];
 
         // Define the chart data
         const data = {
             labels: labelsArray,
             datasets: [{
-                    label: 'PSA 9',
-                    data: grade9Data,
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                    label: $wire.chartGrade ? $wire.chartGrade : '',
+                    data: gradeData,
+                    backgroundColor: 'rgba(255, 165, 0, 0.2)', // Line fill color
+                    borderColor: 'rgba(255, 165, 0, 1)', // Line color (orange)
                     stack: 'combined',
                     type: 'line',
                     yAxisID: 'y',
                     tension: 0.5,
                     pointRadius: 4,
                     pointRadius: 3,
-                    pointBackgroundColor: 'rgba(255, 99, 132, 1)',
-                    pointBorderColor: 'rgba(255, 99, 132, 1)',
-                },
-                {
-                    label: 'PSA 10',
-                    data: grade10Data,
-                    backgroundColor: 'rgba(255, 165, 0, 0.2)',
-                    borderColor: 'rgba(255, 165, 0, 1)',
-                    stack: 'combined',
-                    type: 'line',
-                    yAxisID: 'y',
-                    tension: 0.5,
-                    pointRadius: 4,
-                    pointRadius: 3,
-                    pointBackgroundColor: 'rgba(255, 165, 0, 1)',
+                    pointBackgroundColor: 'rgba(255, 165, 0, 1)', // Make points visible
                     pointBorderColor: 'rgba(255, 165, 0, 1)',
                 },
+                // ,{
+                //     label: 'PSA 9',
+                //     data: grade9Data,
+                //     borderColor: 'rgba(255, 99, 132, 1)',
+                //     backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                //     stack: 'combined',
+                //     type: 'line',
+                //     yAxisID: 'y',
+                //     tension: 0.5,
+                //     pointRadius: 4,
+                //     pointRadius: 3,
+                //     pointBackgroundColor: 'rgba(255, 99, 132, 1)',
+                //     pointBorderColor: 'rgba(255, 99, 132, 1)',
+                // },
+                // {
+                //     label: 'PSA 10',
+                //     data: grade10Data,
+                //     backgroundColor: 'rgba(255, 165, 0, 0.2)',
+                //     borderColor: 'rgba(255, 165, 0, 1)',
+                //     stack: 'combined',
+                //     type: 'line',
+                //     yAxisID: 'y',
+                //     tension: 0.5,
+                //     pointRadius: 4,
+                //     pointRadius: 3,
+                //     pointBackgroundColor: 'rgba(255, 165, 0, 1)',
+                //     pointBorderColor: 'rgba(255, 165, 0, 1)',
+                // },
                 {
                     label: 'Volume',
                     data: transactionData,
@@ -365,9 +420,12 @@ new class extends Component {
         // Listen for Livewire event to update chart with new data
         Livewire.on('saleChartDataUpdated', () => {
             myChart2.data.labels = $wire.saleChartData.labels;
-            myChart2.data.datasets[0].data = $wire.showableCharts.includes('PSA9') ? $wire.saleChartData.grade9Prices : [];
-            myChart2.data.datasets[1].data = $wire.showableCharts.includes('PSA10') ? $wire.saleChartData.grade10Prices : [];
-            myChart2.data.datasets[2].data = $wire.showableCharts.includes('VOLUME') ? $wire.saleChartData.transactions : [];
+            myChart2.data.datasets[0].data = $wire.saleChartData.gradePrices ?? [];
+            myChart2.data.datasets[0].label = $wire.chartGrade ? $wire.chartGrade : '';
+            // myChart2.data.datasets[0].data = $wire.showableCharts.includes('PSA9') ? $wire.saleChartData.grade9Prices : [];
+            // myChart2.data.datasets[1].data = $wire.showableCharts.includes('PSA10') ? $wire.saleChartData.grade10Prices : [];
+            myChart2.data.datasets[1].data = $wire.showableCharts.includes('VOLUME') ? $wire.saleChartData
+                .transactions : [];
             myChart2.update(); // Refresh the chart
         });
     </script>
