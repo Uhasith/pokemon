@@ -29,7 +29,7 @@ new class extends Component {
     public function mount()
     {
         $this->populations = $this->getAvailableGrades();
-        $this->chartGrade = $this->populations[0];
+        $this->chartGrade = $this->populations[0] ?? null;
         $this->loadChartData();
         $this->checkTimeFrameAvailability();
     }
