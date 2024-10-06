@@ -280,25 +280,35 @@ new class extends Component {
                     backgroundColor: 'rgba(255, 99, 132, 0.5)',
                     stack: 'combined',
                     type: 'line',
-                    yAxisID: 'y', // Link to primary Y axis (left)
+                    yAxisID: 'y',
+                    tension: 0.5,
+                    pointRadius: 4,
+                    pointRadius: 3,
+                    pointBackgroundColor: 'rgba(255, 99, 132, 1)',
+                    pointBorderColor: 'rgba(255, 99, 132, 1)',
                 },
                 {
                     label: 'PSA 10',
                     data: grade10Data,
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                    backgroundColor: 'rgba(255, 165, 0, 0.2)',
+                    borderColor: 'rgba(255, 165, 0, 1)',
                     stack: 'combined',
                     type: 'line',
-                    yAxisID: 'y', // Link to primary Y axis (left)
+                    yAxisID: 'y',
+                    tension: 0.5,
+                    pointRadius: 4,
+                    pointRadius: 3,
+                    pointBackgroundColor: 'rgba(255, 165, 0, 1)',
+                    pointBorderColor: 'rgba(255, 165, 0, 1)',
                 },
                 {
                     label: 'Volume',
                     data: transactionData,
-                    borderColor: 'rgba(75, 192, 75, 1)', // Green border color
-                    backgroundColor: 'rgba(75, 192, 75, 0.5)', // Green with 50% transparency
+                    borderColor: 'rgba(75, 192, 75, 1)',
+                    backgroundColor: 'rgba(75, 192, 75, 0.5)',
                     stack: 'combined',
                     type: 'bar',
-                    yAxisID: 'y1' // Link to secondary Y axis (right)
+                    yAxisID: 'y1',
                 }
             ]
         };
@@ -308,6 +318,7 @@ new class extends Component {
             type: 'bar',
             data: data,
             options: {
+                responsive: true,
                 scales: {
                     y: {
                         type: 'linear',
@@ -325,19 +336,38 @@ new class extends Component {
                         }
                     }
                 }
+            },
+            plugins: {
+                legend: {
+                    display: true, // Show legend
+                    labels: {
+                        color: '#fff' // Legend label color
+                    }
+                },
+                tooltip: {
+                    enabled: true,
+                    backgroundColor: '#fff',
+                    titleColor: '#000',
+                    bodyColor: '#000',
+                    borderColor: '#ddd',
+                    borderWidth: 1,
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            // Format tooltip with $ and two decimals
+                            let price = tooltipItem.raw;
+                            return ' Price: $ ' + Number(price).toFixed(2);
+                        }
+                    }
+                }
             }
         });
 
         // Listen for Livewire event to update chart with new data
         Livewire.on('saleChartDataUpdated', () => {
             myChart2.data.labels = $wire.saleChartData.labels;
-            myChart2.data.datasets[0].data = $wire.showableCharts.includes('PSA9') ? $wire.saleChartData
-                .grade9Prices : [];
-            myChart2.data.datasets[1].data = $wire.showableCharts.includes('PSA10') ? $wire.saleChartData
-                .grade10Prices : [];
-            myChart2.data.datasets[2].data = $wire.showableCharts.includes('VOLUME') ? $wire.saleChartData
-                .transactions : [];
-
+            myChart2.data.datasets[0].data = $wire.showableCharts.includes('PSA9') ? $wire.saleChartData.grade9Prices : [];
+            myChart2.data.datasets[1].data = $wire.showableCharts.includes('PSA10') ? $wire.saleChartData.grade10Prices : [];
+            myChart2.data.datasets[2].data = $wire.showableCharts.includes('VOLUME') ? $wire.saleChartData.transactions : [];
             myChart2.update(); // Refresh the chart
         });
     </script>
