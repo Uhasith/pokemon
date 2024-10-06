@@ -291,7 +291,7 @@ new class extends Component {
             <x-wui-checkbox id="label" label="Volume" wire:model.live="showableCharts" value="VOLUME" />
             {{-- <x-wui-checkbox id="label" label="PSA 9" wire:model.live="showableCharts" value="PSA9" />
             <x-wui-checkbox id="label" label="PSA 10" wire:model.live="showableCharts" value="PSA10" /> --}}
-            <x-wui-select placeholder="Select Grades" wire:model.live='chartGrade' :options="$populations" />
+            <x-wui-select placeholder="Select Grades" wire:model.live='chartGrade' :clearable="false" :options="$populations" />
         </div>
     </div>
     <div id="chart-container" style="width: 100%; height: auto; margin: auto;">
