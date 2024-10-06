@@ -22,28 +22,44 @@ new class extends Component {
         {{-- Item - 01 --}}
         @if (is_array($allCardRecord?->types) && count($allCardRecord?->types) > 0)
             <div class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
-                <div>
-                    <svg width="66" height="66" viewBox="0 0 66 66" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect width="66" height="66" rx="33" fill="white" fill-opacity="0.08" />
-                        <path
-                            d="M27.1358 23.1397C29.4503 20.8252 30.6075 19.668 32.0455 19.668C33.4836 19.668 34.6408 20.8252 36.9553 23.1397L42.847 29.0314C45.1615 31.3459 46.3187 32.5031 46.3187 33.9411C46.3187 35.3792 45.1615 36.5364 42.847 38.8509C40.5325 41.1654 39.3753 42.3226 37.9372 42.3226C36.4992 42.3226 35.342 41.1654 33.0275 38.8509L27.1358 32.9592C24.8213 30.6447 23.6641 29.4875 23.6641 28.0494C23.6641 26.6114 24.8213 25.4542 27.1358 23.1397Z"
-                            fill="#FFC107" />
-                        <path
-                            d="M26.7094 35.3602L20.7651 41.3045C20.3086 41.7611 20.0803 41.9894 19.9431 42.2269C19.571 42.8714 19.571 43.6654 19.9431 44.3099C20.0803 44.5474 20.3085 44.7757 20.7651 45.2323C21.2217 45.6888 21.45 45.9172 21.6875 46.0543C22.332 46.4264 23.1261 46.4264 23.7706 46.0543C24.0081 45.9172 24.2363 45.6889 24.6929 45.2323L30.6372 39.288L26.7094 35.3602Z"
-                            fill="#FFC107" />
-                        <path d="M28.1236 33.946L28.1295 33.9402L32.0573 37.868L32.0514 37.8738L28.1236 33.946Z"
-                            fill="#FFC107" />
-                        <path
-                            d="M43.2221 26.5771C43.5618 25.9434 43.5511 25.1772 43.19 24.5518C43.0529 24.3143 42.8246 24.086 42.368 23.6294C41.9114 23.1728 41.6831 22.9445 41.4457 22.8074C40.8203 22.4463 40.054 22.4356 39.4203 22.7753L43.2221 26.5771Z"
-                            fill="#FFC107" />
-                    </svg>
+                @foreach ($allCardRecord->types as $type)
+                <div class="bg-[#383838] rounded-[100px] p-[18px]">
+                    @if (strtolower($type) === 'water')
+                        <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Water.webp') }}" alt="Water">
+
+                    @elseif (strtolower($type) === 'fire')
+                        <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Fire.webp') }}" alt="Fire">
+
+                    @elseif (strtolower($type) === 'grass')
+                        <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/grass.webp') }}" alt="Grass">
+
+                    @elseif (strtolower($type) === 'darkness')
+                        <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Darkness.webp') }}" alt="Darkness">
+
+                    @elseif (strtolower($type) === 'fairy')
+                        <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Fairy.webp') }}" alt="Fairy">
+
+                    @elseif (strtolower($type) === 'fighting')
+                        <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Fighting.webp') }}" alt="Fighting">
+
+                    @elseif (strtolower($type) === 'lightning')
+                        <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Lightning.webp') }}" alt="Lightning">
+
+                    @elseif (strtolower($type) === 'metal')
+                        <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Metal.webp') }}" alt="Metal">
+
+                    @elseif (strtolower($type) === 'psychic')
+                        <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Psychic.webp') }}" alt="Psychic">
+
+                    @else
+                        <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Colorless.webp') }}" alt="Default">
+                    @endif
                 </div>
                 <div>
                     <h5 class="font-manrope font-medium text-sm text-white">Types</h5>
-                    @foreach ($allCardRecord->types as $type)
-                        <h3 class="font-manrope font-semibold text-base text-white">{{ $type }}</h3>
-                    @endforeach
+                    <h3 class="font-manrope font-semibold text-base text-white">{{ $type }}</h3>
                 </div>
+                @endforeach
             </div>
         @endif
 
@@ -90,16 +106,17 @@ new class extends Component {
         @endif
 
         {{-- Item - 04 --}}
-        <div class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
-            <div class="bg-[#383838] rounded-[100px] p-[18px]">
-                {{-- <svg width="66" height="66" viewBox="0 0 66 66" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="66" height="66" rx="33" fill="white" fill-opacity="0.08" /><path d="M24.562 30.2195L28.6448 24.6954C31.284 21.1247 32.6035 19.3393 33.8347 19.7166C35.0658 20.0939 35.0658 22.2836 35.0658 26.6631V27.0761C35.0658 28.6557 35.0658 29.4455 35.5706 29.9409L35.5973 29.9665C36.1129 30.4515 36.9349 30.4515 38.5789 30.4515C41.5374 30.4515 43.0167 30.4515 43.5166 31.3487C43.5249 31.3636 43.5329 31.3786 43.5408 31.3937C44.0127 32.3048 43.1562 33.4636 41.4432 35.7812L37.3603 41.3052C34.7211 44.876 33.4015 46.6613 32.1704 46.284C30.9392 45.9067 30.9393 43.717 30.9393 39.3374L30.9393 38.9247C30.9394 37.345 30.9394 36.5552 30.4347 36.0598L30.408 36.0342C29.8923 35.5492 29.0703 35.5492 27.4263 35.5492C24.4678 35.5492 22.9885 35.5492 22.4886 34.652C22.4803 34.6371 22.4723 34.6221 22.4645 34.607C21.9925 33.6959 22.849 32.5371 24.562 30.2195Z" fill="#FFC107" /></svg> --}}
-                <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Fire.webp') }}" alt="">
+        @if ($allCardRecord?->supertype)
+            <div class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
+                <div>
+                    <svg width="66" height="66" viewBox="0 0 66 66" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="66" height="66" rx="33" fill="white" fill-opacity="0.08" /><path d="M27.1358 23.1397C29.4503 20.8252 30.6075 19.668 32.0455 19.668C33.4836 19.668 34.6408 20.8252 36.9553 23.1397L42.847 29.0314C45.1615 31.3459 46.3187 32.5031 46.3187 33.9411C46.3187 35.3792 45.1615 36.5364 42.847 38.8509C40.5325 41.1654 39.3753 42.3226 37.9372 42.3226C36.4992 42.3226 35.342 41.1654 33.0275 38.8509L27.1358 32.9592C24.8213 30.6447 23.6641 29.4875 23.6641 28.0494C23.6641 26.6114 24.8213 25.4542 27.1358 23.1397Z" fill="#FFC107" /><path d="M26.7094 35.3602L20.7651 41.3045C20.3086 41.7611 20.0803 41.9894 19.9431 42.2269C19.571 42.8714 19.571 43.6654 19.9431 44.3099C20.0803 44.5474 20.3085 44.7757 20.7651 45.2323C21.2217 45.6888 21.45 45.9172 21.6875 46.0543C22.332 46.4264 23.1261 46.4264 23.7706 46.0543C24.0081 45.9172 24.2363 45.6889 24.6929 45.2323L30.6372 39.288L26.7094 35.3602Z" fill="#FFC107" /><path d="M28.1236 33.946L28.1295 33.9402L32.0573 37.868L32.0514 37.8738L28.1236 33.946Z" fill="#FFC107" /><path d="M43.2221 26.5771C43.5618 25.9434 43.5511 25.1772 43.19 24.5518C43.0529 24.3143 42.8246 24.086 42.368 23.6294C41.9114 23.1728 41.6831 22.9445 41.4457 22.8074C40.8203 22.4463 40.054 22.4356 39.4203 22.7753L43.2221 26.5771Z" fill="#FFC107" /></svg>
+                </div>
+                <div>
+                    <h5 class="font-manrope font-medium text-sm text-white">Typings</h5>
+                    <h3 class="font-manrope font-semibold text-base text-white">{{ $allCardRecord->supertype }}</h3>
+                </div>
             </div>
-            <div>
-                <h5 class="font-manrope font-medium text-sm text-white">Typings</h5>
-                <h3 class="font-manrope font-semibold text-base text-white">Fire</h3>
-            </div>
-        </div>
+        @endif
 
         {{-- Item - 05 --}}
         @if ($allCardRecord?->hp)
@@ -186,9 +203,6 @@ new class extends Component {
             </div>
         @endif
 
-
-
-
         {{-- Item - 07 --}}
         @if ($set?->release_date)
             <div class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
@@ -256,23 +270,47 @@ new class extends Component {
             </div>
         @endif
 
-
         {{-- Item - 10 --}}
-        @if ($allCardRecord?->resistances)
+        @if (is_array($allCardRecord?->resistances) && count($allCardRecord?->resistances) > 0)
             <div class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
-                <div>
-                    <svg width="66" height="66" viewBox="0 0 66 66" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <rect width="66" height="66" rx="33" fill="white" fill-opacity="0.08" />
-                        <path
-                            d="M24.562 30.2195L28.6448 24.6954C31.284 21.1247 32.6035 19.3393 33.8347 19.7166C35.0658 20.0939 35.0658 22.2836 35.0658 26.6631V27.0761C35.0658 28.6557 35.0658 29.4455 35.5706 29.9409L35.5973 29.9665C36.1129 30.4515 36.9349 30.4515 38.5789 30.4515C41.5374 30.4515 43.0167 30.4515 43.5166 31.3487C43.5249 31.3636 43.5329 31.3786 43.5408 31.3937C44.0127 32.3048 43.1562 33.4636 41.4432 35.7812L37.3603 41.3052C34.7211 44.876 33.4015 46.6613 32.1704 46.284C30.9392 45.9067 30.9393 43.717 30.9393 39.3374L30.9393 38.9247C30.9394 37.345 30.9394 36.5552 30.4347 36.0598L30.408 36.0342C29.8923 35.5492 29.0703 35.5492 27.4263 35.5492C24.4678 35.5492 22.9885 35.5492 22.4886 34.652C22.4803 34.6371 22.4723 34.6221 22.4645 34.607C21.9925 33.6959 22.849 32.5371 24.562 30.2195Z"
-                            fill="#FFC107" />
-                    </svg>
-                </div>
-                <div>
-                    <h5 class="font-manrope font-medium text-sm text-white">Resistence</h5>
-                    <h3 class="font-manrope font-semibold text-base text-white">Fire</h3>
-                </div>
+                @foreach ($allCardRecord->resistances as $resistance)
+                    <div class="bg-[#383838] rounded-[100px] p-[18px]">
+                        @if (strtolower($resistance['type']) === 'water')
+                            <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Water.webp') }}" alt="Water">
+
+                        @elseif (strtolower($resistance['type']) === 'fire')
+                            <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Fire.webp') }}" alt="Fire">
+
+                        @elseif (strtolower($resistance['type']) === 'grass')
+                            <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/grass.webp') }}" alt="Grass">
+
+                        @elseif (strtolower($resistance['type']) === 'darkness')
+                            <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Darkness.webp') }}" alt="Darkness">
+
+                        @elseif (strtolower($resistance['type']) === 'fairy')
+                            <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Fairy.webp') }}" alt="Fairy">
+
+                        @elseif (strtolower($resistance['type']) === 'fighting')
+                            <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Fighting.webp') }}" alt="Fighting">
+
+                        @elseif (strtolower($resistance['type']) === 'lightning')
+                            <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Lightning.webp') }}" alt="Lightning">
+
+                        @elseif (strtolower($resistance['type']) === 'metal')
+                            <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Metal.webp') }}" alt="Metal">
+
+                        @elseif (strtolower($resistance['type']) === 'psychic')
+                            <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Psychic.webp') }}" alt="Psychic">
+
+                        @else
+                            <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Colorless.webp') }}" alt="Default">
+                        @endif
+                    </div>
+                    <div>
+                        <h5 class="font-manrope font-medium text-sm text-white">Resistence</h5>
+                        <h3 class="font-manrope font-semibold text-base text-white">{{ $resistance['type'] }}</h3>
+                    </div>
+                @endforeach
             </div>
         @endif
     </div>
