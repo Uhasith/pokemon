@@ -326,4 +326,29 @@ new class extends Component {
             @endforeach
         </div>
     @endif
+
+    @if (is_array($allCardRecord?->attacks) && count($allCardRecord?->attacks) > 0)
+    <div class="my-12">
+        @foreach ($allCardRecord->attacks as $attack)
+            <div class="flex items-center gap-2 mb-2">
+                <h2 class="font-manrope font-bold text-xl text-white">{{ $attack['name'] }} ({{ $attack['damage'] }})</h2>
+
+                @if (is_array($attack['cost']) && count($attack['cost']) > 0)
+                    @foreach ($attack['cost'] as $energyType)
+                        @if (strtolower($energyType) === 'Metal')
+                            <img src="{{ asset('assets/card-images/Metal.webp') }}" alt="Metal Energy">
+                        @elseif (strtolower($energyType) === 'Colorless')
+                            <img src="{{ asset('assets/card-images/Colorless.webp') }}" alt="Colorless Energy">
+                        @endif
+                    @endforeach
+                @endif
+            </div>
+
+            <h2 class="font-manrope font-bold text-xl text-white mb-8">{{ $attack['text'] }}</h2>
+
+        @endforeach
+    </div>
+@endif
+
+
 </div>
