@@ -32,7 +32,7 @@ class ImportPokeCardTransactionTimeSeriesJob implements ShouldQueue
             PokeCardTransactionTimeSeries::updateOrCreate(['card_id' => $row['CardId'], 'psa_grade' => $row['Grade']], [
                 'card_id' => $row['CardId'],
                 'psa_grade' => $row['Grade'],
-                'timeseries_data' => $row['timeseries_prices'],
+                'timeseries_data' => $row['timeseries_transactions'],
             ]);
         }
     }
