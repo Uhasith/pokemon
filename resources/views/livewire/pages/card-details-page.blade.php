@@ -232,14 +232,15 @@ new class extends Component {
                 {{-- right content section --}}
                 <div class="w-4/5 mx-auto lg:w-8/12 xl:w-[60%] xl:px-3 lg:ml-8 xl:ml-5">
                     <div>
-                        <h1 class="font-manrope text-3xl lg:text-4xl font-bold text-white">
+                        <h1 class="font-manrope text-3xl lg:text-4xl font-bold text-white mb-2">
                             {{ $card?->name }} - ({{ $card?->card_number }} /
                             {{ $relatedAllCard?->set['printedTotal'] ?? 0 }})
                         </h1>
-                        <h2 class="font-manrope font-medium text-3xl text-white mt-2">
-                            {{ $relatedAllCard?->set['name'] }}</h2>
+                        <a class="font-manrope font-medium text-xl text-white mt-4" href="">{{ $relatedAllCard?->set['name'] }}</a>
+                        {{-- <h2 class="font-manrope font-medium text-3xl text-white mt-2">
+                            {{ $relatedAllCard?->set['name'] }}</h2> --}}
                     </div>
-                    <div class="flex flex-row gap-2 items-center justify-start my-3">
+                    {{-- <div class="flex flex-row gap-2 items-center justify-start my-3">
 
                         <a href="#"
                             class="flex gap-2 items-center justify-center text-yellowish font-manrope font-medium text-sm">
@@ -255,7 +256,7 @@ new class extends Component {
                                         stroke="#FFC107" stroke-width="1.5" stroke-linecap="round" />
                                 </svg></span>
                         </a>
-                    </div>
+                    </div> --}}
 
                     <div>
                         <div class="mb-4 border-b border-evengray">
@@ -386,7 +387,8 @@ new class extends Component {
                                             <div class="w-full overflow-x-auto relative">
                                                 <div class="flex justify-start w-full mb-3">
                                                     <h2 class="font-manrope font-bold text-base text-white">
-                                                        PSA Population price
+                                                        {{-- PSA Population price --}}
+                                                        Price
                                                     </h2>
                                                 </div>
                                                 <div class="grid grid-cols-10 gap-4 w-full">
@@ -464,8 +466,7 @@ new class extends Component {
                                             class="w-full md:w-12/12 bg-[#27292B] rounded-xl p-4 overflow-x-auto relative flex flex-col justify-between">
                                             <div class="w-full relative overflow-x-auto">
                                                 <div class="flex justify-start w-full mb-3">
-                                                    <h2 class="font-manrope font-bold text-base text-white">PSA
-                                                        Population price</h2>
+                                                    <h2 class="font-manrope font-bold text-base text-white">PSA Population Info</h2>
                                                 </div>
                                                 <div class="flex gap-4 w-full">
                                                     <div

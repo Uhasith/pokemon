@@ -11,8 +11,8 @@ new class extends Component {
 }; ?>
 
 <div class="max-w-5xl mx-auto">
-    <div class="my-8">
-        <h2 class="font-manrope font-bold text-center text-2xl lg:text-3xl text-white">
+    <div class="my-8 flex justify-center">
+        <a href="#graph" class="font-manrope font-bold text-center text-2xl lg:text-3xl text-white">
             Market Price History
         </h2>
     </div>
