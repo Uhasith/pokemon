@@ -1311,8 +1311,9 @@ new class extends Component {
                 </div>
             </div>
         </div> --}}
+        <input type="hidden" name="card_id" id="card_id">
     </div>
     <script>
-        console.log($card_id);
+        console.log(document.getElementById('card_id').value);
     </script>
 </div>
