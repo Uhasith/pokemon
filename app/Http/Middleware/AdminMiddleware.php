@@ -18,9 +18,9 @@ class AdminMiddleware
         // Check if the user is authenticated and is an admin
         if (Auth::check() && Auth::user()->is_admin) {
             return $next($request); // Allow access
+        }else{
+            return redirect()->route('set-index');
         }
 
-        // If not admin, redirect or abort with 403 Forbidden
-        return abort(403, 'Unauthorized action.');
     }
 }

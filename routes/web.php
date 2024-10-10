@@ -5,8 +5,6 @@ use App\Livewire\ShopPage;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
-require __DIR__ . '/auth.php';
-
 Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
@@ -37,3 +35,5 @@ Volt::route('{setSlug}/{slug}', 'pages.card-details-page')->name('card-details')
 Volt::route('{slug}', 'pages.set-details-page')->name('set-details');
 
 Route::get('/CardDetails/{card_id}/{slug}', [RedirectController::class, 'redirectToNewUrl']);
+
+require __DIR__ . '/auth.php';

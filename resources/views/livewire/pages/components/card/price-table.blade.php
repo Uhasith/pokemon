@@ -62,7 +62,7 @@ new class extends Component {
                     </thead>
                     <tbody>
                         @foreach ($prices as $price)
-                            <tr class="odd:bg-oddgray text-white even:bg-evengray">
+                            <tr class="odd:bg-oddgray text-white even:bg-evengray" wire:key="'price-record-'{{ $price->id }}">
                                 <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">
                                     $ {{ $price->value }}
                                 </th>
