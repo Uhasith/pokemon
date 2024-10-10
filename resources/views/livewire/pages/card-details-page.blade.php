@@ -1311,7 +1311,7 @@ new class extends Component {
                 </div>
             </div>
         </div> --}}
-        <input type="hidden" name="card_id" id="card_id">
+        <input type="hidden" name="card_id" id="card_id" value="{{$card_id}}">
     </div>
     <script>
         console.log(document.getElementById('card_id').value);
