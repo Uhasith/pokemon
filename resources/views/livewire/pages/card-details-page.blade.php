@@ -1313,6 +1313,6 @@ new class extends Component {
         </div> --}}
     </div>
     <script>
-        console.log({{$card_id}});
+        console.log($card_id);
     </script>
 </div>
