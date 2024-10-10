@@ -11,10 +11,10 @@ new class extends Component {
     public $set;
     public $allCardRecord;
 
-    public function mount()
-    {
-        Log::info($this->allCardRecord->attacks);
-    }
+    // public function mount()
+    // {
+    //     Log::info($this->allCardRecord->attacks);
+    // }
 }; ?>
 
 <div>

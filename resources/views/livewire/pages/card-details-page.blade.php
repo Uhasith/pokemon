@@ -95,9 +95,9 @@ new class extends Component {
                             </g>
                         </svg>
                     </span>
-                    <a href="{{ route('set-details', ['slug' => $this->card->set->slug]) }}" wire:navigate>
+                    <a href="{{ route('set-details', ['slug' => $card->set->slug]) }}" wire:navigate>
                         <span
-                            class="font-medium text-[#908F8C] text-sm cursor-pointer">{{ $this->card->set->set_name }}</span>
+                            class="font-medium text-[#908F8C] text-sm cursor-pointer">{{ $card->set->set_name }}</span>
                     </a>
                     <span>
                         <svg width="16" height="17" viewBox="0 0 16 17" fill="none"
@@ -236,7 +236,9 @@ new class extends Component {
                             {{ $card?->name }} - ({{ $card?->card_number }} /
                             {{ $relatedAllCard?->set['printedTotal'] ?? 0 }})
                         </h1>
-                        <a class="font-manrope font-medium text-xl text-white mt-4" href="">{{ $relatedAllCard?->set['name'] }}</a>
+                        <a class="font-manrope font-medium text-xl text-white mt-4" href="{{ route('set-details', ['slug' => $card->set->slug]) }}" wire:navigate>
+                            {{ $card?->set->set_name }}
+                        </a>
                         {{-- <h2 class="font-manrope font-medium text-3xl text-white mt-2">
                             {{ $relatedAllCard?->set['name'] }}</h2> --}}
                     </div>
