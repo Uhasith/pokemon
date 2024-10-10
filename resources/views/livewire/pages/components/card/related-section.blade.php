@@ -69,18 +69,18 @@ new class extends Component {
                 </h2>
             </div>
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 my-12">
-                @foreach ($relatedCards->take(11) as $card)
-                    @if ($card?->all_card?->images['small'] !== null)
-                        <div class="flex w-full">
+                @foreach ($relatedCards as $relatedCard)
+                    @if ($relatedCard?->all_card?->images['small'] !== null)
+                        <div class="flex w-full" wire:key="related-card-{{ $relatedCard->card_id }}">
                             <div class="p-6 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
-                                @if ($card?->all_card?->images['small'] !== null)
-                                    <a href="{{ route('card-details', ['slug' => $card->slug, 'setSlug' => $card->set->slug]) }}"
+                                @if ($relatedCard?->all_card?->images['small'] !== null)
+                                    <a href="{{ route('card-details', ['slug' => $relatedCard->slug, 'setSlug' => $relatedCard->set->slug]) }}"
                                         wire:navigate>
-                                        <x-image :src="$card?->all_card?->images['small']" :alt="$card->name" skeltonWidth="180"
+                                        <x-image :src="$relatedCard?->all_card?->images['small']" :alt="$relatedCard->name" skeltonWidth="180"
                                             skeltonHeight="250" />
                                     </a>
                                 @else
-                                    <a href="{{ route('card-details', ['slug' => $card->slug, 'setSlug' => $card->set->slug]) }}"
+                                    <a href="{{ route('card-details', ['slug' => $relatedCard->slug, 'setSlug' => $relatedCard->set->slug]) }}"
                                         wire:navigate>
                                         <div class="flex items-center justify-center bg-gray-300 rounded dark:bg-gray-700 animate-pulse"
                                             style="width: 180px; height: 250px;">
@@ -114,18 +114,18 @@ new class extends Component {
                 </h2>
             </div>
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 my-12">
-                @foreach ($topCards as $card)
-                    @if ($card?->all_card?->images['small'] !== null)
-                        <div class="flex w-full" wire:key="top-card-{{ $card->card_id }}">
+                @foreach ($topCards as $topCard)
+                    @if ($topCard?->all_card?->images['small'] !== null)
+                        <div class="flex w-full" wire:key="top-card-{{ $topCard->card_id }}">
                             <div class="p-6 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
-                                @if ($card?->all_card?->images['small'] !== null)
-                                    <a href="{{ route('card-details', ['slug' => $card->slug, 'setSlug' => $card->set->slug]) }}"
+                                @if ($topCard?->all_card?->images['small'] !== null)
+                                    <a href="{{ route('card-details', ['slug' => $topCard->slug, 'setSlug' => $topCard->set->slug]) }}"
                                         wire:navigate>
-                                        <x-image :src="$card?->all_card?->images['small']" :alt="$card->name" skeltonWidth="180"
+                                        <x-image :src="$topCard?->all_card?->images['small']" :alt="$topCard->name" skeltonWidth="180"
                                             skeltonHeight="250" />
                                     </a>
                                 @else
-                                    <a href="{{ route('card-details', ['slug' => $card->slug, 'setSlug' => $card->set->slug]) }}"
+                                    <a href="{{ route('card-details', ['slug' => $topCard->slug, 'setSlug' => $topCard->set->slug]) }}"
                                         wire:navigate>
                                         <div class="flex items-center justify-center bg-gray-300 rounded dark:bg-gray-700 animate-pulse"
                                             style="width: 180px; height: 250px;">
