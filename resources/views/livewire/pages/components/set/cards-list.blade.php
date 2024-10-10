@@ -312,13 +312,13 @@ new class extends Component {
                                         </div>
                                     </td>
                                     <td class="p-3 text-white">
-                                        <a href="{{ route('card-details', ['slug' => $card->slug ?? 'sword-shield/krabby-043', 'setSlug' => $set->slug]) }}"
+                                        <a href="{{ route('card-details', ['slug' => $card->slug, 'setSlug' => $set->slug]) }}"
                                             wire:navigate>
                                             {{ $card->id }}
                                         </a>
                                     </td>
                                     <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">
-                                        <a href="{{ route('card-details', ['slug' => $card->slug ?? 'sword-shield/krabby-043', 'setSlug' => $set->slug]) }}"
+                                        <a href="{{ route('card-details', ['slug' => $card->slug, 'setSlug' => $set->slug]) }}"
                                             wire:navigate>
                                             <div class="flex items-center gap-3 hyphens-auto cursor-pointer">
                                                 @if ($card?->all_card?->images['small'] !== null)
