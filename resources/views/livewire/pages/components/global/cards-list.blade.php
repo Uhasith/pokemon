@@ -25,47 +25,51 @@ new class extends Component {
         // Extract the PSA grade number from the price string
         $psa_grade = preg_replace('/[^0-9]/', '', $this->price);
 
-        if (empty($this->searchKw)) {
-            // Base query for fetching cards with their relationships and a join on price_timeseries for sorting
-            $query = PokeCard::with(['all_card', 'set'])
-                // Join with price_timeseries table to retrieve the latest price for sorting
+        // Define the base query for `PokeCard` with necessary relationships and joins
+        $baseQuery = function ($query) use ($psa_grade) {
+            $query
+                ->with(['all_card', 'set'])
                 ->leftJoin('poke_card_price_time_series as pts', function ($join) use ($psa_grade) {
                     $join->on('poke_cards.card_id', '=', 'pts.card_id')->where('pts.psa_grade', '=', $psa_grade);
                 })
-                // Select necessary columns, including the fair_price
                 ->select('poke_cards.*', 'pts.latest_fair_price as fair_price');
+        };
 
-            // Apply sorting logic based on `fair_price`
-            if ($this->sortBy === 'Value High to Low') {
-                $query->orderByRaw('fair_price IS NULL, fair_price DESC');
-            } elseif ($this->sortBy === 'Value Low to High') {
-                $query->orderByRaw('fair_price IS NULL, fair_price ASC');
-            } elseif ($this->sortBy === 'Alphabetical') {
-                $query->orderByRaw('fair_price IS NULL, name ASC');
-            } elseif ($this->sortBy === 'Reversed Alphabetical') {
-                $query->orderByRaw('fair_price IS NULL, name DESC');
+        // Define sorting logic based on the `sortBy` attribute
+        $applySorting = function ($query) {
+            switch ($this->sortBy) {
+                case 'Value High to Low':
+                    $query->orderByRaw('fair_price IS NULL, fair_price DESC');
+                    break;
+                case 'Value Low to High':
+                    $query->orderByRaw('fair_price IS NULL, fair_price ASC');
+                    break;
+                case 'Alphabetical':
+                    $query->orderByRaw('fair_price IS NULL, name ASC');
+                    break;
+                case 'Reversed Alphabetical':
+                    $query->orderByRaw('fair_price IS NULL, name DESC');
+                    break;
             }
+        };
 
-            // Paginate the result after applying sorting
+        if (empty($this->searchKw)) {
+            // Apply the base query and sorting logic for a normal query
+            $query = PokeCard::query();
+            $baseQuery($query);
+            $applySorting($query);
             $cards = $query->paginate(20);
-
-            return [
-                'cards' => $cards,
-            ];
         } else {
+            // Apply the base query and sorting logic for a search query
             $cards = PokeCard::search($this->searchKw)
-                ->query(function ($query) use ($psa_grade) {
-                    $query
-                        ->with(['all_card', 'set'])
-                        ->leftJoin('poke_card_price_time_series as pts', function ($join) use ($psa_grade) {
-                            $join->on('poke_cards.card_id', '=', 'pts.card_id')->where('pts.psa_grade', '=', $psa_grade);
-                        })
-                        ->select('poke_cards.*', 'pts.latest_fair_price as fair_price');
+                ->query(function ($query) use ($baseQuery, $applySorting) {
+                    $baseQuery($query);
+                    $applySorting($query);
                 })
                 ->paginate(20);
-
-            return ['cards' => $cards];
         }
+
+        return ['cards' => $cards];
     }
 }; ?>
 
@@ -122,7 +126,7 @@ new class extends Component {
         <div class="grid gap-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 my-5">
             @foreach ($cards as $card)
                 @if ($card?->all_card?->images['small'] !== null)
-                    <div class="w-full" wire:key="card-{{ $card->card_id }}">
+                    <div class="w-full" wire:key="global-grid-card-{{ $card->card_id }}">
                         <div class="flex w-full">
                             <div class="p-4 rounded-2xl bg-[#2C2C2C] bg-blend-screen relative cursor-pointer">
                                 @if ($card?->all_card?->images['small'] !== null)
@@ -293,7 +297,8 @@ new class extends Component {
                     <tbody class="text-sm font-manrope font-bold">
                         @foreach ($cards as $card)
                             @if ($card?->all_card?->images['small'] !== null)
-                                <tr class="odd:bg-oddgray even:bg-evengray">
+                                <tr class="odd:bg-oddgray even:bg-evengray"
+                                    wire:key="global-list-card-{{ $card->card_id }}">
                                     <td class="w-4 p-4">
                                         <div class="flex items-center">
                                             <svg width="22" height="22" viewBox="0 0 22 22" fill="none"
@@ -388,6 +393,5 @@ new class extends Component {
             </div>
         </div>
     </div>
-    {{ $cards->onEachSide(1)->links(data: ['scrollTo' => '#section2']) }}
+    {{ $cards->onEachSide(1)->links(data: ['scrollTo' => false]) }}
 </div>
-

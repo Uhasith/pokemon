@@ -36,7 +36,7 @@ new class extends Component {
             <div class="h-full w-full absolute top-0 right-0 bg-[#000000CC]"></div>
         </div>
         {{-- Cards Loading Section With Paginations --}}
-        <div x-show="open" class="w-full flex items-center justify-center py-8">
+        <div x-show="open" x-transition class="w-full flex items-center justify-center py-8">
             <livewire:pages.components.global.cards-list />
         </div>
 

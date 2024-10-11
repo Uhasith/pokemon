@@ -120,7 +120,7 @@ new class extends Component {
             </div>
 
             {{-- Cards Loading Section With Paginations --}}
-            <div x-show="open" class="w-full flex items-center justify-center py-4 mb-8">
+            <div x-show="open" x-transition class="w-full flex items-center justify-center py-4 mb-8">
                 <livewire:pages.components.global.cards-list />
             </div>
 
