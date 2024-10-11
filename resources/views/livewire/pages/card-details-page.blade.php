@@ -78,6 +78,10 @@ new class extends Component {
 }; ?>
 
 <div>
+    @push('meta-tags')
+        <title>{{ $this->card->name }} {{ $this->card->variant }} {{ $card->set->set_name }} Price</title>
+        <meta name=”description” content="{{ $this->card->name }} {{ $this->card->variant }} from {{ $card->set->set_name }} price guide. Get the latest market value, track historical prices, and see recent sales data for accurate pricing insights. Perfect for casual and serious collectors."/>
+    @endpush
     <div class="w-full bg-darkblackbg" x-init="initFlowbite();">
         <div class="max-w-[1440px] 2xl:max-w-[1500px] bg-darkbg mx-auto relative flex flex-col lg:px-8 xl:px-0">
             <div class="my-12 px-8 lg:px-0">
