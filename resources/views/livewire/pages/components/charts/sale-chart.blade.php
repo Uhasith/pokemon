@@ -151,7 +151,7 @@ new class extends Component {
     // Formats labels into the required format ('M d, Y')
     private function formatLabels(array $labels)
     {
-        return array_values(collect($labels)->map(fn($date) => Carbon::parse($date)->format('M d, Y'))->toArray());
+            
     }
 
     // Maps data to the corresponding labels for the chart
@@ -295,7 +295,7 @@ new class extends Component {
             <x-wui-select placeholder="Select Grades" wire:model.live='chartGrade' :clearable="false" :options="$populations" />
         </div>
     </div>
-    <div id="chart-container" style="width: 100%; height: auto; margin: auto;">
+    <div id="chart-container" style="width: 100%; height: 100%; margin: auto;">
         <canvas id="myChart2"></canvas>
     </div>
 </div>
@@ -380,6 +380,11 @@ new class extends Component {
                         position: 'left',
                         stacked: true, // Stack line charts
                         beginAtZero: true, // Ensure the y-axis starts at zero
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + value; // Add the dollar sign before the value
+                            }
+                        }
                     },
                     y1: {
                         type: 'linear',

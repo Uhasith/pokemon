@@ -22,7 +22,8 @@ new class extends Component {
         {{-- Item - 01 --}}
         @if (is_array($allCardRecord?->types) && count($allCardRecord?->types) > 0)
             <div class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
-                @foreach ($allCardRecord->types as $type)
+                @foreach ($allCardRecord->types as $key=>$type)
+                <div class="flex items-center justify-center gap-5" wire:key="widget-type-{{ $key }}">
                     <div class="bg-[#383838] rounded-[100px] p-[18px]">
                         @if (strtolower($type) === 'water')
                             <img class="w-[30px] height-auto object-contain"
@@ -60,6 +61,7 @@ new class extends Component {
                         <h5 class="font-manrope font-medium text-sm text-white">Types</h5>
                         <h3 class="font-manrope font-semibold text-base text-white">{{ $type }}</h3>
                     </div>
+                </div>
                 @endforeach
             </div>
         @endif
