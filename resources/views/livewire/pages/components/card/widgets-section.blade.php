@@ -175,8 +175,8 @@ new class extends Component {
         @if (is_array($allCardRecord?->weaknesses) && count($allCardRecord?->weaknesses) > 0)
             <div class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
                 <div>
-                    @foreach ($allCardRecord->weaknesses as $weakness)
-                        <div class="flex items-center gap-5">
+                    @foreach ($allCardRecord->weaknesses as $key=>$weakness)
+                        <div class="flex items-center gap-5" wire:key="widget-weakness-{{ $key }}">
                             <div class="bg-[#383838] rounded-[100px] p-[18px]">
                                 @if (strtolower($weakness['type']) === 'water')
                                     <img class="w-[30px] height-auto object-contain"
@@ -298,8 +298,9 @@ new class extends Component {
         {{-- Item - 10 --}}
         @if (is_array($allCardRecord?->resistances) && count($allCardRecord?->resistances) > 0)
             <div class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
-                @foreach ($allCardRecord->resistances as $resistance)
-                    <div class="bg-[#383838] rounded-[100px] p-[18px]">
+                @foreach ($allCardRecord->resistances as $key=>$resistance)
+                <div class="flex gap-5 items-center">
+                    <div class="bg-[#383838] rounded-[100px] p-[18px]" wire:key="widget-resistance-{{ $key }}">
                         @if (strtolower($resistance['type']) === 'water')
                             <img class="w-[30px] height-auto object-contain"
                                 src="{{ asset('assets/card-images/Water.webp') }}" alt="Water">
@@ -336,6 +337,7 @@ new class extends Component {
                         <h5 class="font-manrope font-medium text-sm text-white">Resistence</h5>
                         <h3 class="font-manrope font-semibold text-base text-white">{{ $resistance['type'] }}</h3>
                     </div>
+                </div>
                 @endforeach
             </div>
         @endif
