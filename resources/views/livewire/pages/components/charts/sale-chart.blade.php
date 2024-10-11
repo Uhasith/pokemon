@@ -151,7 +151,7 @@ new class extends Component {
     // Formats labels into the required format ('M d, Y')
     private function formatLabels(array $labels)
     {
-            
+        return array_values(collect($labels)->map(fn($date) => Carbon::parse($date)->format('M d, Y'))->toArray());
     }
 
     // Maps data to the corresponding labels for the chart
