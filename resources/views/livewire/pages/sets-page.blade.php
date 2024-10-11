@@ -21,6 +21,10 @@ new class extends Component {
 }; ?>
 
 <div>
+    @push('meta-tags')
+        <title>All Pokemon Card Set List</title>
+        <meta name=”description” content="Check Pokémon card prices with our up-to-date price checker. Browse the latest TCG sets, from classic Base Set to recent releases, and find accurate values and population insights for your collection."/>
+    @endpush
     <div class="bg-darkblackbg w-full relative" x-data="{ open: false }"
         x-on:search-this.window="if($event.detail[0] != '') { open = true } else { open = false }">
         {{-- First hero Section --}}
