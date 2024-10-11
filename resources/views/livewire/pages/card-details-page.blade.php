@@ -78,7 +78,8 @@ new class extends Component {
 }; ?>
 
 <div>
-    <div class="w-full bg-darkblackbg" x-init="initFlowbite();">
+    <div class="w-full bg-darkblackbg" x-init="initFlowbite();" x-data="{ open: false }"
+        x-on:search-this.window="if($event.detail[0] != '') { open = true } else { open = false }">
         <div class="max-w-[1440px] 2xl:max-w-[1500px] bg-darkbg mx-auto relative flex flex-col lg:px-8 xl:px-0">
             <div class="my-12 px-8 lg:px-0">
                 <h3 class="flex gap-3 items-center font-manrope">
@@ -112,6 +113,11 @@ new class extends Component {
                     <span class="font-semibold text-white text-sm">{{ $this->card->card_number }}
                         {{ $this->card->name }}</span>
                 </h3>
+            </div>
+
+            {{-- Cards Loading Section With Paginations --}}
+            <div x-show="open" class="w-full flex items-center justify-center py-4 mb-8">
+                <livewire:pages.components.global.cards-list />
             </div>
 
             <div class="flex gap-4 flex-col lg:flex-row lg:flex-wrap xl:flex-nowrap items-center lg:items-start">
@@ -236,7 +242,8 @@ new class extends Component {
                             {{ $card?->name }} - ({{ $card?->card_number }} /
                             {{ $relatedAllCard?->set['printedTotal'] ?? 0 }})
                         </h1>
-                        <a class="font-manrope font-medium text-xl text-white mt-4" href="{{ route('set-details', ['slug' => $card->set->slug]) }}" wire:navigate>
+                        <a class="font-manrope font-medium text-xl text-white mt-4"
+                            href="{{ route('set-details', ['slug' => $card->set->slug]) }}" wire:navigate>
                             {{ $card?->set->set_name }}
                         </a>
                         {{-- <h2 class="font-manrope font-medium text-3xl text-white mt-2">
@@ -468,11 +475,11 @@ new class extends Component {
                                             class="w-full md:w-12/12 bg-[#27292B] rounded-xl p-4 overflow-x-auto relative flex flex-col justify-between">
                                             <div class="w-full relative overflow-x-auto">
                                                 <div class="flex justify-start w-full mb-3">
-                                                    <h2 class="font-manrope font-bold text-base text-white">PSA Population Info</h2>
+                                                    <h2 class="font-manrope font-bold text-base text-white">PSA
+                                                        Population Info</h2>
                                                 </div>
                                                 <div class="flex gap-4 w-full">
-                                                    <div
-                                                        class="w-[800px] md:w-1/4 flex flex-col gap-2 justify-between">
+                                                    <div class="w-[800px] md:w-1/4 flex flex-col gap-2 justify-between">
                                                         <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">
                                                             PSA total population</h4>
                                                         <h4
@@ -480,8 +487,7 @@ new class extends Component {
                                                             {{ $totalPopulation }}
                                                         </h4>
                                                     </div>
-                                                    <div
-                                                        class="w-[800px] md:w-1/5 flex flex-col gap-2 justify-between">
+                                                    <div class="w-[800px] md:w-1/5 flex flex-col gap-2 justify-between">
                                                         <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">
                                                             PSA 10 chance</h4>
                                                         <h4
@@ -489,8 +495,7 @@ new class extends Component {
                                                             {{ number_format($percentage, 2) }} %
                                                         </h4>
                                                     </div>
-                                                    <div
-                                                        class="w-[800px] md:w-1/5 flex flex-col gap-2 justify-between">
+                                                    <div class="w-[800px] md:w-1/5 flex flex-col gap-2 justify-between">
                                                         <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">
                                                             PSA 9/10 Ratio
                                                         </h4>
@@ -499,8 +504,7 @@ new class extends Component {
                                                             {{ number_format($ratio, 2) }} : 1
                                                         </h4>
                                                     </div>
-                                                    <div
-                                                        class="w-[800px] md:w-1/4 flex flex-col gap-2 justify-between">
+                                                    <div class="w-[800px] md:w-1/4 flex flex-col gap-2 justify-between">
                                                         <h4 class="font-manrope font-semibold text-sm text-[#BEBFBF]">
                                                             PSA Grade Difficulty</h4>
                                                         <h4
@@ -1313,7 +1317,7 @@ new class extends Component {
                 </div>
             </div>
         </div> --}}
-        <input type="hidden" name="card_id" id="card_id" value="{{$card_id}}">
+        <input type="hidden" name="card_id" id="card_id" value="{{ $card_id }}">
     </div>
     <script>
         console.log(document.getElementById('card_id').value);
