@@ -14,7 +14,7 @@ new class extends Component {
     <div class="my-8 flex justify-center">
         <a href="#graph" class="font-manrope font-bold text-center text-2xl lg:text-3xl text-white">
             Market Price History
-        </h2>
+        </a>
     </div>
     <div>
         <div class="border-gray-200 dark:border-gray-700">
