@@ -292,7 +292,8 @@ new class extends Component {
             <x-wui-checkbox id="label" label="Volume" wire:model.live="showableCharts" value="VOLUME" />
             {{-- <x-wui-checkbox id="label" label="PSA 9" wire:model.live="showableCharts" value="PSA9" />
             <x-wui-checkbox id="label" label="PSA 10" wire:model.live="showableCharts" value="PSA10" /> --}}
-            <x-wui-select placeholder="Select Grades" wire:model.live='chartGrade' :clearable="false" :options="$populations" />
+            <x-wui-select placeholder="Select Grades" wire:model.live='chartGrade' :clearable="false"
+                :options="$populations" />
         </div>
     </div>
     <div id="chart-container" style="width: 100%; height: 100%; margin: auto;">
@@ -305,7 +306,14 @@ new class extends Component {
         const ctx = document.getElementById('myChart2');
 
         // Initial data setup from Livewire
-        let labelsArray = $wire.saleChartData.labels;
+        let labelsArray = $wire.saleChartData.labels.map(dateStr => {
+            const date = new Date(dateStr);
+            const formatter = new Intl.DateTimeFormat('en', {
+                month: 'short',
+                year: 'numeric'
+            });
+            return formatter.format(date).replace(' ', '-');
+        });
         let gradeData = $wire.saleChartData.gradePrices ?? [];
         // let grade9Data = $wire.showableCharts.includes('PSA9') ? $wire.saleChartData.grade9Prices : [];
         // let grade10Data = $wire.showableCharts.includes('PSA10') ? $wire.saleChartData.grade10Prices : [];
@@ -424,7 +432,14 @@ new class extends Component {
 
         // Listen for Livewire event to update chart with new data
         Livewire.on('saleChartDataUpdated', () => {
-            myChart2.data.labels = $wire.saleChartData.labels;
+            myChart2.data.labels = $wire.saleChartData.labels.map(dateStr => {
+                const date = new Date(dateStr);
+                const formatter = new Intl.DateTimeFormat('en', {
+                    month: 'short',
+                    year: 'numeric'
+                });
+                return formatter.format(date).replace(' ', '-');
+            });;
             myChart2.data.datasets[0].data = $wire.saleChartData.gradePrices ?? [];
             myChart2.data.datasets[0].label = $wire.chartGrade ? $wire.chartGrade : '';
             // myChart2.data.datasets[0].data = $wire.showableCharts.includes('PSA9') ? $wire.saleChartData.grade9Prices : [];
