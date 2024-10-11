@@ -267,11 +267,11 @@ new class extends Component {
                                 data-tabs-active-classes="text-yellowish hover:text-yellowish dark:text-purple-500 dark:hover:text-purple-500 border-yellowish dark:border-yellowish"
                                 data-tabs-inactive-classes="text-white hover:text-yellowish dark:text-gray-400 border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300"
                                 role="tablist">
-                                <li class="me-2" role="presentation">
+                                {{-- <li class="me-2" role="presentation">
                                     <button class="inline-block p-4 border-b rounded-t-lg" id="prices-styled-tab"
                                         data-tabs-target="#styled-prices" type="button" role="tab"
                                         aria-controls="prices" aria-selected="false">Prices</button>
-                                </li>
+                                </li> --}}
                                 {{-- <li class="me-2" role="presentation">
                                     <button
                                         class="inline-block p-4 border-b border-evengray rounded-t-lg hover:text-yellowish hover:border-yellowish"
@@ -294,7 +294,7 @@ new class extends Component {
                             </ul>
                         </div>
                         <div id="default-styled-tab-content">
-                            <div class="hidden" id="styled-prices" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="hiddennn" id="styled-prices" role="tabpanel" aria-labelledby="profile-tab">
                                 <div class="relative overflow-x-auto sm:rounded-lg">
                                     {{-- <table class="w-full text-sm text-left rtl:text-right text-gray-500">
                                         <thead class="text-xs text-white uppercase bg-evengray">
