@@ -132,7 +132,7 @@ new class extends Component {
 }; ?>
 
 <div wire:ignore>
-    <div class="flex justify-between items-center mb-5" x-data="{ timeFrame: $wire.entangle('timeFrame').live, timeFrameAvailability: $wire.entangle('timeFrameAvailability').live }">
+    <div class="flex justify-between items-center mb-5 relative" x-data="{ timeFrame: $wire.entangle('timeFrame').live, timeFrameAvailability: $wire.entangle('timeFrameAvailability').live }">
         <div class="flex rounded-lg bg-evengray p-1 w-auto gap-3">
             <!-- 6M Button -->
             <div>
