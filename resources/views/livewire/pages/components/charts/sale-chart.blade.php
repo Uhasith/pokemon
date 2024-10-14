@@ -315,65 +315,40 @@ new class extends Component {
             return formatter.format(date).replace(' ', '-');
         });
         let gradeData = $wire.saleChartData.gradePrices ?? [];
-        // let grade9Data = $wire.showableCharts.includes('PSA9') ? $wire.saleChartData.grade9Prices : [];
-        // let grade10Data = $wire.showableCharts.includes('PSA10') ? $wire.saleChartData.grade10Prices : [];
-        let transactionData = $wire.showableCharts.includes('VOLUME') ? $wire.saleChartData.transactionVolumes : [];
+        let transactionData = $wire.showableCharts.includes('VOLUME') ? $wire.saleChartData.transactions : [];
 
-        // Define the chart data
+        // Define the chart data without the volume dataset initially
+        const datasets = [{
+            label: $wire.chartGrade ? $wire.chartGrade : '',
+            data: gradeData,
+            backgroundColor: 'rgba(255, 165, 0, 0.2)', // Line fill color
+            borderColor: 'rgba(255, 165, 0, 1)', // Line color (orange)
+            stack: 'combined',
+            type: 'line',
+            yAxisID: 'y',
+            tension: 0.5,
+            pointRadius: 4,
+            pointRadius: 3,
+            pointBackgroundColor: 'rgba(255, 165, 0, 1)', // Make points visible
+            pointBorderColor: 'rgba(255, 165, 0, 1)',
+        }];
+
+        // Add the volume dataset only if transactionData is not empty
+        if (transactionData.length > 0) {
+            datasets.push({
+                label: 'Volume',
+                data: transactionData,
+                borderColor: 'rgba(75, 192, 75, 1)',
+                backgroundColor: 'rgba(75, 192, 75, 0.5)',
+                stack: 'combined',
+                type: 'bar',
+                yAxisID: 'y1',
+            });
+        }
+
         const data = {
             labels: labelsArray,
-            datasets: [{
-                    label: $wire.chartGrade ? $wire.chartGrade : '',
-                    data: gradeData,
-                    backgroundColor: 'rgba(255, 165, 0, 0.2)', // Line fill color
-                    borderColor: 'rgba(255, 165, 0, 1)', // Line color (orange)
-                    stack: 'combined',
-                    type: 'line',
-                    yAxisID: 'y',
-                    tension: 0.5,
-                    pointRadius: 4,
-                    pointRadius: 3,
-                    pointBackgroundColor: 'rgba(255, 165, 0, 1)', // Make points visible
-                    pointBorderColor: 'rgba(255, 165, 0, 1)',
-                },
-                // ,{
-                //     label: 'PSA 9',
-                //     data: grade9Data,
-                //     borderColor: 'rgba(255, 99, 132, 1)',
-                //     backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                //     stack: 'combined',
-                //     type: 'line',
-                //     yAxisID: 'y',
-                //     tension: 0.5,
-                //     pointRadius: 4,
-                //     pointRadius: 3,
-                //     pointBackgroundColor: 'rgba(255, 99, 132, 1)',
-                //     pointBorderColor: 'rgba(255, 99, 132, 1)',
-                // },
-                // {
-                //     label: 'PSA 10',
-                //     data: grade10Data,
-                //     backgroundColor: 'rgba(255, 165, 0, 0.2)',
-                //     borderColor: 'rgba(255, 165, 0, 1)',
-                //     stack: 'combined',
-                //     type: 'line',
-                //     yAxisID: 'y',
-                //     tension: 0.5,
-                //     pointRadius: 4,
-                //     pointRadius: 3,
-                //     pointBackgroundColor: 'rgba(255, 165, 0, 1)',
-                //     pointBorderColor: 'rgba(255, 165, 0, 1)',
-                // },
-                {
-                    label: 'Volume',
-                    data: transactionData,
-                    borderColor: 'rgba(75, 192, 75, 1)',
-                    backgroundColor: 'rgba(75, 192, 75, 0.5)',
-                    stack: 'combined',
-                    type: 'bar',
-                    yAxisID: 'y1',
-                }
-            ]
+            datasets: datasets
         };
 
         // Create the chart
@@ -386,44 +361,45 @@ new class extends Component {
                     y: {
                         type: 'linear',
                         position: 'left',
-                        stacked: true, // Stack line charts
-                        beginAtZero: true, // Ensure the y-axis starts at zero
+                        stacked: true,
+                        beginAtZero: true,
                         ticks: {
                             callback: function(value) {
-                                return '$' + value; // Add the dollar sign before the value
+                                return '$' + value;
                             }
                         }
                     },
-                    y1: {
-                        type: 'linear',
-                        position: 'right', // Position secondary Y axis on the right
-                        stacked: false, // No stacking for bar chart
-                        beginAtZero: true, // Start at zero for the bar chart
-                        grid: {
-                            drawOnChartArea: false // Prevent grid lines from overlapping with the left Y-axis
+                    ...(transactionData.length > 0 && {
+                        y1: {
+                            type: 'linear',
+                            position: 'right',
+                            stacked: false,
+                            beginAtZero: true,
+                            grid: {
+                                drawOnChartArea: false
+                            }
                         }
-                    }
-                }
-            },
-            plugins: {
-                legend: {
-                    display: true, // Show legend
-                    labels: {
-                        color: '#fff' // Legend label color
-                    }
+                    })
                 },
-                tooltip: {
-                    enabled: true,
-                    backgroundColor: '#fff',
-                    titleColor: '#000',
-                    bodyColor: '#000',
-                    borderColor: '#ddd',
-                    borderWidth: 1,
-                    callbacks: {
-                        label: function(tooltipItem) {
-                            // Format tooltip with $ and two decimals
-                            let price = tooltipItem.raw;
-                            return ' Price: $ ' + Number(price).toFixed(2);
+                plugins: {
+                    legend: {
+                        display: false,
+                        labels: {
+                            color: '#fff'
+                        }
+                    },
+                    tooltip: {
+                        enabled: true,
+                        backgroundColor: '#fff',
+                        titleColor: '#000',
+                        bodyColor: '#000',
+                        borderColor: '#ddd',
+                        borderWidth: 1,
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                let price = tooltipItem.raw;
+                                return ' Price: $ ' + Number(price).toFixed(2);
+                            }
                         }
                     }
                 }
@@ -439,14 +415,64 @@ new class extends Component {
                     year: 'numeric'
                 });
                 return formatter.format(date).replace(' ', '-');
-            });;
-            myChart2.data.datasets[0].data = $wire.saleChartData.gradePrices ?? [];
-            myChart2.data.datasets[0].label = $wire.chartGrade ? $wire.chartGrade : '';
-            // myChart2.data.datasets[0].data = $wire.showableCharts.includes('PSA9') ? $wire.saleChartData.grade9Prices : [];
-            // myChart2.data.datasets[1].data = $wire.showableCharts.includes('PSA10') ? $wire.saleChartData.grade10Prices : [];
-            myChart2.data.datasets[1].data = $wire.showableCharts.includes('VOLUME') ? $wire.saleChartData
+            });
+            myChart2.data.datasets = [{
+                label: $wire.chartGrade ? $wire.chartGrade : '',
+                data: $wire.saleChartData.gradePrices ?? [],
+                backgroundColor: 'rgba(255, 165, 0, 0.2)', // Line fill color
+                borderColor: 'rgba(255, 165, 0, 1)', // Line color (orange)
+                stack: 'combined',
+                type: 'line',
+                yAxisID: 'y',
+                tension: 0.5,
+                pointRadius: 4,
+                pointRadius: 3,
+                pointBackgroundColor: 'rgba(255, 165, 0, 1)', // Make points visible
+                pointBorderColor: 'rgba(255, 165, 0, 1)',
+            }];
+
+            // Conditionally add the volume dataset if transaction data is available
+            const updatedTransactionData = $wire.showableCharts.includes('VOLUME') ? $wire.saleChartData
                 .transactions : [];
-            myChart2.update(); // Refresh the chart
+            if (updatedTransactionData.length > 0) {
+                myChart2.data.datasets.push({
+                    label: 'Volume',
+                    data: updatedTransactionData,
+                    borderColor: 'rgba(75, 192, 75, 1)',
+                    backgroundColor: 'rgba(75, 192, 75, 0.5)',
+                    stack: 'combined',
+                    type: 'bar',
+                    yAxisID: 'y1',
+                });
+            }
+
+            // Update the scales accordingly
+            myChart2.options.scales = {
+                y: {
+                    type: 'linear',
+                    position: 'left',
+                    stacked: true,
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return '$' + value;
+                        }
+                    }
+                },
+                ...(updatedTransactionData.length > 0 && {
+                    y1: {
+                        type: 'linear',
+                        position: 'right',
+                        stacked: false,
+                        beginAtZero: true,
+                        grid: {
+                            drawOnChartArea: false
+                        }
+                    }
+                })
+            };
+
+            myChart2.update();
         });
     </script>
 @endscript
