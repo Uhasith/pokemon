@@ -296,7 +296,7 @@ new class extends Component {
                 :options="$populations" />
         </div>
     </div>
-    <div id="chart-container" style="width: 100%; height: 100%; margin: auto;">
+    <div id="chart-container" style="width: 100%; margin: auto;" class="h-[40vh]">
         <canvas id="myChart2"></canvas>
     </div>
 </div>

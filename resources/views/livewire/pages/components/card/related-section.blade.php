@@ -72,7 +72,7 @@ new class extends Component {
                 @foreach ($relatedCards as $relatedCard)
                     @if ($relatedCard?->all_card?->images['small'] !== null)
                         <div class="flex w-full" wire:key="related-card-{{ $relatedCard->card_id }}">
-                            <div class="p-6 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
+                            <div class="p-2 md:p-6 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
                                 @if ($relatedCard?->all_card?->images['small'] !== null)
                                     <a href="{{ route('card-details', ['slug' => $relatedCard->slug, 'setSlug' => $relatedCard->set->slug]) }}"
                                         wire:navigate>
@@ -117,7 +117,7 @@ new class extends Component {
                 @foreach ($topCards as $topCard)
                     @if ($topCard?->all_card?->images['small'] !== null)
                         <div class="flex w-full" wire:key="top-card-{{ $topCard->card_id }}">
-                            <div class="p-6 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
+                            <div class="p-2 md:p-6 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
                                 @if ($topCard?->all_card?->images['small'] !== null)
                                     <a href="{{ route('card-details', ['slug' => $topCard->slug, 'setSlug' => $topCard->set->slug]) }}"
                                         wire:navigate>
