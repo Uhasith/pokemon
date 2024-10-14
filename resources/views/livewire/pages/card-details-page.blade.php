@@ -404,7 +404,7 @@ new class extends Component {
                                                         Price
                                                     </h2>
                                                 </div>
-                                                <div class="grid grid-cols-10 gap-4 w-[38rem]">
+                                                <div class="grid grid-cols-10 gap-4 w-[38rem] md:w-full">
                                                     @foreach ($prices as $key => $value)
                                                         <div class="w-28 md:w-full flex flex-col gap-2 justify-center">
                                                             <h4
@@ -518,7 +518,7 @@ new class extends Component {
                                                     </div>
                                                 </div>
                                                 <hr class="my-2">
-                                                <div class="grid grid-cols-10 gap-4 w-[38rem]">
+                                                <div class="grid grid-cols-10 gap-4 w-[38rem] md:w-full">
                                                     @foreach ($populations as $key => $value)
                                                         <div class="w-28 flex flex-col gap-2 justify-center">
                                                             <h4
