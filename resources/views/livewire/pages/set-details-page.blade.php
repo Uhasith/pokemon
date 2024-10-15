@@ -36,7 +36,9 @@ new class extends Component {
 <div>
     @push('meta-tags')
         <title>Pokemon {{ $set->set_name }} Card Value</title>
-        <meta name=”description” content="Check Pokemon {{ $set->set_name }} card values with our price tool. Access up-to-date market prices for each card and track value trends over time. Great for casual and serious collectors."/>
+        <meta name="description" content="Check Pokemon {{ $set->set_name }} card values with our price tool. Access up-to-date market prices for each card and track value trends over time. Great for casual and serious collectors.">
+        <meta property="og:description" content="Check Pokemon {{ $set->set_name }} card values with our price tool. Access up-to-date market prices for each card and track value trends over time. Great for casual and serious collectors.">
+        <meta name="twitter:description" content="Check Pokemon {{ $set->set_name }} card values with our price tool. Access up-to-date market prices for each card and track value trends over time. Great for casual and serious collectors.">
     @endpush
     <div class="bg-darkblackbg w-full relative">
         {{-- First hero Section --}}
