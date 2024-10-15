@@ -23,7 +23,8 @@ new class extends Component {
         <div class="w-full xl:w-10/12">
             <div class="mb-9">
                 <h2 class="font-manrope font-bold text-center text-2xl lg:text-3xl text-white">
-                    {{ $card->name }} Transaction History
+                    {{-- {{ $card->name }} Transaction History --}}
+                    Transactions
                 </h2>
             </div>
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
