@@ -477,7 +477,7 @@ new class extends Component {
                                     <div class="w-full flex flex-col md:flex-row gap-5 my-5">
                                         <div
                                             class="w-full md:w-12/12 bg-[#27292B] rounded-xl p-4 overflow-x-auto md:overflow-x-hidden relative flex flex-col justify-between">
-                                            <div class="w-full relative overflow-x-auto">
+                                            <div class="w-full relative overflow-x-auto md:overflow-x-hidden">
                                                 <div class="flex justify-start w-full mb-3">
                                                     <h2 class="font-manrope font-bold text-base text-white">PSA Population Info</h2>
                                                 </div>
