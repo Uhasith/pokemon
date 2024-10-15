@@ -393,10 +393,12 @@ new class extends Component {
             tooltip: {
                 enabled: true,
                 backgroundColor: '#fff',
+                intersect: false,
                 titleColor: '#000',
                 bodyColor: '#000',
                 borderColor: '#ddd',
                 borderWidth: 1,
+                intersect: false,
                 bodyFont: {
                     size: 10
                 },
@@ -464,6 +466,7 @@ new class extends Component {
                 enabled: true,
                 backgroundColor: '#fff',
                 titleColor: '#000',
+                intersect: false,
                 bodyColor: '#000',
                 borderColor: '#ddd',
                 borderWidth: 1,
