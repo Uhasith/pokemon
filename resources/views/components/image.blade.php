@@ -11,7 +11,7 @@
 
     <!-- Image -->
     <img :src="imageSrc" @load="isLoading = false"
-        :class="isLoading ? 'hidden' : 'block w-full h-auto ' + extraClass" :alt="altText">
+        :class="isLoading ? 'hidden' : 'block w-full h-auto rounded-lg' + extraClass" :alt="altText">
 </div>
 
 <script>

@@ -12,15 +12,12 @@ new class extends Component {
 
     public $sortBy = 'Value High to Low';
     public $price = 'PSA 10';
-    public $set;
-    public $set_id,
-        $searchKw = '';
+    public $searchKw = '';
 
     #[On('search-this')]
     public function search($kw)
     {
         $this->searchKw = $kw;
-        // $cards = App\Models\PokeCard::search($kw)->get();
     }
 
     public function with(): array
@@ -58,7 +55,7 @@ new class extends Component {
 
         if (empty($this->searchKw)) {
             // Apply the base query and sorting logic for a normal query
-            $query = PokeCard::query()->where('set_id', $this->set_id);
+            $query = PokeCard::query();
             $baseQuery($query);
             $applySorting($query);
             $cards = $query->paginate(20);
@@ -129,17 +126,17 @@ new class extends Component {
         <div class="grid gap-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 my-5">
             @foreach ($cards as $card)
                 @if ($card?->all_card?->images['small'] !== null)
-                    <div class="w-full" wire:key="card-grid-{{ $card->card_id }}">
+                    <div class="w-full" wire:key="global-grid-card-{{ $card->card_id }}">
                         <div class="flex w-full">
                             <div class="p-4 rounded-2xl bg-[#2C2C2C] bg-blend-screen relative cursor-pointer">
                                 @if ($card?->all_card?->images['small'] !== null)
-                                    <a href="{{ route('card-details', ['slug' => $card->slug, 'setSlug' => $set->slug]) }}"
+                                    <a href="{{ route('card-details', ['slug' => $card->slug, 'setSlug' => $card->set->slug]) }}"
                                         wire:navigate>
                                         <x-image :src="$card?->all_card?->images['small']" :alt="$card->name" skeltonWidth="160"
                                             skeltonHeight="220" />
                                     </a>
                                 @else
-                                    <a href="{{ route('card-details', ['slug' => $card->slug, 'setSlug' => $set->slug]) }}"
+                                    <a href="{{ route('card-details', ['slug' => $card->slug, 'setSlug' => $card->set->slug]) }}"
                                         wire:navigate>
                                         <div class="flex items-center justify-center bg-gray-300 rounded dark:bg-gray-700 animate-pulse"
                                             style="width: 160px; height: 220px;">
@@ -300,7 +297,8 @@ new class extends Component {
                     <tbody class="text-sm font-manrope font-bold">
                         @foreach ($cards as $card)
                             @if ($card?->all_card?->images['small'] !== null)
-                                <tr class="odd:bg-oddgray even:bg-evengray" wire:key="card-list-{{ $card->card_id }}">
+                                <tr class="odd:bg-oddgray even:bg-evengray"
+                                    wire:key="global-list-card-{{ $card->card_id }}">
                                     <td class="w-4 p-4">
                                         <div class="flex items-center">
                                             <svg width="22" height="22" viewBox="0 0 22 22" fill="none"
@@ -315,13 +313,13 @@ new class extends Component {
                                         </div>
                                     </td>
                                     <td class="p-3 text-white">
-                                        <a href="{{ route('card-details', ['slug' => $card->slug, 'setSlug' => $set->slug]) }}"
+                                        <a href="{{ route('card-details', ['slug' => $card->slug, 'setSlug' => $card->set->slug]) }}"
                                             wire:navigate>
                                             {{ $card->id }}
                                         </a>
                                     </td>
                                     <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">
-                                        <a href="{{ route('card-details', ['slug' => $card->slug, 'setSlug' => $set->slug]) }}"
+                                        <a href="{{ route('card-details', ['slug' => $card->slug, 'setSlug' => $card->set->slug]) }}"
                                             wire:navigate>
                                             <div class="flex items-center gap-3 hyphens-auto cursor-pointer">
                                                 @if ($card?->all_card?->images['small'] !== null)
@@ -395,5 +393,5 @@ new class extends Component {
             </div>
         </div>
     </div>
-    {{ $cards->onEachSide(1)->links(data: ['scrollTo' => '#section2']) }}
+    {{ $cards->onEachSide(1)->links(data: ['scrollTo' => false]) }}
 </div>

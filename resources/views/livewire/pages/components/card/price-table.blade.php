@@ -9,7 +9,7 @@ new class extends Component {
 
     public function with(): array
     {
-        $prices = $this->card->card_prices()->paginate(7);
+        $prices = $this->card->card_prices()->latest()->paginate(7);
 
         return [
             'prices' => $prices,
