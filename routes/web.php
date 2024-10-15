@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\RedirectController;
 use App\Livewire\ShopPage;
+use App\Models\PokeCardPriceTimeSeries;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
