@@ -33,6 +33,7 @@ Route::middleware([
     Volt::route('/population-page', 'pages.admin.population-page')->name('population-page');
     Volt::route('/submitted-data-page', 'pages.admin.submitted-data-page')->name('submitted-data-page');
     Volt::route('/content-page', 'pages.admin.content-page')->name('content-page');
+    Volt::route('/upload-json', 'pages.admin.json-files')->name('json-uploads');
 });
 
 Volt::route('/sets', 'pages.sets-page')->name('set-index');
