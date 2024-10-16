@@ -93,7 +93,7 @@ class extends Component {
 
 <div>
     <div class="grid grid-cols-2 gap-10 mx-auto justify-center my-12 max-w-[1100px]">
-        <form wire:submit="submitTcgAllCard" class="px-6 max-w-96">
+        <form wire:submit="submitTcgAllCard" class="px-6 max-w-96" enctype="multipart/form-data">
             <div class="space-y-6 mb-8">
                 <h2>Upload TCG All Cards JSON file</h2>
                 <x-file-pond wire:model="tcg_all_card" accept="application/json" />
@@ -108,7 +108,7 @@ class extends Component {
             <x-wui-button class="w-full my-2" type="submit" spinner="submitTcgAllCard" primary label="Import" />
         </form>
 
-        <form wire:submit="submitTcgAllSet" class="px-6 max-w-96">
+        <form wire:submit="submitTcgAllSet" class="px-6 max-w-96" enctype="multipart/form-data">
             <div class="space-y-6 mb-8">
                 <h2>Upload TCG All Sets JSON file</h2>
                 <x-file-pond wire:model="tcg_all_set" accept="application/json" />
@@ -123,7 +123,7 @@ class extends Component {
             <x-wui-button class="w-full my-2" type="submit" spinner="submitTcgAllSet" primary label="Import" />
         </form>
 
-        <form wire:submit="submitTransactionTimeSeries" class="px-6 max-w-96">
+        <form wire:submit="submitTransactionTimeSeries" class="px-6 max-w-96" enctype="multipart/form-data">
             <div class="space-y-6 mb-8">
                 <h2>Upload Transaction Time Series JSON file</h2>
                 <x-file-pond wire:model="transaction_time_series" accept="application/json" />
@@ -138,7 +138,7 @@ class extends Component {
             <x-wui-button class="w-full my-2" type="submit" spinner="submitTransactionTimeSeries" primary label="Import" />
         </form>
 
-        <form wire:submit="submitPriceTimeSeries" class="px-6 max-w-96">
+        <form wire:submit="submitPriceTimeSeries" class="px-6 max-w-96" enctype="multipart/form-data">
             <div class="space-y-6 mb-8">
                 <h2>Upload Price Time Series JSON file</h2>
                 <x-file-pond wire:model="price_time_series" accept="application/json" />
