@@ -3,6 +3,7 @@
 use Livewire\Volt\Component;
 use Livewire\WithFileUploads;
 use App\Services\Notifications\NotificationService;
+use Livewire\Attributes\Layout;
 
 new 
 #[Layout('layouts.admin')]

@@ -59,6 +59,9 @@ new class extends Component {
                     <x-nav-link :href="route('content-page')" :active="request()->routeIs('content-page')" wire:navigate>
                         {{ __('Content') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('json-uploads')" :active="request()->routeIs('json-uploads')" wire:navigate>
+                        {{ __('JSON Uploads') }}
+                    </x-nav-link>
                 </div>
             </div>
 
