@@ -18,12 +18,12 @@ new class extends Component {
 }; ?>
 
 <div>
-    <div class="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-5 items-center justify-center">
+    <div class="w-full grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-5 items-center justify-center">
         {{-- Item - 01 --}}
         @if (is_array($allCardRecord?->types) && count($allCardRecord?->types) > 0)
-            <div class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
+            <div class="flex items-center gap-2 md:gap-5 rounded-xl bg-[#FFFFFF08] w-full md:w-72 p-2 md:p-5 border border-[#FFFFFF0D] mx-auto">
                 @foreach ($allCardRecord->types as $key=>$type)
-                <div class="flex items-center justify-center gap-5" wire:key="widget-type-{{ $key }}">
+                <div class="flex items-center justify-center gap-2 md:gap-5" wire:key="widget-type-{{ $key }}">
                     <div class="bg-[#383838] rounded-[100px] p-[18px]">
                         @if (strtolower($type) === 'water')
                             <img class="w-[30px] height-auto object-contain"
@@ -58,8 +58,8 @@ new class extends Component {
                         @endif
                     </div>
                     <div>
-                        <h5 class="font-manrope font-medium text-sm text-white">Types</h5>
-                        <h3 class="font-manrope font-semibold text-base text-white">{{ $type }}</h3>
+                        <h5 class="font-manrope font-medium text-xs md:text-sm text-white">Types</h5>
+                        <h3 class="font-manrope font-semibold text-sm md:text-base text-white">{{ $type }}</h3>
                     </div>
                 </div>
                 @endforeach
@@ -68,7 +68,7 @@ new class extends Component {
 
         {{-- Item - 02 --}}
         @if ($allCardRecord?->converted_retreat_cost)
-            <div class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
+            <div class="flex items-center gap-2 md:gap-5 rounded-xl bg-[#FFFFFF08] w-full md:w-72 p-2 md:p-5 border border-[#FFFFFF0D] mx-auto">
                 <div>
                     <svg width="66" height="66" viewBox="0 0 66 66" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
@@ -79,8 +79,8 @@ new class extends Component {
                     </svg>
                 </div>
                 <div>
-                    <h5 class="font-manrope font-medium text-sm text-white">Retreat</h5>
-                    <h3 class="font-manrope font-semibold text-base text-white">
+                    <h5 class="font-manrope font-medium text-xs md:text-sm text-white">Retreat</h5>
+                    <h3 class="font-manrope font-semibold text-sm md:text-base text-white">
                         X{{ $allCardRecord->converted_retreat_cost }}</h3>
                 </div>
             </div>
@@ -88,7 +88,7 @@ new class extends Component {
 
         {{-- Item - 03 --}}
         @if (is_array($allCardRecord?->subtypes) && count($allCardRecord?->subtypes) > 0)
-            <div class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
+            <div class="flex items-center gap-2 md:gap-5 rounded-xl bg-[#FFFFFF08] w-full md:w-72 p-2 md:p-5 border border-[#FFFFFF0D] mx-auto">
                 <div>
                     <svg width="66" height="66" viewBox="0 0 66 66" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
@@ -102,15 +102,15 @@ new class extends Component {
                     </svg>
                 </div>
                 <div>
-                    <h5 class="font-manrope font-medium text-sm text-white">Form</h5>
-                    <h3 class="font-manrope font-semibold text-base text-white">{{ $allCardRecord->subtypes[0] }}</h3>
+                    <h5 class="font-manrope font-medium text-xs md:text-sm text-white">Form</h5>
+                    <h3 class="font-manrope font-semibold text-sm md:text-base text-white">{{ $allCardRecord->subtypes[0] }}</h3>
                 </div>
             </div>
         @endif
 
         {{-- Item - 04 --}}
         @if ($allCardRecord?->supertype)
-            <div class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
+            <div class="flex items-center gap-2 md:gap-5 rounded-xl bg-[#FFFFFF08] w-full md:w-72 p-2 md:p-5 border border-[#FFFFFF0D] mx-auto">
                 <div>
                     <svg width="66" height="66" viewBox="0 0 66 66" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
@@ -129,15 +129,15 @@ new class extends Component {
                     </svg>
                 </div>
                 <div>
-                    <h5 class="font-manrope font-medium text-sm text-white">Typings</h5>
-                    <h3 class="font-manrope font-semibold text-base text-white">{{ $allCardRecord->supertype }}</h3>
+                    <h5 class="font-manrope font-medium text-xs md:text-sm text-white">Typings</h5>
+                    <h3 class="font-manrope font-semibold text-sm md:text-base text-white">{{ $allCardRecord->supertype }}</h3>
                 </div>
             </div>
         @endif
 
         {{-- Item - 05 --}}
         @if ($allCardRecord?->hp)
-            <div class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
+            <div class="flex items-center gap-2 md:gap-5 rounded-xl bg-[#FFFFFF08] w-full md:w-72 p-2 md:p-5 border border-[#FFFFFF0D] mx-auto">
                 <div>
                     <svg width="66" height="66" viewBox="0 0 66 66" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
@@ -148,24 +148,24 @@ new class extends Component {
                     </svg>
                 </div>
                 <div>
-                    <h5 class="font-manrope font-medium text-sm text-white">HP</h5>
-                    <h3 class="font-manrope font-semibold text-base text-white">{{ $allCardRecord->hp }}</h3>
+                    <h5 class="font-manrope font-medium text-xs md:text-sm text-white">HP</h5>
+                    <h3 class="font-manrope font-semibold text-sm md:text-base text-white">{{ $allCardRecord->hp }}</h3>
                 </div>
             </div>
         @endif
 
         {{-- Item - 06 --}}
         {{-- @if (is_array($allCardRecord?->weaknesses) && count($allCardRecord?->weaknesses) > 0)
-            <div class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
+            <div class="flex items-center gap-2 md:gap-5 rounded-xl bg-[#FFFFFF08] w-full md:w-72 p-2 md:p-5 border border-[#FFFFFF0D] mx-auto">
                 <div class="bg-[#383838] rounded-[100px] p-[18px]">
                     <img class="w-[30px] height-auto object-contain" src="{{ asset('assets/card-images/Fire.webp') }}" alt="">
                 </div>
                 <div>
-                    <h5 class="font-manrope font-medium text-sm text-white">Weakness</h5>
+                    <h5 class="font-manrope font-medium text-xs md:text-sm text-white">Weakness</h5>
                     @foreach ($allCardRecord->weaknesses as $weakness)
                         <div class="flex items-center gap-2">
-                            <h3 class="font-manrope font-semibold text-base text-white">{{ $weakness['type'] }}</h3>
-                            <h3 class="font-manrope font-semibold text-base text-white">{{ $weakness['value'] }}</h3>
+                            <h3 class="font-manrope font-semibold text-sm md:text-base text-white">{{ $weakness['type'] }}</h3>
+                            <h3 class="font-manrope font-semibold text-sm md:text-base text-white">{{ $weakness['value'] }}</h3>
                         </div>
                     @endforeach
                 </div>
@@ -173,10 +173,10 @@ new class extends Component {
         @endif --}}
 
         @if (is_array($allCardRecord?->weaknesses) && count($allCardRecord?->weaknesses) > 0)
-            <div class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
+            <div class="flex items-center gap-2 md:gap-5 rounded-xl bg-[#FFFFFF08] w-full md:w-72 p-2 md:p-5 border border-[#FFFFFF0D] mx-auto">
                 <div>
                     @foreach ($allCardRecord->weaknesses as $key=>$weakness)
-                        <div class="flex items-center gap-5" wire:key="widget-weakness-{{ $key }}">
+                        <div class="flex items-center gap-2 md:gap-5" wire:key="widget-weakness-{{ $key }}">
                             <div class="bg-[#383838] rounded-[100px] p-[18px]">
                                 @if (strtolower($weakness['type']) === 'water')
                                     <img class="w-[30px] height-auto object-contain"
@@ -213,11 +213,11 @@ new class extends Component {
 
                             <!-- Display the weakness type and value -->
                             <div>
-                                <h5 class="font-manrope font-medium text-sm text-white">Weakness</h5>
+                                <h5 class="font-manrope font-medium text-xs md:text-sm text-white">Weakness</h5>
                                 <div class="flex gap-1">
-                                    <h3 class="font-manrope font-semibold text-base text-white">
+                                    <h3 class="font-manrope font-semibold text-sm md:text-base text-white">
                                         {{ $weakness['type'] }}</h3>
-                                    <h3 class="font-manrope font-semibold text-base text-white">
+                                    <h3 class="font-manrope font-semibold text-sm md:text-base text-white">
                                         {{ $weakness['value'] }}</h3>
                                 </div>
                             </div>
@@ -229,7 +229,7 @@ new class extends Component {
 
         {{-- Item - 07 --}}
         @if ($set?->release_date)
-            <div class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
+            <div class="flex items-center gap-2 md:gap-5 rounded-xl bg-[#FFFFFF08] w-full md:w-72 p-2 md:p-5 border border-[#FFFFFF0D] mx-auto">
                 <div>
                     <svg width="66" height="66" viewBox="0 0 66 66" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
@@ -243,8 +243,8 @@ new class extends Component {
                     </svg>
                 </div>
                 <div>
-                    <h5 class="font-manrope font-medium text-sm text-white">Release Date</h5>
-                    <h3 class="font-manrope font-semibold text-base text-white">
+                    <h5 class="font-manrope font-medium text-xs md:text-sm text-white">Release Date</h5>
+                    <h3 class="font-manrope font-semibold text-sm md:text-base text-white">
                         {{ optional($set)->release_date?->format('Y-m-d') }}</h3>
                 </div>
             </div>
@@ -252,7 +252,7 @@ new class extends Component {
 
         {{-- Item - 08 --}}
         @if ($allCardRecord?->artist)
-            <div class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
+            <div class="flex items-center gap-2 md:gap-5 rounded-xl bg-[#FFFFFF08] w-full md:w-72 p-2 md:p-5 border border-[#FFFFFF0D] mx-auto">
                 <div>
                     <svg width="66" height="66" viewBox="0 0 66 66" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
@@ -263,15 +263,15 @@ new class extends Component {
                     </svg>
                 </div>
                 <div>
-                    <h5 class="font-manrope font-medium text-sm text-white">Artist</h5>
-                    <h3 class="font-manrope font-semibold text-base text-white">{{ $allCardRecord?->artist }}</h3>
+                    <h5 class="font-manrope font-medium text-xs md:text-sm text-white">Artist</h5>
+                    <h3 class="font-manrope font-semibold text-sm md:text-base text-white">{{ $allCardRecord?->artist }}</h3>
                 </div>
             </div>
         @endif
 
         {{-- Item - 09 --}}
         @if ($allCardRecord?->regulation_mark)
-            <div class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
+            <div class="flex items-center gap-2 md:gap-5 rounded-xl bg-[#FFFFFF08] w-full md:w-72 p-2 md:p-5 border border-[#FFFFFF0D] mx-auto">
                 <div>
                     <svg width="66" height="66" viewBox="0 0 66 66" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
@@ -288,8 +288,8 @@ new class extends Component {
                     </svg>
                 </div>
                 <div>
-                    <h5 class="font-manrope font-medium text-sm text-white">Regulation mark</h5>
-                    <h3 class="font-manrope font-semibold text-base text-white">{{ $allCardRecord?->regulation_mark }}
+                    <h5 class="font-manrope font-medium text-xs md:text-sm text-white">Regulation mark</h5>
+                    <h3 class="font-manrope font-semibold text-sm md:text-base text-white">{{ $allCardRecord?->regulation_mark }}
                     </h3>
                 </div>
             </div>
@@ -297,7 +297,7 @@ new class extends Component {
 
         {{-- Item - 10 --}}
         @if (is_array($allCardRecord?->resistances) && count($allCardRecord?->resistances) > 0)
-            <div class="flex items-center gap-5 rounded-xl bg-[#FFFFFF08] w-72 p-5 border border-[#FFFFFF0D] mx-auto">
+            <div class="flex items-center gap-2 md:gap-5 rounded-xl bg-[#FFFFFF08] w-full md:w-72 p-2 md:p-5 border border-[#FFFFFF0D] mx-auto">
                 @foreach ($allCardRecord->resistances as $key=>$resistance)
                 <div class="flex gap-5 items-center">
                     <div class="bg-[#383838] rounded-[100px] p-[18px]" wire:key="widget-resistance-{{ $key }}">
@@ -334,8 +334,8 @@ new class extends Component {
                         @endif
                     </div>
                     <div>
-                        <h5 class="font-manrope font-medium text-sm text-white">Resistence</h5>
-                        <h3 class="font-manrope font-semibold text-base text-white">{{ $resistance['type'] }}</h3>
+                        <h5 class="font-manrope font-medium text-xs md:text-sm text-white">Resistence</h5>
+                        <h3 class="font-manrope font-semibold text-sm md:text-base text-white">{{ $resistance['type'] }}</h3>
                     </div>
                 </div>
                 @endforeach
@@ -344,7 +344,7 @@ new class extends Component {
     </div>
 
     @if (is_array($allCardRecord?->abilities) && count($allCardRecord?->abilities) > 0)
-        <div class="my-12">
+        <div class="my-12 w-[100%] md:w-[90%] lg:w-[95%] mx-auto xl:w-[93%]">
             @foreach ($allCardRecord->abilities as $ability)
                 <h2 class="font-manrope font-bold text-xl text-white mb-2">{{ $ability['name'] }}
                     ({{ $ability['type'] }})
@@ -357,11 +357,11 @@ new class extends Component {
     @endif
 
     @if (is_array($allCardRecord?->attacks) && count($allCardRecord->attacks) > 0)
-        <div class="my-12">
+        <div class="my-12 w-[100%] md:w-[90%] lg:w-[95%] mx-auto xl:w-[93%]">
             @foreach ($allCardRecord->attacks as $attack)
                 <div class="flex items-center gap-2 mb-2">
                     @if (isset($attack['name']) && isset($attack['damage']))
-                        <h2 class="font-manrope font-bold text-xl text-white">
+                        <h2 class="font-manrope font-bold text-2xl text-white">
                             {{ $attack['name'] }}
                             @if (!is_null($attack['damage']) && $attack['damage'] !== '')
                                 ({{ $attack['damage'] }})
@@ -384,9 +384,9 @@ new class extends Component {
                 </div>
 
                 @if (!empty($attack['text']))
-                    <h2 class="font-manrope font-bold text-xl text-white mb-8">{{ $attack['text'] }}</h2>
+                    <h2 class="font-manrope font-medium text-base text-white">{{ $attack['text'] }}</h2>
                 @else
-                    <h2 class="font-manrope font-bold text-xl text-white mb-8">Not available</h2>
+                    <h2 class="font-manrope font-medium text-base text-white">Not available</h2>
                 @endif
             @endforeach
         </div>

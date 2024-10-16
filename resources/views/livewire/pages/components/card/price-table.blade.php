@@ -9,7 +9,7 @@ new class extends Component {
 
     public function with(): array
     {
-        $prices = $this->card->card_prices()->latest()->paginate(7);
+        $prices = $this->card->card_prices()->orderBy('sale_date', 'DESC')->paginate(7);
 
         return [
             'prices' => $prices,
@@ -23,7 +23,8 @@ new class extends Component {
         <div class="w-full xl:w-10/12">
             <div class="mb-9">
                 <h2 class="font-manrope font-bold text-center text-2xl lg:text-3xl text-white">
-                    {{ $card->name }} Transaction History
+                    {{-- {{ $card->name }} Transaction History --}}
+                    Transactions
                 </h2>
             </div>
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -54,10 +55,10 @@ new class extends Component {
                                 class="px-6 py-3 text-yellowish font-manrope font-semibold text-sm normal-case w-auto xl:w-[30%]">
                                 Title
                             </th>
-                            <th scope="col"
+                            {{-- <th scope="col"
                                 class="px-6 py-3 text-yellowish font-manrope font-semibold text-sm normal-case w-auto xl:w-[8%]">
 
-                            </th>
+                            </th> --}}
                         </tr>
                     </thead>
                     <tbody>
@@ -81,7 +82,7 @@ new class extends Component {
                                 <td class="px-6 py-4">
                                     {{ $price->seller }} - {{ $price->lot_id }}
                                 </td>
-                                <td class="px-6 py-4">
+                                {{-- <td class="px-6 py-4">
                                     <svg width="42" height="42" viewBox="0 0 42 42" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <circle opacity="0.04" cx="21" cy="21" r="21" fill="white" />
@@ -91,7 +92,7 @@ new class extends Component {
                                                 fill="white" />
                                         </g>
                                     </svg>
-                                </td>
+                                </td> --}}
                             </tr>
                         @endforeach
                     </tbody>

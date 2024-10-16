@@ -234,7 +234,7 @@ new class extends Component {
 }; ?>
 
 <div wire:ignore>
-    <div class="flex justify-between items-center mb-5" x-data="{ timeFrame: $wire.entangle('timeFrame').live, timeFrameAvailability: $wire.entangle('timeFrameAvailability').live }">
+    <div class="flex justify-between items-center mb-5 relative" x-data="{ timeFrame: $wire.entangle('timeFrame').live, timeFrameAvailability: $wire.entangle('timeFrameAvailability').live }">
         <div class="flex rounded-lg bg-evengray p-1 w-auto gap-3">
             <!-- 6M Button -->
             <div>
@@ -296,17 +296,214 @@ new class extends Component {
                 :options="$populations" />
         </div>
     </div>
-    <div id="chart-container" style="width: 100%; height: 100%; margin: auto;">
+    <div id="chart-container" style="width: 100%; margin: auto;" class="h-[40vh] md:h-full">
         <canvas id="myChart2"></canvas>
     </div>
 </div>
 
 @script
-    <script>
-        const ctx = document.getElementById('myChart2');
+<script>
+    const ctx = document.getElementById('myChart2');
 
-        // Initial data setup from Livewire
-        let labelsArray = $wire.saleChartData.labels.map(dateStr => {
+    let labelsArray = $wire.saleChartData.labels.map(dateStr => {
+        const date = new Date(dateStr);
+        const formatter = new Intl.DateTimeFormat('en', {
+            month: 'short',
+            year: 'numeric'
+        });
+        return formatter.format(date).replace(' ', '-');
+    });
+    let gradeData = $wire.saleChartData.gradePrices ?? [];
+    let transactionData = $wire.showableCharts.includes('VOLUME') ? $wire.saleChartData.transactions : [];
+
+    const datasets = [{
+        label: $wire.chartGrade ? $wire.chartGrade : '',
+        data: gradeData,
+        backgroundColor: 'rgba(255, 165, 0, 0.2)',
+        borderColor: 'rgba(255, 165, 0, 1)',
+        stack: 'combined',
+        type: 'line',
+        yAxisID: 'y',
+        tension: 0.5,
+        pointRadius: 3,
+        pointBackgroundColor: 'rgba(255, 165, 0, 1)',
+        pointBorderColor: 'rgba(255, 165, 0, 1)',
+    }];
+
+    if (transactionData.length > 0) {
+        datasets.push({
+            label: 'Volume',
+            data: transactionData,
+            borderColor: 'rgba(75, 192, 75, 1)',
+            backgroundColor: 'rgba(75, 192, 75, 0.5)',
+            stack: 'combined',
+            type: 'bar',
+            yAxisID: 'y1',
+        });
+    }
+
+    const data = {
+        labels: labelsArray,
+        datasets: datasets
+    };
+
+    // Options for mobile and tablet devices below 768px
+    const mobileAndTabletOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        layout: {
+            padding: 5
+        },
+        scales: {
+            y: {
+                type: 'linear',
+                position: 'left',
+                stacked: true,
+                beginAtZero: true,
+                ticks: {
+                    callback: function(value) {
+                        return '$' + value;
+                    },
+                    font: {
+                        size: 10
+                    }
+                }
+            },
+            ...(transactionData.length > 0 && {
+                y1: {
+                    type: 'linear',
+                    position: 'right',
+                    stacked: false,
+                    beginAtZero: true,
+                    grid: {
+                        drawOnChartArea: false
+                    },
+                    ticks: {
+                        font: {
+                            size: 10
+                        }
+                    }
+                }
+            })
+        },
+        plugins: {
+            legend: {
+                display: false
+            },
+            tooltip: {
+                enabled: true,
+                backgroundColor: '#fff',
+                intersect: false,
+                titleColor: '#000',
+                bodyColor: '#000',
+                borderColor: '#ddd',
+                borderWidth: 1,
+                intersect: false,
+                bodyFont: {
+                    size: 10
+                },
+                callbacks: {
+                    label: function(tooltipItem) {
+                        let price = tooltipItem.raw;
+                        return ' Price: $ ' + Number(price).toFixed(2);
+                    }
+                }
+            }
+        }
+    };
+
+    // Options for desktop (same for above 768px)
+    const desktopOptions = {
+        responsive: true,
+        maintainAspectRatio: true,
+        layout: {
+            padding: 20
+        },
+        scales: {
+            y: {
+                type: 'linear',
+                position: 'left',
+                stacked: true,
+                beginAtZero: true,
+                ticks: {
+                    callback: function(value) {
+                        return '$' + value;
+                    },
+                    font: {
+                        size: 14
+                    },
+                    maxTicksLimit: 20
+                }
+            },
+            ...(transactionData.length > 0 && {
+                y1: {
+                    type: 'linear',
+                    position: 'right',
+                    stacked: false,
+                    beginAtZero: true,
+                    grid: {
+                        drawOnChartArea: false
+                    },
+                    ticks: {
+                        font: {
+                            size: 14
+                        },
+                        maxTicksLimit: 20
+                    }
+                }
+            })
+        },
+        plugins: {
+            legend: {
+                display: true,
+                labels: {
+                    font: {
+                        size: 14
+                    }
+                }
+            },
+            tooltip: {
+                enabled: true,
+                backgroundColor: '#fff',
+                titleColor: '#000',
+                intersect: false,
+                bodyColor: '#000',
+                borderColor: '#ddd',
+                borderWidth: 1,
+                bodyFont: {
+                    size: 12
+                },
+                callbacks: {
+                    label: function(tooltipItem) {
+                        let price = tooltipItem.raw;
+                        return ' Price: $ ' + Number(price).toFixed(2);
+                    }
+                }
+            }
+        }
+    };
+
+    // Function to get the appropriate options based on screen size
+    function getChartOptions() {
+        return window.innerWidth < 768 ? mobileAndTabletOptions : desktopOptions;
+    }
+
+    // Create the chart with initial options based on screen size
+    const myChart2 = new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: getChartOptions()
+    });
+
+    // Listen for window resize and update chart options
+    window.addEventListener('resize', () => {
+        myChart2.options = getChartOptions();
+        myChart2.update();
+    });
+
+    // Update chart data when Livewire data changes
+    Livewire.on('saleChartDataUpdated', () => {
+        myChart2.data.labels = $wire.saleChartData.labels.map(dateStr => {
             const date = new Date(dateStr);
             const formatter = new Intl.DateTimeFormat('en', {
                 month: 'short',
@@ -314,30 +511,25 @@ new class extends Component {
             });
             return formatter.format(date).replace(' ', '-');
         });
-        let gradeData = $wire.saleChartData.gradePrices ?? [];
-        let transactionData = $wire.showableCharts.includes('VOLUME') ? $wire.saleChartData.transactions : [];
-
-        // Define the chart data without the volume dataset initially
-        const datasets = [{
+        myChart2.data.datasets = [{
             label: $wire.chartGrade ? $wire.chartGrade : '',
-            data: gradeData,
-            backgroundColor: 'rgba(255, 165, 0, 0.2)', // Line fill color
-            borderColor: 'rgba(255, 165, 0, 1)', // Line color (orange)
+            data: $wire.saleChartData.gradePrices ?? [],
+            backgroundColor: 'rgba(255, 165, 0, 0.2)',
+            borderColor: 'rgba(255, 165, 0, 1)',
             stack: 'combined',
             type: 'line',
             yAxisID: 'y',
             tension: 0.5,
-            pointRadius: 4,
             pointRadius: 3,
-            pointBackgroundColor: 'rgba(255, 165, 0, 1)', // Make points visible
+            pointBackgroundColor: 'rgba(255, 165, 0, 1)',
             pointBorderColor: 'rgba(255, 165, 0, 1)',
         }];
 
-        // Add the volume dataset only if transactionData is not empty
-        if (transactionData.length > 0) {
-            datasets.push({
+        const updatedTransactionData = $wire.showableCharts.includes('VOLUME') ? $wire.saleChartData.transactions : [];
+        if (updatedTransactionData.length > 0) {
+            myChart2.data.datasets.push({
                 label: 'Volume',
-                data: transactionData,
+                data: updatedTransactionData,
                 borderColor: 'rgba(75, 192, 75, 1)',
                 backgroundColor: 'rgba(75, 192, 75, 0.5)',
                 stack: 'combined',
@@ -346,133 +538,8 @@ new class extends Component {
             });
         }
 
-        const data = {
-            labels: labelsArray,
-            datasets: datasets
-        };
+        myChart2.update();
+    });
+</script>
 
-        // Create the chart
-        const myChart2 = new Chart(ctx, {
-            type: 'bar',
-            data: data,
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        type: 'linear',
-                        position: 'left',
-                        stacked: true,
-                        beginAtZero: true,
-                        ticks: {
-                            callback: function(value) {
-                                return '$' + value;
-                            }
-                        }
-                    },
-                    ...(transactionData.length > 0 && {
-                        y1: {
-                            type: 'linear',
-                            position: 'right',
-                            stacked: false,
-                            beginAtZero: true,
-                            grid: {
-                                drawOnChartArea: false
-                            }
-                        }
-                    })
-                },
-                plugins: {
-                    legend: {
-                        display: false,
-                        labels: {
-                            color: '#fff'
-                        }
-                    },
-                    tooltip: {
-                        enabled: true,
-                        backgroundColor: '#fff',
-                        titleColor: '#000',
-                        bodyColor: '#000',
-                        borderColor: '#ddd',
-                        borderWidth: 1,
-                        callbacks: {
-                            label: function(tooltipItem) {
-                                let price = tooltipItem.raw;
-                                return ' Price: $ ' + Number(price).toFixed(2);
-                            }
-                        }
-                    }
-                }
-            }
-        });
-
-        // Listen for Livewire event to update chart with new data
-        Livewire.on('saleChartDataUpdated', () => {
-            myChart2.data.labels = $wire.saleChartData.labels.map(dateStr => {
-                const date = new Date(dateStr);
-                const formatter = new Intl.DateTimeFormat('en', {
-                    month: 'short',
-                    year: 'numeric'
-                });
-                return formatter.format(date).replace(' ', '-');
-            });
-            myChart2.data.datasets = [{
-                label: $wire.chartGrade ? $wire.chartGrade : '',
-                data: $wire.saleChartData.gradePrices ?? [],
-                backgroundColor: 'rgba(255, 165, 0, 0.2)', // Line fill color
-                borderColor: 'rgba(255, 165, 0, 1)', // Line color (orange)
-                stack: 'combined',
-                type: 'line',
-                yAxisID: 'y',
-                tension: 0.5,
-                pointRadius: 4,
-                pointRadius: 3,
-                pointBackgroundColor: 'rgba(255, 165, 0, 1)', // Make points visible
-                pointBorderColor: 'rgba(255, 165, 0, 1)',
-            }];
-
-            // Conditionally add the volume dataset if transaction data is available
-            const updatedTransactionData = $wire.showableCharts.includes('VOLUME') ? $wire.saleChartData
-                .transactions : [];
-            if (updatedTransactionData.length > 0) {
-                myChart2.data.datasets.push({
-                    label: 'Volume',
-                    data: updatedTransactionData,
-                    borderColor: 'rgba(75, 192, 75, 1)',
-                    backgroundColor: 'rgba(75, 192, 75, 0.5)',
-                    stack: 'combined',
-                    type: 'bar',
-                    yAxisID: 'y1',
-                });
-            }
-
-            // Update the scales accordingly
-            myChart2.options.scales = {
-                y: {
-                    type: 'linear',
-                    position: 'left',
-                    stacked: true,
-                    beginAtZero: true,
-                    ticks: {
-                        callback: function(value) {
-                            return '$' + value;
-                        }
-                    }
-                },
-                ...(updatedTransactionData.length > 0 && {
-                    y1: {
-                        type: 'linear',
-                        position: 'right',
-                        stacked: false,
-                        beginAtZero: true,
-                        grid: {
-                            drawOnChartArea: false
-                        }
-                    }
-                })
-            };
-
-            myChart2.update();
-        });
-    </script>
 @endscript

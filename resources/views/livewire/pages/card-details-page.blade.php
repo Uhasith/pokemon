@@ -80,7 +80,9 @@ new class extends Component {
 <div>
     @push('meta-tags')
         <title>{{ $this->card->name }} {{ $this->card->variant }} {{ $card->set->set_name }} Price</title>
-        <meta name=”description” content="{{ $this->card->name }} {{ $this->card->variant }} from {{ $card->set->set_name }} price guide. Get the latest market value, track historical prices, and see recent sales data for accurate pricing insights. Perfect for casual and serious collectors."/>
+        <meta name="description" content="{{ $this->card->name }} {{ $this->card->variant }} from {{ $card->set->set_name }} price guide. Get the latest market value, track historical prices, and see recent sales data for accurate pricing insights. Perfect for casual and serious collectors.">
+        <meta property="og:description" content="{{ $this->card->name }} {{ $this->card->variant }} from {{ $card->set->set_name }} price guide. Get the latest market value, track historical prices, and see recent sales data for accurate pricing insights. Perfect for casual and serious collectors.">
+        <meta name="twitter:description" content="{{ $this->card->name }} {{ $this->card->variant }} from {{ $card->set->set_name }} price guide. Get the latest market value, track historical prices, and see recent sales data for accurate pricing insights. Perfect for casual and serious collectors.">
     @endpush
     <div class="w-full bg-darkblackbg" x-init="initFlowbite();" x-data="{ open: false }"
         x-on:search-this.window="if($event.detail[0] != '') { open = true } else { open = false }">
@@ -404,7 +406,7 @@ new class extends Component {
                                                         Price
                                                     </h2>
                                                 </div>
-                                                <div class="grid grid-cols-10 gap-4 w-full">
+                                                <div class="grid grid-cols-10 gap-4 w-[38rem] md:w-full">
                                                     @foreach ($prices as $key => $value)
                                                         <div class="w-28 md:w-full flex flex-col gap-2 justify-center">
                                                             <h4
@@ -476,11 +478,10 @@ new class extends Component {
 
                                     <div class="w-full flex flex-col md:flex-row gap-5 my-5">
                                         <div
-                                            class="w-full md:w-12/12 bg-[#27292B] rounded-xl p-4 overflow-x-auto relative flex flex-col justify-between">
-                                            <div class="w-full relative overflow-x-auto">
+                                            class="w-full md:w-12/12 bg-[#27292B] rounded-xl p-4 overflow-x-auto md:overflow-x-hidden relative flex flex-col justify-between">
+                                            <div class="w-full relative overflow-x-auto md:overflow-x-hidden">
                                                 <div class="flex justify-start w-full mb-3">
-                                                    <h2 class="font-manrope font-bold text-base text-white">PSA
-                                                        Population Info</h2>
+                                                    <h2 class="font-manrope font-bold text-base text-white">PSA Population Info</h2>
                                                 </div>
                                                 <div class="flex gap-4 w-full">
                                                     <div class="w-[800px] md:w-1/4 flex flex-col gap-2 justify-between">
@@ -518,9 +519,9 @@ new class extends Component {
                                                     </div>
                                                 </div>
                                                 <hr class="my-2">
-                                                <div class="grid grid-cols-10 gap-4 w-full">
+                                                <div class="grid grid-cols-10 gap-4 w-[38rem] md:w-full">
                                                     @foreach ($populations as $key => $value)
-                                                        <div class="w-full flex flex-col gap-2 justify-center">
+                                                        <div class="w-28 flex flex-col gap-2 justify-center">
                                                             <h4
                                                                 class="font-manrope font-semibold text-sm text-[#BEBFBF]">
                                                                 {{ $key }}
