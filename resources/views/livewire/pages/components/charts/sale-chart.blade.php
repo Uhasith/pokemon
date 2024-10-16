@@ -391,6 +391,7 @@ new class extends Component {
                     tooltip: {
                         enabled: true,
                         backgroundColor: '#fff',
+                        intersect: false,
                         titleColor: '#000',
                         bodyColor: '#000',
                         borderColor: '#ddd',
