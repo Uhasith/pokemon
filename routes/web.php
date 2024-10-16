@@ -13,6 +13,10 @@ Route::get('/', function () {
     return redirect()->route('set-index');
 });
 
+Route::get('/dashboard', function () {
+    return redirect()->route('set-page');
+})->name('dashboard');
+
 Route::middleware([
     'auth',
     'admin',
