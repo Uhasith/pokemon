@@ -88,10 +88,27 @@ new class extends Component {
         $filteredTransactionData = $this->filterTransactionData();
 
         $this->saleChartData['labels'] = $this->getFormattedLabels($filteredPriceData, $filteredTransactionData);
-        $this->saleChartData['gradePrices'] = $this->mapDataToLabels($filteredPriceData, 'fair_price', $this->numericGrade);
+        
+        $gradePrices = $this->mapDataToLabels($filteredPriceData, 'fair_price', $this->numericGrade);
+        
+        $lastValue = null;
+        foreach ($gradePrices as $key => $value) {
+            if ($value === '' || $value === null) {
+                $gradePrices[$key] = $lastValue;
+            } else {
+                $lastValue = $value;
+            }
+        }
+
+        $this->saleChartData['gradePrices'] = $gradePrices; //array_values($filteredGradePrices);
+
+       
         // $this->saleChartData['grade9Prices'] = $this->mapDataToLabels($filteredPriceData, 'fair_price', 9);
         // $this->saleChartData['grade10Prices'] = $this->mapDataToLabels($filteredPriceData, 'fair_price', 10);
         $this->saleChartData['transactions'] = $this->mapDataToLabels($filteredTransactionData, 'transaction_count');
+        // echo '<pre>';
+        //     print_r($this->saleChartData['gradePrices']);
+        //     echo '</pre>';
     }
 
     // Filters price data based on allowed grades
