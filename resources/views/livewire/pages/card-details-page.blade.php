@@ -145,7 +145,7 @@ new class extends Component {
                                 </div>
                             @endif
                         </div>
-                        <div class="relative">
+                        {{-- <div class="relative">
                             <div
                                 class="bg-[#3D3D3D] p-3 rounded-full w-auto absolute top-[50px] -ml-[20px] border-[5px] border-[solid] border-[#212121]">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -155,7 +155,7 @@ new class extends Component {
                                         stroke="white" stroke-width="1.5" stroke-linecap="round" />
                                 </svg>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
 
                     {{-- <div class="flex gap-3 my-3 flex-col xl:flex-row">
