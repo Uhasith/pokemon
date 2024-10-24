@@ -269,7 +269,7 @@ new class extends Component {
                                 </div>
                             </th> --}}
                             <th scope="col" class="px-6 py-3 text-center">
-                                Varient
+                                Variant
                             </th>
                             <th scope="col" class="px-6 py-3 text-center">
                                 Card Number
