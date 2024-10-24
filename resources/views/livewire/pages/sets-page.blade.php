@@ -44,7 +44,7 @@ new class extends Component {
 
         {{-- Second Main Section --}}
         <div id="section3" class="w-full bg-darkblackbg min-h-screen">
-            <div class="max-w-[1440px] relative flex flex-col md:flex-row gap-8 xl:gap-12 mx-auto p-5">
+            <div class="max-w-[1440px] relative flex flex-col md:flex-row gap-8 xl:gap-12 mx-auto p-6">
                 <div class="w-full md:w-12/12 xl:w-12/12">
                     {{-- This is Grid View --}}
                     <div class="grid gap-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 my-5">
