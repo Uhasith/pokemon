@@ -27,7 +27,8 @@
 
     <!-- Filepond stylesheet -->
     <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
-    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" />
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
+        rel="stylesheet" />
 
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
@@ -36,16 +37,13 @@
         [x-cloak] {
             display: none !important;
         }
-
-
     </style>
 
     @filamentStyles
-    <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-
     @livewireStyles
     @wireUiScripts
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
 </head>
 
@@ -87,9 +85,16 @@
 <footer>
     <div class="w-full !bg-[#1C1C1C] py-8">
         <div class="max-w-[1440px] relative flex justify-center items-center flex-col gap-4 mx-auto p-5">
-            <h3 class="text-center font-manrope text-white text-xl font-semibold">Got a Question? Email <a href="">website@pokemonprice.com</a></h3>
-            <h4 class="text-center font-manrope leading-8 text-white text-sm font-medium">When you click on links to various merchants on this site and make a purchase, this can result in this site earning a commission. Affiliate programs and <br> affiliations include, but are not limited to, the eBay partner network.</a></h4>
-            <h4 class="text-center font-manrope leading-8 text-white text-sm font-medium">Pokémon © 2002-2024 Pokémon. © 1995-2024 Nintendo/Creatures Inc./GAME FREAK inc. TM, ® and Pokémon character names are trademarks off Ninetendo. This website is not produced, endorsed, supported, or affiliated with Nintendo/Creatures Inc./GAME FREAK inc.</h4>
+            <h3 class="text-center font-manrope text-white text-xl font-semibold">Got a Question? Email <a
+                    href="">website@pokemonprice.com</a></h3>
+            <h4 class="text-center font-manrope leading-8 text-white text-sm font-medium">When you click on links to
+                various merchants on this site and make a purchase, this can result in this site earning a commission.
+                Affiliate programs and <br> affiliations include, but are not limited to, the eBay partner network.</a>
+            </h4>
+            <h4 class="text-center font-manrope leading-8 text-white text-sm font-medium">Pokémon © 2002-2024 Pokémon. ©
+                1995-2024 Nintendo/Creatures Inc./GAME FREAK inc. TM, ® and Pokémon character names are trademarks off
+                Ninetendo. This website is not produced, endorsed, supported, or affiliated with Nintendo/Creatures
+                Inc./GAME FREAK inc.</h4>
         </div>
     </div>
 
