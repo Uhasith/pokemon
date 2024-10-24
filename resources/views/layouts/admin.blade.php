@@ -32,11 +32,10 @@
     </style>
 
     @filamentStyles
-    <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-
     @livewireStyles
     @wireUiScripts
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
 </head>
 
