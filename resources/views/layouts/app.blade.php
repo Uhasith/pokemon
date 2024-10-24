@@ -46,6 +46,9 @@
 
     @livewireStyles
     @wireUiScripts
+
+    <script src="//unpkg.com/alpinejs" defer></script>
+
     @stack('styles')
 </head>
 
