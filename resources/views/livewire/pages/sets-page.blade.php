@@ -27,8 +27,7 @@ new class extends Component {
         <meta property="og:description" content="Check Pokémon card prices with our up-to-date price checker. Browse the latest TCG sets, from classic Base Set to recent releases, and find accurate values and population insights for your collection.">
         <meta name="twitter:description" content="Check Pokémon card prices with our up-to-date price checker. Browse the latest TCG sets, from classic Base Set to recent releases, and find accurate values and population insights for your collection.">
         @endpush
-    <div class="bg-darkblackbg w-full relative" x-data="{ open: false }"
-        x-on:search-this.window="if($event.detail[0] != '') { open = true } else { open = false }">
+    <div class="bg-darkblackbg w-full relative" x-data="{ open: false }" x-on:search-this.window="if($event.detail[0] != '') { open = true } else { open = false }">
         {{-- First hero Section --}}
         <div class="w-full h-56 bg-blend-darken bg-no-repeat bg-center bg-cover relative flex justify-center items-center"
             style="background-image: url('{{ asset('assets/card-images/hero-background.png') }}');">

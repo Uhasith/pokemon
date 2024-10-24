@@ -36,6 +36,7 @@ Route::middleware([
     Volt::route('/upload-json', 'pages.admin.json-files')->name('json-uploads');
 });
 
+Volt::route('/', 'pages.home')->name('home');
 Volt::route('/sets', 'pages.sets-page')->name('set-index');
 Volt::route('{setSlug}/{slug}', 'pages.card-details-page')->name('card-details');
 Volt::route('{slug}', 'pages.set-details-page')->name('set-details');
