@@ -15,7 +15,7 @@ new class extends Component {
         <label for="default-search"
             class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
         <div class="relative">
-            <input type="text" id="default-search" wire:model.live="kw" class="block w-auto h-12 m-2 text-sm text-gray-900 rounded-lg bg-[#FFFFFF14] border-0" placeholder="Find a card..." required />
+            <input type="text" id="default-search" wire:model.live="kw" class="block w-full h-12 m-2 text-sm text-gray-900 rounded-lg bg-[#FFFFFF14] border-0" placeholder="Find a card..." required />
             <button type="submit"
                 class="text-white absolute end-2.5 bottom-1.5 font-medium rounded-lg text-sm p-2">
                 <svg width="22" height="22" viewBox="0 0 22 22" fill="none"
