@@ -7,7 +7,9 @@ new class extends Component {
 
     function updatedKw($value): void
     {
-        $this->dispatch('search-this', $value);
+        if(strlen($value) >= 3){
+            $this->dispatch('search-this', $value);
+        }
     }
 }; ?>
 

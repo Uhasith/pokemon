@@ -74,6 +74,7 @@ new class extends Component {
 }; ?>
 
 <div class="w-full md:w-9/12 xl:w-4/5" x-data="{ type: 'grid' }">
+    @if (count($cards) > 1)
     <div class="flex items-center justify-end gap-4 flex-wrap">
         <div class="grid grid-col lg:grid-cols-[auto_1fr] items-center gap-3 w-[50%] lg:w-1/4">
             <h2 class="font-manrope font-semibold text-sm text-white w-full">Sort By: </h2>
@@ -120,11 +121,11 @@ new class extends Component {
             </button>
         </div>
     </div>
-
+    @endif
     {{-- This is Grid View --}}
     <div x-show="type == 'grid'" x-transition>
         <div class="grid gap-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 my-5">
-            @foreach ($cards as $card)
+            @forelse ($cards as $card)
                 @if ($card?->all_card?->images['small'] !== null)
                     <div class="w-full" wire:key="global-grid-card-{{ $card->card_id }}">
                         <div class="flex w-full">
@@ -177,7 +178,9 @@ new class extends Component {
                         </div>
                     </div>
                 @endif
-            @endforeach
+            @empty
+                <p class="text-white p-1 text-lg text-center col-span-5">No cards to be found! Please check your search query again.</p>
+            @endforelse
         </div>
     </div>
     {{-- This is List view --}}
