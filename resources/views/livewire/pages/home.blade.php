@@ -31,7 +31,7 @@ new class extends Component {
         x-on:search-this.window="if($event.detail[0] != '') { open = true } else { open = false }">
 
         <div class="w-full bg-darkblackbg">
-            <div class="max-w-xl mx-auto py-6 md:py-48 px-6 md:px-4">
+            <div class="max-w-xl mx-auto py-6 md:py-24 px-6 md:px-4">
                 <h2 class="mx-auto text-2xl text-center text-white mb-4 uppercase">Find a card...</h2>
                 <x-wui-input wire:model.live.debounce.500ms="kw_search" rounded placeholder="Find a card..."/>
             </div>
