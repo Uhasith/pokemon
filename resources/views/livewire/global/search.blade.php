@@ -13,6 +13,6 @@ new class extends Component {
 
 <div>
     <div class="relative">
-        <x-wui-input placeholder="Find a card..." wire:model.live="kw" />
+        <x-wui-input placeholder="Find a card..." wire:model.live.debounce.500ms="kw" class="text-sm text-gray-900 rounded-lg bg-[#FFFFFF14]" />    
     </div>
 </div>

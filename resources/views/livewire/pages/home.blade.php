@@ -33,7 +33,7 @@ new class extends Component {
         <div class="w-full bg-darkblackbg">
             <div class="max-w-xl mx-auto py-6 md:py-48 px-6 md:px-4">
                 <h2 class="mx-auto text-2xl text-center text-white mb-4 uppercase">Find a card...</h2>
-                <x-wui-input wire:model.live="kw_search" rounded placeholder="Find a card..."/>
+                <x-wui-input wire:model.live.debounce.500ms="kw_search" rounded placeholder="Find a card..."/>
             </div>
         </div>
 
