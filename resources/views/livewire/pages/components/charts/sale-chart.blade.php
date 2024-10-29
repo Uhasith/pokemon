@@ -64,7 +64,7 @@ new class extends Component {
                 // Check if 'timeseries_data' exists in each item and count the valid entries inside it
                 return $items
                     ->filter(function ($item) {
-                        return isset($item['timeseries_data']) && count($item['timeseries_data']) > 5; // Only include if timeseries_data has more than 5 values
+                        return isset($item['timeseries_data']) && count($item['timeseries_data']) >= 1; // Only include if timeseries_data has more than 5 values
                     })
                     ->isNotEmpty();
             })
@@ -240,7 +240,7 @@ new class extends Component {
         $this->timeFrame = $timeFrame;
         $labels = $this->getFormattedLabels($this->filterPriceData([$this->numericGrade]), $this->filterTransactionData());
         $this->timeFrame = $originalTimeFrame;
-        return count($labels) >= 10;
+        return count($labels) >= 1;
     }
 
     // Extracts grade-specific price data from the filtered data
