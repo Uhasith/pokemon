@@ -20,13 +20,13 @@ new class extends Component {
 
 <div>
     @push('meta-tags')
-        <title>All Pokemon Card Set List</title>
+        <title>PokemonPrice - Price & Population Guide for Pokemon TCG</title>
         <meta name="description"
-            content="Check Pokémon card prices with our up-to-date price checker. Browse the latest TCG sets, from classic Base Set to recent releases, and find accurate values and population insights for your collection.">
+            content="Find accurate Pokemon card prices and population data with our comprehensive guide. Stay updated on Pokemon card market trends and track the value of your collection instantly. Ideal for collectors and investors!">
         <meta property="og:description"
-            content="Check Pokémon card prices with our up-to-date price checker. Browse the latest TCG sets, from classic Base Set to recent releases, and find accurate values and population insights for your collection.">
+            content="Find accurate Pokemon card prices and population data with our comprehensive guide. Stay updated on Pokemon card market trends and track the value of your collection instantly. Ideal for collectors and investors!">
         <meta name="twitter:description"
-            content="Check Pokémon card prices with our up-to-date price checker. Browse the latest TCG sets, from classic Base Set to recent releases, and find accurate values and population insights for your collection.">
+            content="Find accurate Pokemon card prices and population data with our comprehensive guide. Stay updated on Pokemon card market trends and track the value of your collection instantly. Ideal for collectors and investors!">
     @endpush
 
     <div class="bg-darkblackbg w-full relative" x-data="{ open: false }"
