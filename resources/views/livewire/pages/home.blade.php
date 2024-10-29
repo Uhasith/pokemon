@@ -7,7 +7,9 @@ new class extends Component {
     public $kw_search = '';
 
     function updatedKwSearch($value) : void {
-        $this->dispatch('search-this', $value);
+        if(strlen($value) >= 3){
+            $this->dispatch('search-this', $value);
+        }
     }
 
     public function with(): array {
@@ -28,7 +30,7 @@ new class extends Component {
     @endpush
 
     <div class="bg-darkblackbg w-full relative" x-data="{ open: false }"
-        x-on:search-this.window="if($event.detail[0] != '') { open = true } else { open = false }">
+        x-on:search-this.window="console.log($event); if($event.detail[0] != '') { open = true } else { open = false }">
 
         <div class="w-full bg-darkblackbg">
             <div class="max-w-xl mx-auto py-6 md:py-24 px-6 md:px-4">
