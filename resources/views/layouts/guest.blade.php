@@ -35,6 +35,15 @@
         }
     </style>
 
+     <!-- Google tag (gtag.js) -->
+     <script async src="https://www.googletagmanager.com/gtag/js?id=G-TY6DF3L8CE"></script>
+     <script>
+         window.dataLayer = window.dataLayer || [];
+         function gtag(){dataLayer.push(arguments);}
+         gtag('js', new Date());
+         gtag('config', 'G-TY6DF3L8CE');
+     </script>
+
     @filamentStyles
     @livewireStyles
     @wireUiScripts
