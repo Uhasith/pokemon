@@ -84,8 +84,8 @@ new class extends Component {
         <meta property="og:description" content="{{ $this->card->name }} {{ $this->card->variant }} from {{ $card->set->set_name }} price guide. Get the latest market value, track historical prices, and see recent sales data for accurate pricing insights. Perfect for casual and serious collectors.">
         <meta name="twitter:description" content="{{ $this->card->name }} {{ $this->card->variant }} from {{ $card->set->set_name }} price guide. Get the latest market value, track historical prices, and see recent sales data for accurate pricing insights. Perfect for casual and serious collectors.">
     @endpush
-    <div class="w-full bg-darkblackbg" x-init="initFlowbite();" x-data="{ open: false }"
-        x-on:search-this.window="if($event.detail[0] != '') { open = true } else { open = false }">
+    <div class="w-full bg-darkblackbg" x-init="initFlowbite();" x-data="{ cardListOpen: false }"
+        x-on:search-this.window="if($event.detail[0] != '') { cardListOpen = true } else { cardListOpen = false }">
         <div class="max-w-[1440px] 2xl:max-w-[1500px] bg-darkbg mx-auto relative flex flex-col lg:px-8 xl:px-0">
             <div class="my-12 px-8 lg:px-0">
                 <h3 class="flex gap-3 items-center font-manrope">
@@ -122,7 +122,7 @@ new class extends Component {
             </div>
 
             {{-- Cards Loading Section With Paginations --}}
-            <div x-show="open" x-transition class="w-full flex items-center justify-center py-4 mb-8">
+            <div x-show="cardListOpen" x-transition class="w-full flex items-center justify-center py-4 mb-8">
                 <livewire:pages.components.global.cards-list />
             </div>
 

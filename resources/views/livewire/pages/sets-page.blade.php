@@ -27,7 +27,7 @@ new class extends Component {
         <meta property="og:description" content="Check Pokémon card prices with our up-to-date price checker. Browse the latest TCG sets, from classic Base Set to recent releases, and find accurate values and population insights for your collection.">
         <meta name="twitter:description" content="Check Pokémon card prices with our up-to-date price checker. Browse the latest TCG sets, from classic Base Set to recent releases, and find accurate values and population insights for your collection.">
         @endpush
-    <div class="bg-darkblackbg w-full relative" x-data="{ open: false }" x-on:search-this.window="if($event.detail[0] != '') { open = true } else { open = false }">
+    <div class="bg-darkblackbg w-full relative" x-data="{ cardListOpen: false }" x-on:search-this.window="if($event.detail[0] != '') { cardListOpen = true } else { cardListOpen = false }">
         {{-- First hero Section --}}
         <div class="w-full h-56 bg-blend-darken bg-no-repeat bg-center bg-cover relative flex justify-center items-center"
             style="background-image: url('{{ asset('assets/card-images/hero-background.png') }}');">
@@ -37,7 +37,7 @@ new class extends Component {
             <div class="h-full w-full absolute top-0 right-0 bg-[#000000CC]"></div>
         </div>
         {{-- Cards Loading Section With Paginations --}}
-        <div x-show="open" x-transition class="w-full flex items-center justify-center py-8">
+        <div x-show="cardListOpen" x-transition class="w-full flex items-center justify-center py-8">
             <livewire:pages.components.global.cards-list />
         </div>
 
