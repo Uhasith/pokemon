@@ -122,14 +122,14 @@ class extends Component {
 
                         @if ($this->file && count($this->excelColumns) > 0)
                             <div class="grid grid-cols-2 gap-4">
-                                @foreach ($this->dbColumns as $dbColumn)
-                                    <div class="grid grid-cols-[1fr_2fr] items-center gap-4 py-4">
+                                @foreach ($this->dbColumns as $index => $dbColumn)
+                                    <div class="grid grid-cols-[1fr_2fr] items-center gap-4 py-4" wire:key="db-col-{{$index}}">
                                         <p class="font-semibold text-gray-500">{{ $dbColumn['name'] }}</p>
                                         <x-wui-select placeholder="Select Column"
                                             wire:model.live="columnMappings.{{ $dbColumn['value'] }}"
                                             wire:loading.attr="disabled" wire:target="submit">
-                                            @foreach ($excelColumns as $excelColumn)
-                                                <x-wui-select.option :disabled="in_array($excelColumn['value'], $columnMappings)
+                                            @foreach ($excelColumns as $excelColumnindex => $excelColumn)
+                                                <x-wui-select.option wire:key="excelCol-{{$excelColumnindex}}" :disabled="in_array($excelColumn['value'], $columnMappings)
                                                     ? true
                                                     : false"
                                                     value="{{ $excelColumn['value'] }}">{{ $excelColumn['name'] }}</x-wui-select.option>

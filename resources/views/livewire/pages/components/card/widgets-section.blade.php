@@ -358,8 +358,8 @@ new class extends Component {
 
     @if (is_array($allCardRecord?->attacks) && count($allCardRecord->attacks) > 0)
         <div class="my-12 w-[100%] md:w-[90%] lg:w-[95%] mx-auto xl:w-[93%]">
-            @foreach ($allCardRecord->attacks as $attack)
-                <div class="flex items-center gap-2 mb-2">
+            @foreach ($allCardRecord->attacks as $index => $attack)
+                <div class="flex items-center gap-2 mb-2" wire:key="attack-{{$index}}">
                     @if (isset($attack['name']) && isset($attack['damage']))
                         <h2 class="font-manrope font-bold text-2xl text-white">
                             {{ $attack['name'] }}

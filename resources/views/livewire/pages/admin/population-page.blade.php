@@ -122,8 +122,8 @@ new #[Layout('layouts.admin')] class extends Component {
 
                         @if ($this->file && count($this->excelColumns) > 0)
                             <div class="grid grid-cols-2 gap-4">
-                                @foreach ($this->dbColumns as $dbColumn)
-                                    <div class="grid grid-cols-[1fr_2fr] items-center gap-4 py-4">
+                                @foreach ($this->dbColumns as $index => $dbColumn)
+                                    <div class="grid grid-cols-[1fr_2fr] items-center gap-4 py-4" wire:key="population-pg-db-col-{{$index}}">
                                         <p class="font-semibold text-gray-500">{{ $dbColumn['name'] }}</p>
                                         <x-wui-select placeholder="Select Column"
                                             wire:model.live="columnMappings.{{ $dbColumn['value'] }}"

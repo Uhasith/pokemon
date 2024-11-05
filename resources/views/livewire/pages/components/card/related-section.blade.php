@@ -71,7 +71,7 @@ new class extends Component {
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 my-12">
                 @foreach ($relatedCards as $relatedCard)
                     @if ($relatedCard?->all_card?->images['small'] !== null)
-                        <div class="flex w-full" wire:key="related-card-{{ $relatedCard->card_id }}">
+                        <div class="flex w-full" wire:key="related-card-{{ $relatedCard->card_id }}" wire:key="related-crds-{{$relatedCard->slug}}">
                             <div class="p-2 md:p-6 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
                                 @if ($relatedCard?->all_card?->images['small'] !== null)
                                     <a href="{{ route('card-details', ['slug' => $relatedCard->slug, 'setSlug' => $relatedCard->set->slug]) }}"
@@ -116,7 +116,7 @@ new class extends Component {
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 my-12">
                 @foreach ($topCards as $topCard)
                     @if ($topCard?->all_card?->images['small'] !== null)
-                        <div class="flex w-full" wire:key="top-card-{{ $topCard->card_id }}">
+                        <div class="flex w-full" wire:key="top-card-{{ $topCard->card_id }}" wire:key="crd-{{$topCard->slug}}">
                             <div class="p-2 md:p-6 rounded-2xl bg-[#2C2C2C] bg-blend-screen">
                                 @if ($topCard?->all_card?->images['small'] !== null)
                                     <a href="{{ route('card-details', ['slug' => $topCard->slug, 'setSlug' => $topCard->set->slug]) }}"
