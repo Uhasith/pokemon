@@ -29,8 +29,8 @@ new class extends Component {
             content="Find accurate Pokemon card prices and population data with our comprehensive guide. Stay updated on Pokemon card market trends and track the value of your collection instantly. Ideal for collectors and investors!">
     @endpush
 
-    <div class="bg-darkblackbg w-full relative" x-data="{ open: false }"
-        x-on:search-this.window="console.log($event); if($event.detail[0] != '') { open = true } else { open = false }">
+    <div class="bg-darkblackbg w-full relative" x-data="{ openSearch: false }"
+        x-on:search-this.window="console.log($event); if($event.detail[0] != '') { openSearch = true } else { openSearch = false }">
 
         <div class="w-full bg-darkblackbg">
             <div class="max-w-xl mx-auto py-6 md:py-24 px-6 md:px-4">
@@ -39,7 +39,7 @@ new class extends Component {
             </div>
         </div>
 
-        <div x-show="open" x-transition class="w-full flex items-center justify-center py-8">
+        <div x-show="openSearch" x-transition class="w-full flex items-center justify-center py-8">
             <livewire:pages.components.global.cards-list />
         </div>
 
