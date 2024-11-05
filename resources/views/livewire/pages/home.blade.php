@@ -49,8 +49,7 @@ new class extends Component {
                     {{-- This is Grid View --}}
                     <div class="grid gap-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 my-5">
                         @foreach ($sets as $set)
-                        <a href="{{ route('set-details', ['slug' => $set->slug]) }}" wire:navigate
-                            wire:key="set-{{ $set->set_id }}">
+                        <a href="{{ route('set-details', ['slug' => $set->slug]) }}" wire:key="set-show-{{ $set->set_id }}">
                             <div class="w-full">
                                 <div class="flex w-full">
                                     <div
