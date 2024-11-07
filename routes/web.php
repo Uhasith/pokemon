@@ -41,6 +41,8 @@ Volt::route('/sets', 'pages.sets-page')->name('set-index');
 Volt::route('{setSlug}/{slug}', 'pages.card-details-page')->name('card-details');
 Volt::route('{slug}', 'pages.set-details-page')->name('set-details');
 
+// Redirects
 Route::get('/CardDetails/{card_id}/{slug}', [RedirectController::class, 'redirectToNewUrl']);
+Route::get('/CardsForSet/{set_id}/{slug}', [RedirectController::class, 'setRedirectToNewUrl']);
 
 require __DIR__ . '/auth.php';
