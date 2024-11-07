@@ -25,4 +25,17 @@ class RedirectController extends Controller
         // If the card is not found, redirect to a 404 page or home page as needed
         return redirect()->to(route('set-index'), 302);
     }
+
+    function setRedirectToNewUrl($set_id, $slug) {
+        $set_id_array = explode('-', $set_id);
+        if(count($set_id_array) >= 1){
+            $set = DB::table('poke_sets')->where('set_id', 'LIKE', '%' . $set_id_array[0] . '%')->first();
+        }
+
+        if($set){
+            $newUrl = config('app.url') . "/" . $set->slug;
+            return redirect()->to($newUrl, 301);
+        }
+        return redirect()->to(route('set-index'), 302);
+    }
 }
